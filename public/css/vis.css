@@ -1,0 +1,55 @@
+/*
+ * http://kuler.adobe.com/
+ * bassin rich
+ * C4CCBB
+ * 1C202E
+ * 2D4469
+ * 5CB9F2
+ * 73DBFE
+ */
+@CHARSET "UTF-8";
+#wrapper {
+	width: 100%;
+	overflow: auto;
+}
+
+#header {
+	height: 40px;
+	background-color: #2D4469;
+	/*border: 1px solid orange;*/
+}
+
+#header h1 {
+	margin: 0px 0px 0px 10px;
+	padding: 11px 0px 0px 0px;
+	font-size: 15px;
+	font-family: arial, sans-serif;
+	font-weight: bold;
+	letter-spacing: 1px;
+	color: #fff;
+}
+
+#sidebar {
+	float: left;	
+	width: 15%;
+	background: #5CB9F2;
+	min-height: 700px;
+	/*border: 1px solid blue;*/
+}
+
+#content {
+	float: left;
+	width: 84%;
+	background: #73DBFE;
+	min-height: 700px;	
+	/*border: 1px solid red;*/
+}
+
+#footer {
+	background: #C4CCBB;
+	/*border: 1px solid green;*/	
+}
+
+.clear {
+	clear: both;
+}

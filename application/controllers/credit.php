@@ -1,7 +1,11 @@
 <?php
-class Credit extends CI_Controller {
+class Credit extends MY_Controller {
 	
+	private $_name = 'credit';
+	 	
 	public function index() {
-		$this->load->view('credit');
+		$this->view->load('content', $this->_name . '/index', array());
+		$this->view->set(array());		// TODO add data
+		$this->view->render();  
 	}
 }
