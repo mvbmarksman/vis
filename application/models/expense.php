@@ -1,6 +1,7 @@
 <?php
 class Expense extends CI_Model
 {
+	public $expenseId;
 	public $dailyExpenseTransactionId;
 	public $description;
 	public $price;

@@ -1,6 +1,7 @@
 <?php
 class InventoryExpenseTransaction extends CI_Model
 {
+	public $inventoryItemExpense;
 	public $dailyExpenseTransactionID;
 	public $itemDetailId;
 	public $unitPrice;

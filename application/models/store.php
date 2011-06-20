@@ -1,6 +1,7 @@
 <?php
 class Store extends CI_Model
 {
+	public $storeId;
 	public $name;
 	public $location;
 

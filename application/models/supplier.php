@@ -1,6 +1,7 @@
 <?php
 class Supplier extends CI_Model
 {
+	public $supplierId;
 	public $name;
 	public $discount;
 

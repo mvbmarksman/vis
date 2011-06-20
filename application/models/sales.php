@@ -1,7 +1,7 @@
 <?php
 class Sales extends CI_Model
 {
-
+	public $salesId;
   	public $salesTransactionId;
   	public $itemDetailId;
   	public $unitPrice;

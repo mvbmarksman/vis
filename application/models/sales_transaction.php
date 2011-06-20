@@ -1,6 +1,7 @@
 <?php
 class SalesTransaction extends CI_Model
 {
+	public $salesTransactionId;
 	public $date;
 	public $userId;
 	public $creditId;

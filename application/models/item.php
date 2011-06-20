@@ -1,6 +1,7 @@
 <?php
 class Item extends CI_Model
 {
+	public $itemId;
 	public $itemDetailId;
 	public $storeId;
 

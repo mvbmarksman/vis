@@ -1,6 +1,7 @@
 <?php
 class Credit extends CI_Model
 {
+	public $creditId;
 	public $fullName;
 	public $address;
 	public $phoneNo;

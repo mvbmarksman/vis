@@ -1,7 +1,8 @@
 <?php
 class DailyExpenseTransaction extends CI_Model
 {
-	public $data;
+	public $dailyExpenseTransactionId;
+	public $date;
 
 	private $_name = 'DailyExpenseTransaction';
 
