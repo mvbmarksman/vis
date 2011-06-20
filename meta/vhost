@@ -1,0 +1,11 @@
+<VirtualHost *:80>
+        ServerName local.vis.com
+        DocumentRoot /var/www/vis/
+        <Directory /var/www/vis>
+                RewriteEngine On
+                RewriteBase /
+                RewriteCond %{REQUEST_FILENAME} !-f
+                RewriteCond %{REQUEST_FILENAME} !-d
+                RewriteRule ^(.*)$ index.php/$1 [L]
+        </Directory>
+</VirtualHost>  
