@@ -1,5 +1,5 @@
 <?php
-class SalesTrasaction extends CI_Model
+class SalesTransaction extends CI_Model
 {
 	public $date;
 	public $userId;
@@ -7,7 +7,7 @@ class SalesTrasaction extends CI_Model
 	public $totalPrice;
 	public $isFullyPaid;
 
-	private $_name = 'SalesTrasaction';
+	private $_name = 'SalesTransaction';
 
 	public function __construct()
 	{
