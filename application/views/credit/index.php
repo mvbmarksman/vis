@@ -1,1 +1,1 @@
-CONTENT WEEE
+<?php echo $msg; ?>
