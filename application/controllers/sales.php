@@ -13,12 +13,10 @@ class Sales extends MY_Controller {
 	}
 
 	public function salesInput(){
-		$this->load->model('sales_model');
-		$this->view->load('content', $this->_name . '/formsample', array());
-		$this->sales_model->insert();
+		$this->load->model('sales_transaction');
+		$this->view->load('content', $this->_name . '/index', array());
+		$this->sales_transaction->insert();
 		$this->view->render();
-
-
 	}
 
 

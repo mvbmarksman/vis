@@ -18,14 +18,17 @@ class Sales_model extends CI_Model
 		parent::__construct();
 	}
 
-	public function insert(){
-		$data = array('salesTransactionId' => '1',
+	public function insert($salesTransactionId){
+
+		$this->input->post('fisVAT') == 'on' ? $isVAT = '1' : $isVAT = '0';
+		$data = array('salesTransactionId' => $salesTransactionId,
 					'itemDetailId'=>$this->input->post('fitemDetailId'),
 	                'unitPrice'=>$this->input->post('funitPrice'),
         	        'qty'=>$this->input->post('fqty'),
                 	'discount'=>$this->input->post('fdiscount'),
                 	'storeId'=>$this->input->post('fstoreId'),
-                	);
+                	'isVAT'=>$isVAT,
+					);
 		$this->db->insert('Sales',$data);
 	}
 }
