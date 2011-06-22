@@ -1,21 +1,25 @@
 <?php
-class Credit extends MY_Controller {
+class Sales extends MY_Controller {
 
-	private $_name = 'credit';
+	private $_name = 'sales';
 
 	public function index() {
+		$this->load->helper('form');
+
 		$this->view->load('content', $this->_name . '/index', array());
+
 		$this->view->set(array());		// TODO add data
 		$this->view->render();
 	}
 
-	public function formsample() {
+	public function salesInput(){
+		$this->load->model('sales_model');
 		$this->view->load('content', $this->_name . '/formsample', array());
-		if ($data = $this->input->post()) {
-			echo '<pre>';
-			print_r($data);
-			echo '</pre>';
-		}
+		$this->sales_model->insert();
 		$this->view->render();
+
+
 	}
+
+
 }

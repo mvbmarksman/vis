@@ -15,4 +15,9 @@ class SalesTransaction extends CI_Model
 		$this->load->database();
 		parent::__construct();
 	}
+
+	public function insert(){
+
+
+	}
 }
