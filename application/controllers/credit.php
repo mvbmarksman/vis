@@ -9,13 +9,4 @@ class Credit extends MY_Controller {
 		$this->view->render();
 	}
 
-	public function formsample() {
-		$this->view->load('content', $this->_name . '/formsample', array());
-		if ($data = $this->input->post()) {
-			echo '<pre>';
-			print_r($data);
-			echo '</pre>';
-		}
-		$this->view->render();
-	}
 }

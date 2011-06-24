@@ -18,6 +18,21 @@ class Sales_model extends CI_Model
 		parent::__construct();
 	}
 
+	public function general(){
+		$data['fuserId'] = array('name' => 'fuserId', 'label' => 'fuserId',);
+		$data['fitemDetailId'] = array('name' => 'fitemDetailId', 'label' => 'fitemDetailId',);
+		$data['funitPrice'] = array('name' => 'funitPrice', 'label' => 'funitPrice',);
+		$data['fqty'] = array('name' => 'fqty', 'label' => 'fqty',);
+		$data['fdiscount'] = array('name' => 'fdiscount', 'label' => 'fdiscount',);
+		$data['fstoreId'] = array('name' => 'fstoreId', 'label' => 'fstoreId',);
+		$data['fisVAT'] = array('name' => 'fisVAT', 'label' => 'fisVAT',);
+		$data['fisFullyPaid'] = array('name' => 'fisFullyPaid', 'label' => 'fisFullyPaid',);
+
+		return $data;
+
+
+	}
+
 	public function insert($salesTransactionId){
 
 		$this->input->post('fisVAT') == 'on' ? $isVAT = '1' : $isVAT = '0';

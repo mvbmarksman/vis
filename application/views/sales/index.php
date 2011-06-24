@@ -1,12 +1,22 @@
-<form action="sales/salesInput" method="POST">
-	<label for="User">User</label><input id="User" type="text" name="fuserId"/><br />
-	<label for="Item Detail ID">Item Detail Id </label><input id="Item Detail Id" type="text" name="fitemDetailId"/><br/>
-	<label for="Unit Price">Unit Price</label><input id="Unit Price" type="text" name="funitPrice"/><br />
-	<label for="Qty">Qty</label><input id="Qty" type="text" name="fqty"/><br />
-	<label for="Discount">Discount</label><input id="Discount" type="text" name="fdiscount"/><br />
-	<label for="Store Id">Store Id</label><input id="Store Id" type="text" name="fstoreId"/><br />
-	<label for="VAT">VAT</label><input id="VAT" type="checkbox" name="fisVAT"/><br />
-	<label for="Full payment">Full Payment</label><input id="Full Payment" type="checkbox" name="fisFullyPaid"/><br />
+<?php
+	echo form_open('sales/salesInput');
+	echo form_label('User','User'). form_input($fuserId) . '<br />';
+	echo form_label('Item Detail ID','Item Detail ID').form_input($fitemDetailId) . '<br />';
+	echo form_label('Unit Price','Unit Price'). form_input($funitPrice) . '<br />';
+	echo form_label('Qty','Qty'). form_input($fqty) . '<br />';
+	echo form_label('Discount','Discount'). form_input($fdiscount) . '<br />';
+	echo form_label('Store Id','Store Id'). form_input($fstoreId) . '<br />';
+	echo form_label('VAT','VAT'). form_checkbox($fisVAT) . '<br />';
+	echo form_label('Full Payment','Full Payment'). form_checkbox($fisFullyPaid) . '<br />';
+	echo form_submit('submit');
+?>
 
-	<input type="submit">
-</form>
+
+
+
+
+
+
+
+
+

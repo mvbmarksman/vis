@@ -1,5 +1,9 @@
-<form action="/credit/formsample" method="POST">
-        <label for="name">name </label><input id="name" type="text" name="name"/>
-        <label for="password">password: </label><input id="password" type="text" name="password"/>
+<form action="/sales/creditInput" method="POST">
+        <h2>Contact Info</h2><br/>
+        <label for="Full Name">Full Name </label><input id="Full Name" type="text" name="ffullName"/><br/>
+        <label for="Address">Address </label><input id="Address" type="text" name="faddress"/><br/>
+ 		<label for="Contact Number">Contact Number </label><input id="Contact Number" type="text" name="fphoneNo"/><br/>
+        <br/>
+        <label for="Amount Paid">Amount Paid </label><input id="Amount Paid" type="type" name="famountPaid"/><br/>
         <input type="submit">
 </form>
