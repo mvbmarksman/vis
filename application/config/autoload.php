@@ -36,9 +36,7 @@
 |  $autoload['packages'] = array(APPPATH.'third_party', '/usr/local/shared');
 |
 */
-
 $autoload['packages'] = array(APPPATH.'third_party');
-
 
 /*
 | -------------------------------------------------------------------
@@ -52,7 +50,7 @@ $autoload['packages'] = array(APPPATH.'third_party');
 |	$autoload['libraries'] = array('database', 'session', 'xmlrpc');
 */
 
-$autoload['libraries'] = array();
+$autoload['libraries'] = array('Debug');
 
 
 /*

@@ -8,17 +8,17 @@ CREATE TABLE `Credit` (
   PRIMARY KEY (`creditId`)
 )  ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
-DROP TABLE IF EXISTS `DailyExpenseTransaction`;
-CREATE TABLE `DailyExpenseTransaction` (
-  `dailyExpenseTransacationId` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+DROP TABLE IF EXISTS `ExpenseTransaction`;
+CREATE TABLE `ExpenseTransaction` (
+  `expenseTransacationId` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `date` DATETIME NOT NULL ,
-  PRIMARY KEY (`dailyExpenseTransacationId`)
+  PRIMARY KEY (`expenseTransacationId`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 DROP TABLE IF EXISTS `Expense`;
 CREATE TABLE `Expense` (
   `expenseId` INTEGER UNSIGNED NULL AUTO_INCREMENT,
-  `dailyExpenseTransactionId` INT UNSIGNED,
+  `expenseTransactionId` INT UNSIGNED,
   `description` VARCHAR(100),
   `price` DECIMAL(18,4),
   `disburser` VARCHAR(30),
@@ -28,7 +28,7 @@ CREATE TABLE `Expense` (
 DROP TABLE IF EXISTS `InventoryItemExpense`;
 CREATE TABLE `InventoryItemExpense` (
   `inventoryItemExpenseId` INT UNSIGNED AUTO_INCREMENT,
-  `dailyExpenseTransactionId` INT UNSIGNED,
+  `expenseTransactionId` INT UNSIGNED,
   `itemDetailId` INT UNSIGNED,
   `unitPrice` DECIMAL(18,4) NOT NULL,
   `qty` INTEGER NOT NULL,
@@ -130,6 +130,6 @@ ALTER TABLE `Sales` ADD FOREIGN KEY (itemDetailId) REFERENCES `ItemDetail` (`ite
 ALTER TABLE `Sales` ADD FOREIGN KEY (storeId) REFERENCES `Store` (`storeId`);
 ALTER TABLE `SalesTransaction` ADD FOREIGN KEY (userId) REFERENCES `User` (`userId`);
 ALTER TABLE `SalesTransaction` ADD FOREIGN KEY (creditId) REFERENCES `Credit` (`creditId`);
-ALTER TABLE `InventoryItemExpense` ADD FOREIGN KEY (dailyExpenseTransactionId) REFERENCES `DailyExpenseTransaction` (`dailyExpenseTransacationId`);
+ALTER TABLE `InventoryItemExpense` ADD FOREIGN KEY (expenseTransactionId) REFERENCES `ExpenseTransaction` (`expenseTransacationId`);
 ALTER TABLE `InventoryItemExpense` ADD FOREIGN KEY (itemDetailId) REFERENCES `ItemDetail` (`itemDetailId`);
-ALTER TABLE `Expense` ADD FOREIGN KEY (dailyExpenseTransactionId) REFERENCES `DailyExpenseTransaction` (`dailyExpenseTransacationId`);
+ALTER TABLE `Expense` ADD FOREIGN KEY (expenseTransactionId) REFERENCES `ExpenseTransaction` (`expenseTransacationId`);

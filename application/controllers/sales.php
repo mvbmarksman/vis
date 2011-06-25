@@ -23,6 +23,8 @@ class Sales extends MY_Controller {
 	}
 
 	public function salesInput(){
+		// TODO login not yet implemented
+		$userId = 1;
 
 		$isFullyPaid = $this->input->post('fisFullyPaid');
 
@@ -44,4 +46,22 @@ class Sales extends MY_Controller {
 		$this->load->model('credit_model');
 		$this->credit_model->insert();
 		}
+
+
+	public function saveCredit() {
+		$this->load->model('credit_model');
+		$this->load->model('sales_transaction_model');
+
+		$data = array(
+			'fullName'		=> $this->input->post('fullName'),
+            'address'		=> $this->input->post('address'),
+			'phoneNo'		=> $this->input->post('phoneNo') ,
+			'amountPaid'	=> $this->input->post('amountPaid'),
+		);
+
+
+
+		$lastInsertId = $this->credit_model->insert();
+		$this->sales_transaction_model->insert($lastInsertId);
+	}
 }
