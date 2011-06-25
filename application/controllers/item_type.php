@@ -1,9 +1,11 @@
 <?php
 class Item_type extends MY_Controller
 {
-	public function show() {
-		$this->load->model('item_type_model');
+	const MODEL = 'item_type_model';
+
+	public function showall() {
+		$this->load->model(self::MODEL);
 		$itemtypes = $this->item_type_model->fetch();
-		Debug::dump($itemtypes);
+		$this->renderView('showall', array('data' => 5));
 	}
 }
