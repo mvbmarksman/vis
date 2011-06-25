@@ -1,6 +1,9 @@
 <?php
 class Sales_transaction_model extends CI_Model
 {
+
+	const TBL_NAME = 'SalesTransaction';
+
 	public $salesTransactionId;
 	public $date;
 	public $userId;
@@ -8,29 +11,47 @@ class Sales_transaction_model extends CI_Model
 	public $totalPrice;
 	public $isFullyPaid;
 
-	private $_name = 'Sales_transaction_model';
+	public function save($salesTransactionModel) {
+		if (!$salesTransactionModel instanceof Sales_transaction_model) {
+			throw new DAOException("Parameter should be an instance of Sales_transaction_model class");
+		}
+		if (!$salesTransactionModel) {
+			throw new DAOException("Must specify salesTransactionModel.");
+		}
 
-	public function __construct()
-	{
-		$this->load->database();
-		parent::__construct();
+		if ($salesTransactionModel->salesTransactionId) {
+			$salesTransactionId = $salesTransactionModel->salesTransactionId;
+			unset($salesTransactionModel->salesTransactionId);
+			$this->db->update(self::TBL_NAME, $salesTransactionModel, array('salesTransactionId' => $salesTransactionId));
+			return $this->db->insert_id();
+		}
+		$this->db->insert(self::TBL_NAME, $salesTransactionModel);
+		return $this->db->insert_id();
 	}
 
-	public function insert($creditId){
-		$this->load->model('sales_model');
 
-		$this->input->post('fisFullyPaid') == 'on' ? $isFullyPaid = '1' : $isFullyPaid = '0';
-		$data = array('userId'=>$this->input->post('fuserId'),
-                	'isFullyPaid'=>$isFullyPaid,
-					'creditId'=>$creditId,
-					'date'=> date('Y/m/d',mktime(0,0,0,date("m"),date("d"),date("Y"))) , //Mark can you please edit this one to recod the correct date to the database
-					);
-		$this->db->insert('SalesTransaction',$data);
+	/**
+	 * Fetches sales details from the database.
+	 * If salesTransactionId is not specified, all records are fetched
+	 *
+	 * @return array
+	 */
+	public function fetch($salesTransactionId = null) {
 
-		//trying to get the latest sales transation ID to attach it the sales table
-		$query = $this->db->query('SELECT SalesTransactionId FROM SalesTransaction ORDER BY SalesTransactionId DESC LIMIT 1');
-		foreach ($query->result() as $row){
-		   	$this->sales_model->insert($row->SalesTransactionId);
+		$this->db->select();
+		$this->db->from(self::TBL_NAME);
+		if ($salesTransactionId) {
+			$this->db->where('salesTransactionId', $salesTransactionId);
 		}
+		$query = $this->db->get();
+		return $query->result_array();
+	}
+
+
+	public function delete($salesTransactionId) {
+		if (!$salesTransactionId) {
+			throw new DAOException("Must specify id to delete.");
+		}
+		$this->db->delete(self:: TBL_NAME, array('salesTransactionId' => $salesTransactionId));
 	}
 }

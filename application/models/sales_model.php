@@ -1,6 +1,8 @@
 <?php
 class Sales_model extends CI_Model
 {
+	const TBL_NAME = 'Sales';
+
 	public $salesId;
   	public $salesTransactionId;
   	public $itemDetailId;
@@ -10,25 +12,47 @@ class Sales_model extends CI_Model
   	public $storeId;
   	public $isVAT;
 
-	private $_name = 'Sales';
+	public function save($salesModel) {
+		if (!$salesModel instanceof Sales_model) {
+			throw new DAOException("Parameter should be an instance of Sales_model class");
+		}
+		if (!$salesModel) {
+			throw new DAOException("Must specify salesModel.");
+		}
 
-	public function __construct()
-	{
-		$this->load->database();
-		parent::__construct();
+		if ($salesModel->salesId) {
+			$salesId = $salesModel->salesId;
+			unset($salesModel->salesId);
+			$this->db->update(self::TBL_NAME, $salesModel, array('salesId' => $salesId));
+			return $this->db->insert_id();
+		}
+		$this->db->insert(self::TBL_NAME, $salesModel);
+		return $this->db->insert_id();
 	}
 
-	public function insert($salesTransactionId){
 
-		$this->input->post('fisVAT') == 'on' ? $isVAT = '1' : $isVAT = '0';
-		$data = array('salesTransactionId' => $salesTransactionId,
-					'itemDetailId'=>$this->input->post('fitemDetailId'),
-	                'unitPrice'=>$this->input->post('funitPrice'),
-        	        'qty'=>$this->input->post('fqty'),
-                	'discount'=>$this->input->post('fdiscount'),
-                	'storeId'=>$this->input->post('fstoreId'),
-                	'isVAT'=>$isVAT,
-					);
-		$this->db->insert('Sales',$data);
+	/**
+	 * Fetches sales details from the database.
+	 * If salesId is not specified, all records are fetched
+	 *
+	 * @return array
+	 */
+	public function fetch($salesId = null) {
+
+		$this->db->select();
+		$this->db->from(self::TBL_NAME);
+		if ($salesId) {
+			$this->db->where('salesId', $salesId);
+		}
+		$query = $this->db->get();
+		return $query->result_array();
+	}
+
+
+	public function delete($salesId) {
+		if (!$salesId) {
+			throw new DAOException("Must specify id to delete.");
+		}
+		$this->db->delete(self:: TBL_NAME, array('salesId' => $salesId));
 	}
 }
