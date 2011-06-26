@@ -1,7 +1,11 @@
 <style>
-.sales_form_container li {
+.sales_form_container li ul li {
 	float: left;
 	margin: 5px 15px;
+}
+
+.sales_form_row {
+	clear:both;
 }
 </style>
 
@@ -27,7 +31,7 @@
 	<li>
 		<ul class="sales_form_row">
 			<li>
-				<select name="item">
+				<select name="item" onchange="updatePrice(this)">
 					<?php foreach ($itemDetails as $itemDetail): ?>
 					<option value="<?php echo $itemDetail['itemDetailId'] ?>">
 						<?php echo $itemDetail['description'] ?>
@@ -36,7 +40,7 @@
 				</select>
 			</li>
 			<li>
-				100.00
+				<?php echo $itemDetails[0]['sellingPrice'];?>
 			</li>
 				<li><input type="text" name="qty[]"/></li>
 				<li><input type="text" name="discount[]"/></li>
@@ -48,6 +52,11 @@
 </div>
 
 <script type="text/javascript">
+var priceLookup = new Array();
+<?php foreach ($itemDetails as $itemDetail):?>
+	priceLookup["<?php echo $itemDetail['itemDetailId']; ?>"] = "<?php echo $itemDetail['sellingPrice'] ?>";
+<? endforeach; ?>
+
 $(document).ready(function(){
 	$(".sales_form_container").append($("#tpl").html());
 });
@@ -61,4 +70,13 @@ function addRow(obj) {
 var removeRow = function(obj) {
 	$(obj).parent().parent().parent().remove();
 }
+
+function updatePrice(obj) {
+	var itemSelectedVal = $(obj).val();
+	$(obj).parent().next().html(priceLookup[itemSelectedVal]);
+}
+
+
+
+
 </script>
