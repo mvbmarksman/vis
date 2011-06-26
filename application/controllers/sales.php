@@ -1,10 +1,24 @@
 <?php
 class Sales extends MY_Controller {
 
-	private $_name = 'sales';
-	private $_name2 = 'credit';//needed to call the credit functions
 
-	public function index() {
+
+	public function createsalesform() {
+
+		$this->load->model('item_detail_model');
+		$this->load->model('sales_model');
+		$this->load->model('item_model');
+		$itemDetails = $this->item_detail_model->fetch();
+		$this->renderView('salesform', array('itemDetails' => $itemDetails));
+	}
+
+
+	public function salesformhandler() {
+		$data = $this->input->post();
+		Debug::dump($data);
+	}
+
+ /*public function index() {
 		$this->load->helper('form');
 
 		$this->load->model('sales_model');
@@ -64,14 +78,5 @@ class Sales extends MY_Controller {
 		$lastInsertId = $this->credit_model->insert();
 		$this->sales_transaction_model->insert($lastInsertId);
 	}
-
-	public function salesform() {
-		$this->renderView('salesform', array());
-	}
-
-
-	public function salesformhandler() {
-		$data = $this->input->post();
-		Debug::dump($data);
-	}
+	*/
 }
