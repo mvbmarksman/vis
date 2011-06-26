@@ -5,10 +5,16 @@
 class MY_Controller extends CI_Controller {
 
 	private $_controllerName;
+	private $_model;
 
 	public function __construct() {
 		parent::__construct();
 		$this->_controllerName = strtolower(get_class($this));
+	}
+
+
+	public function setModel($model) {
+		$this->_model = $model;
 	}
 
 
@@ -25,6 +31,21 @@ class MY_Controller extends CI_Controller {
 		$this->view->load('content', $this->_controllerName . '/' . $template, $data);
 		$this->view->render();
 
+	}
+
+	public function listall() {
+		$this->renderView('listall', array());
+	}
+
+	public function getgriddata() {
+		$model = $this->_model;
+		$this->load->model($model);
+		$items = $this->$model->fetch();
+		if (!$items) {
+			return;
+		}
+		$this->load->library('flexigrid');
+		Flexigrid::create($items);
 	}
 
 }

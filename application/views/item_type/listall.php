@@ -12,7 +12,7 @@
 
 $(document).ready(function(){
 	$("#flex1").flexigrid({
-		url: '/item_type/getdata',
+		url: '/item_type/getgriddata',
 		dataType: 'json',
 		colModel : [
 			{display: 'ID', name : 'itemTypeId', width : 40, sortable : true, align: 'center'},
