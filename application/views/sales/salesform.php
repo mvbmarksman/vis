@@ -32,10 +32,12 @@
 					<option value="<?php echo $itemDetail['itemDetailId'] ?>">
 						<?php echo $itemDetail['description'] ?>
 					</option>
+					<?php endforeach; ?>
 				</select>
 			</li>
-			<li><?php echo $itemDetail['description'] ?></li>
-			<?php endforeach; ?>
+			<li>
+				100.00
+			</li>
 				<li><input type="text" name="qty[]"/></li>
 				<li><input type="text" name="discount[]"/></li>
 				<li><input type="checkbox" name="vat[]"/></li>
