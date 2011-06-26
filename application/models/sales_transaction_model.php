@@ -1,5 +1,5 @@
 <?php
-class Sales_transaction_model extends CI_Model
+class Sales_transaction_model extends MY_Model
 {
 
 	const TBL_NAME = 'SalesTransaction';
@@ -19,12 +19,18 @@ class Sales_transaction_model extends CI_Model
 			throw new DAOException("Must specify salesTransactionModel.");
 		}
 
+		$date = $salesTransactionModel->date;
+		$formatted = date( 'Y-m-d H:i:s', strtotime($date));
+		$salesTransactionModel->date = $formatted;
+
 		if ($salesTransactionModel->salesTransactionId) {
 			$salesTransactionId = $salesTransactionModel->salesTransactionId;
 			unset($salesTransactionModel->salesTransactionId);
 			$this->db->update(self::TBL_NAME, $salesTransactionModel, array('salesTransactionId' => $salesTransactionId));
 			return $this->db->insert_id();
 		}
+
+
 		$this->db->insert(self::TBL_NAME, $salesTransactionModel);
 		return $this->db->insert_id();
 	}

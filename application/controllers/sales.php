@@ -13,9 +13,26 @@ class Sales extends MY_Controller {
 	}
 
 
-	public function salesformhandler() {
-		$data = $this->input->post();
-		Debug::dump($data);
+	public function managesalesform() {
+		$this->load->model('sales_transaction_model');
+		$this->load->model('item_detail_model');
+
+		/*$sales_transaction= new Sales_transaction_model();
+		$sales_transaction->date = date("Y-m-d H:i:s");
+		$sales_transaction->userId = 1; //TODO CHANGED
+		$sales_transaction->isFullyPaid = 1;//TODO CHANGED
+		$this->sales_transaction_model->save($sales_transaction);
+
+		$data = $this->db->insert_id();
+*/
+		$storeId = 1; //TODO change this pls
+		$salesTransactionId = $this->db->insert_id();
+		$itemDetailId = $this->input->post('item');
+		$unitPrice =
+		$discount = $this->input->post('discount');
+		$vat = $this->input->post('vat');
+		$qty = $this->input->post('qty');
+		debug :: dump($data);
 	}
 
  /*public function index() {

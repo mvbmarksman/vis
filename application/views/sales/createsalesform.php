@@ -9,7 +9,7 @@
 }
 </style>
 
-<form action="/sales/salesformhandler" method="POST">
+<form action="/sales/managesalesform" method="POST">
 	<ul class="sales_form_container">
 		<li>
 			<ul>
@@ -36,7 +36,7 @@
 	<li id="row_1">
 		<ul class="sales_form_row">
 			<li class="itemDetails">
-				<select name="item" onchange="updatePrice(this)">
+				<select name="item[]" onchange="updatePrice(this)">
 					<?php foreach ($itemDetails as $itemDetail): ?>
 					<option value="<?php echo $itemDetail['itemDetailId'] ?>">
 						<?php echo $itemDetail['description'] ?>
@@ -51,13 +51,13 @@
 				<input type="text" name="qty[]" size ="3" value="0" onblur="updateSubTotal(this)"/>
 			</li>
 			<li class="discount">
-				<input type="text" size ="6" name="discount[]" value="0.00"/>
+				<input type="text" size ="6" name="discount[]" onblur="updateSubTotal(this)" value="0.00"/>
 			</li>
 			<li class="vat">
-				<input type="checkbox" name="vat[]"/>
+				<input type="checkbox" name="vat[]" onclick="updateVatSubTotal(this)" value="0" />
 			</li>
 			<li class="subtotal">
-				5
+				0.00
 			</li>
 			<li class="controls">
 				<input type="button" value="add" onclick="addRow(this)">
@@ -66,23 +66,25 @@
 	</li>
 </div>
 
-<input type="button" onclick="computeTotal()">
-
 <script type="text/javascript">
 var priceLookup = new Array();
 <?php foreach ($itemDetails as $itemDetail):?>
 	priceLookup["<?php echo $itemDetail['itemDetailId']; ?>"] = "<?php echo $itemDetail['sellingPrice'] ?>";
 <? endforeach; ?>
-var ctr = 1;
+var ctr = 0;
+var subtotalVATable = 0;
 
 $(document).ready(function(){
-	$(".sales_form_container").append($("#tpl").html());
+	setupRowTemplate();
 });
 
 function addRow(obj) {
 	$(obj).attr("value", "remove");
 	$(obj).attr("onclick", "removeRow(this)");
+	setupRowTemplate();
+}
 
+function setupRowTemplate() {
 	// get the first li in the template and set the ID
 	var row = $("#tpl").children()[0];
 	$(row).attr("id", "row_" + ++ctr);
@@ -90,6 +92,9 @@ function addRow(obj) {
 	var cells = $(row).children().first().children().each(function(i){
 		this.id = this.className + "_" + ctr;
 	});
+
+	$("#vat_" + ctr).children().first().attr("value", ctr);
+	console.log($("#vat_" + ctr));
 
 	$(".sales_form_container").append($("#tpl").html());
 }
@@ -101,20 +106,64 @@ var removeRow = function(obj) {
 function updatePrice(obj) {
 	var itemSelectedVal = $(obj).val();
 	$(obj).parent().next().html(priceLookup[itemSelectedVal]);
+	var rowNo = getRowNo(obj);
+	$(".discount:#discount_"+rowNo).children().val("0.00");
+	$(".quantity:#quantity_"+rowNo).children().val("0.00");
+	$(".subtotal:#subtotal_"+rowNo).html("0.00");
+
 }
 
 function updateSubTotal(obj){
-	alert("test");
+	var rowNo = getRowNo(obj);
+	var discount = parseFloat($(".discount:#discount_"+rowNo).children().val());
+	var quantity = parseFloat($(".quantity:#quantity_"+rowNo).children().val());
+	var price = parseFloat($(".sellingPrice:#sellingPrice_"+rowNo).html());
+	var subtotalVAT = 0;
+	var subtotal = quantity * price -discount;
+	subtotal = subtotal.toFixed(2);
+	$(".subtotal:#subtotal_"+rowNo).html(subtotal);
+
+	console.log(subtotalVATable);
+	computeTotal();
 }
 
 function computeTotal() {
 	var total = 0;
 	$(".subtotal:visible").each(function(){
 		total += parseInt($(this).html());
-		return total;
-	});
-	console.log(total);
+		});
+	total = total.toFixed(2);
+	$("#total").html("Total: " + total);
 }
+
+
+
+function updateVatSubTotal(obj){
+	var rowNo = getRowNo(obj);
+	if ($(".vat:#vat_"+rowNo).children().first().prop("checked")){
+		subtotalVATable += parseFloat($(".subtotal:#subtotal_"+rowNo).html());
+
+	}
+	else {
+		subtotalVATable -= parseFloat($(".subtotal:#subtotal_"+rowNo).html());
+
+	}
+	var totalVATable = subtotalVATable / 1.12
+	var VAT = subtotalVATable - subtotalVATable / 1.12;
+	totalVATable = totalVATable.toFixed(2);
+	VAT = VAT.toFixed(2);
+	$("#vatable").html("VATable: " + totalVATable);
+	$("#totalvat").html("Total Vat: " + VAT);
+}
+
+function getRowNo(obj){
+	var rowId = ($(obj).parent().parent().parent().attr("id"));
+	var parts = rowId.split("_");
+	return parts[1];
+}
+
+
+
 
 
 </script>
