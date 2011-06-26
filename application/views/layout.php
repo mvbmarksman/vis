@@ -7,8 +7,10 @@
     <link href="/public/css/reset.css" rel="stylesheet" type="text/css" media="screen"/>
     <link href="/public/css/vis.css" rel="stylesheet" type="text/css" media="screen"/>
 
-    <script type="text/javascript" src="public/js/jquery/jquery-1.6.1.min.js"></script>
-    <script type="text/javascript" src="public/js/flexigrid/js/flexigrid.js"></script>
+	<link rel="stylesheet" type="text/css" href="/public/js/flexigrid/css/flexigrid.css" />
+
+    <script type="text/javascript" src="/public/js/jquery/jquery-1.6.1.min.js"></script>
+    <script type="text/javascript" src="/public/js/flexigrid/js/flexigrid.js"></script>
   </head>
 
   <body>
