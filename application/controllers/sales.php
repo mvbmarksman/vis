@@ -64,4 +64,14 @@ class Sales extends MY_Controller {
 		$lastInsertId = $this->credit_model->insert();
 		$this->sales_transaction_model->insert($lastInsertId);
 	}
+
+	public function salesform() {
+		$this->renderView('salesform', array());
+	}
+
+
+	public function salesformhandler() {
+		$data = $this->input->post();
+		Debug::dump($data);
+	}
 }
