@@ -23,6 +23,11 @@
 		</li>
 	</ul>
 	<div class="clear"></div>
+	<ul>
+		<li id="vatable">Vatable</li>
+		<li id="totalvat">TotalVAT</li>
+		<li id="total">Total</li>
+	</ul>
 	<input type="submit">
 </form>
 
@@ -42,10 +47,10 @@
 			<li>
 				<?php echo $itemDetails[0]['sellingPrice'];?>
 			</li>
-				<li><input type="text" name="qty[]"/></li>
-				<li><input type="text" name="discount[]"/></li>
+				<li><input type="text" name="qty[]" size ="3" value="0" onblur="updateSubTotal(this)"/></li>
+				<li><input type="text" size ="6" name="discount[]" value="0.00"/></li>
 				<li><input type="checkbox" name="vat[]"/></li>
-			<li>100.00</li>
+			<li></li>
 			<li><input type="button" value="add" onclick="addRow(this)"></li>
 		</ul>
 	</li>
@@ -75,6 +80,12 @@ function updatePrice(obj) {
 	var itemSelectedVal = $(obj).val();
 	$(obj).parent().next().html(priceLookup[itemSelectedVal]);
 }
+
+function updateSubTotal(obj){
+	alert("test");
+}
+
+
 
 
 
