@@ -33,7 +33,7 @@ class Item_type_model extends MY_Model implements IAbstractDAO
 	 */
 	public function fetch($itemTypeId = null) {
 
-		$this->db->select('itemTypeId, name');
+		$this->db->select();
 		$this->db->from(self::TBL_NAME);
 		if ($itemTypeId) {
 			$this->db->where('itemTypeId', $itemTypeId);
