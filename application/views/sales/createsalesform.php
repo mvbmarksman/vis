@@ -48,7 +48,7 @@
 				<?php echo $itemDetails[0]['sellingPrice'];?>
 			</li>
 			<li class="quantity">
-				<input type="text" name="qty[]" size ="3" value="0" onblur="updateSubTotal(this)"/>
+				<input type="text" name="qty[]" size ="3" value="0" onblur="updateSubTotal(this) , validateQty(this)"/>
 			</li>
 			<li class="discount">
 				<input type="text" size ="6" name="discount[]" onblur="updateSubTotal(this)" value="0.00"/>
@@ -94,8 +94,6 @@ function setupRowTemplate() {
 	});
 
 	$("#vat_" + ctr).children().first().attr("value", ctr);
-	console.log($("#vat_" + ctr));
-
 	$(".sales_form_container").append($("#tpl").html());
 }
 
@@ -108,7 +106,7 @@ function updatePrice(obj) {
 	$(obj).parent().next().html(priceLookup[itemSelectedVal]);
 	var rowNo = getRowNo(obj);
 	$(".discount:#discount_"+rowNo).children().val("0.00");
-	$(".quantity:#quantity_"+rowNo).children().val("0.00");
+	$(".quantity:#quantity_"+rowNo).children().val("0");
 	$(".subtotal:#subtotal_"+rowNo).html("0.00");
 
 }
@@ -122,8 +120,6 @@ function updateSubTotal(obj){
 	var subtotal = quantity * price -discount;
 	subtotal = subtotal.toFixed(2);
 	$(".subtotal:#subtotal_"+rowNo).html(subtotal);
-
-	console.log(subtotalVATable);
 	computeTotal();
 }
 
@@ -155,6 +151,21 @@ function updateVatSubTotal(obj){
 	$("#vatable").html("VATable: " + totalVATable);
 	$("#totalvat").html("Total Vat: " + VAT);
 }
+
+function validateQty(obj){
+	var rowNo = getRowNo(obj);
+	var quantity = $(".quantity:#quantity_"+rowNo).children().val();
+	if (quantity <= 0 || isNaN(quantity))
+		{
+	console.log(quantity);
+		}
+	else
+		{
+	console.log('success');
+		}
+}
+
+
 
 function getRowNo(obj){
 	var rowId = ($(obj).parent().parent().parent().attr("id"));
