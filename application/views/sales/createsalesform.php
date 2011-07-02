@@ -128,12 +128,9 @@
 	<div id="salesControls" class="rightAligned">
 		<a href="javascript:addRow()">Add a New Row</a> | <a href="javascript:openDialog()">Credit Payment</a> | <a href="javascript:openDialog()">Checkout</a>
 	</div>
-</form>
 
-
-<div id="creditFormContainer">
-	<h1>Credit Form</h1>
-	<form action="">
+	<div id="creditFormContainer">
+		<h1>Credit Form</h1>
 		<table id="creditForm">
 			<tr>
 				<td class="rightAligned">Name:</td>
@@ -144,9 +141,9 @@
 				<td><input type="text"/></td>				
 			</tr>
 		</table>
-	</form>
-</div>
+	</div>
 	
+</form>
 	
 	
 <script type="text/javascript">
