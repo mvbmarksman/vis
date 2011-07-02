@@ -37,9 +37,8 @@ class Sales extends MY_Controller {
 		$ctr = 0; //initialize the array to the index
 		$totalPrice = 0;
 
-		if (isset($vat)){
+		if ($vat != null){
 			foreach ($vat as $no){
-
 				$isVAT[$no - 1]=1;
 			}
 		}
@@ -59,11 +58,11 @@ class Sales extends MY_Controller {
 				$totalPrice = $totalPrice + $qty[$ctr] * $unitPrice[0]['sellingPrice'] -$discount[$ctr];
 
 				$ctr++;
-				debug :: dump($totalPrice);
+				//debug :: dump($totalPrice);
 		}
 		$sales_transaction ->salesTransactionId = $salesTransactionId;
 		$sales_transaction ->totalPrice = $totalPrice;
 		$this->sales_transaction_model->save($sales_transaction);
-		debug :: dump('success');
+		//debug :: dump('success');
 	}
  }
