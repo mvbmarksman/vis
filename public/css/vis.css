@@ -42,14 +42,14 @@ body {
 
 #sidebar {
 	float: left;	
-	width: 13%;
+	width: 200px;
 	min-height: 700px;
 	border-right: 1px solid silver;
 }
 
 #content {
 	float: left;
-	width: 86%;
+	width: 72%;
 	min-height: 700px;
 	padding: 7px;
 }

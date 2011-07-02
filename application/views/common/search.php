@@ -1,7 +1,7 @@
 <style>
 
 #search {
-	width: 210px;
+	width: 190px;
 	margin: 7px auto;
 	border: 1px solid silver;
 	border-top: none;
@@ -32,7 +32,7 @@
 }
 
 #searchContainer {
-	margin-left: 10px;
+	margin-left: 2px;
 }
 </style>
 

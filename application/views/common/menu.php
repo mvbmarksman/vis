@@ -1,47 +1,47 @@
 <style>
-#sidebar #menu {
-	margin: 10px auto;
-	font-size: 14px;
-}
-
-ul#menu, ul#menu ul {
-  list-style-type:none;
-  margin: 0;
-  padding: 0;
-  width: 15em;
-}
-
-ul#menu a {
-  display: block;
-  text-decoration: none;	
-}
-
-ul#menu li {
-  margin-top: 1px;
-}
-
-ul#menu li a {
-  background: #6997BF;
-  color: #fff;	
-  padding: 0.5em;
-}
-
-ul#menu li a:hover {
-  background: #F2DEA0;
-  color: #545454;
-}
-
-ul#menu li ul li a {
-  background: #C3DFF7;
-  color: #545454;
-  padding-left: 20px;
-}
-
-ul#menu li ul li a:hover {
-  background: #FAF1D7;
-  border-left: 5px #545454 solid;
-  padding-left: 15px;
-}
+	#sidebar #menu {
+		margin: 10px auto;
+		font-size: 14px;
+	}
+	
+	ul#menu, ul#menu ul {
+	  list-style-type:none;
+	  margin: 0;
+	  padding: 0;
+	  width: 190px;
+	}
+	
+	ul#menu a {
+	  display: block;
+	  text-decoration: none;	
+	}
+	
+	ul#menu li {
+	  margin-top: 1px;
+	}
+	
+	ul#menu li a {
+	  background: #6997BF;
+	  color: #fff;	
+	  padding: 0.5em;
+	}
+	
+	ul#menu li a:hover {
+	  background: #F2DEA0;
+	  color: #545454;
+	}
+	
+	ul#menu li ul li a {
+	  background: #C3DFF7;
+	  color: #545454;
+	  padding-left: 20px;
+	}
+	
+	ul#menu li ul li a:hover {
+	  background: #FAF1D7;
+	  border-left: 5px #545454 solid;
+	  padding-left: 15px;
+	}
 </style>
 
 
