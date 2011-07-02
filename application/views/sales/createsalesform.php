@@ -138,12 +138,11 @@ function updateVatSubTotal(obj){
 	var rowNo = getRowNo(obj);
 	if ($(".vat:#vat_"+rowNo).children().first().prop("checked")){
 		subtotalVATable += parseFloat($(".subtotal:#subtotal_"+rowNo).html());
-
 	}
 	else {
 		subtotalVATable -= parseFloat($(".subtotal:#subtotal_"+rowNo).html());
-
 	}
+
 	var totalVATable = subtotalVATable / 1.12
 	var VAT = subtotalVATable - subtotalVATable / 1.12;
 	totalVATable = totalVATable.toFixed(2);
@@ -155,14 +154,12 @@ function updateVatSubTotal(obj){
 function validateQty(obj){
 	var rowNo = getRowNo(obj);
 	var quantity = $(".quantity:#quantity_"+rowNo).children().val();
-	if (quantity <= 0 || isNaN(quantity))
-		{
-	console.log(quantity);
-		}
-	else
-		{
+	if (quantity <= 0 || isNaN(quantity)){
+		$(".quantity:#quantity_"+rowNo).children().focusin();
+	}
+	else{
 	console.log('success');
-		}
+	}
 }
 
 
