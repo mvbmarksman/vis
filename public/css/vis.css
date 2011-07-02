@@ -61,4 +61,17 @@ body {
 .clear {
 	clear: both;
 }
+.rightAligned {
+	text-align:right;
+}
+
+#content h1 {
+/*    border-bottom: 1px dotted silver;*/
+    color: #C45002;
+    font-family: Arial;
+    font-size: 18px;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    padding-bottom: 2px;
+}
 

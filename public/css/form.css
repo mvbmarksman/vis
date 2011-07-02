@@ -26,3 +26,8 @@ input[type="button"]:hover {
 select {
 	border: 1px solid #8EA7D1;
 }
+
+ .smallTxt {
+ 	width: 40px;
+ }
+ 

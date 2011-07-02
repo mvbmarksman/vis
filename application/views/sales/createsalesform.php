@@ -1,18 +1,222 @@
 <style>
-.sales_form_container li ul li {
-	float: left;
-	margin: 5px 15px;
+#salesForm {
+	margin: 5px 10px 10px 10px;
 }
 
-.sales_form_row {
-	clear:both;
+#salesForm th {
+	border-bottom: 1px solid silver;
+	text-align: left;
+	color: #545454;
+	font-weight:bold;
+	padding: 5px 3px;
 }
+
+#salesForm tr td {
+	padding: 5px 3px;
+}
+
+#salesControls {
+	margin-left: 15px;
+}
+
+.removeBtn {
+	width: 16px;
+	height: 16px;
+	background-image: url("/public/images/icons/delete.png");
+	cursor: pointer;
+}
+
+#creditFormContainer {
+    background-color: #EDEFF4;
+    border: 1px solid silver;
+    border-radius: 5px 5px 5px 5px;
+    margin: 40px 10px 10px;
+    min-height: 200px;
+    padding: 10px 0;
+    width: 500px;
+}
+
+#creditFormContainer h1 {
+    background-color: #6997BF;
+    color: #FFFFFF;
+    font-size: 12px;
+    font-weight: bold;
+    margin: 0;
+    padding: 3px;
+    width: 99%;
+}
+
+#creditForm {
+	padding: 10px;
+}
+
+#creditForm tr td {
+	padding: 8px 5px;
+}
+
+#creditForm .rightAligned {
+	text-align: right;
+}
+
+#saleHeader img {
+	float: left;
+}
+#saleHeader div {
+    padding-left: 40px;
+    padding-top: 5px;
+}
+
+#salesControls {
+	width: 80%;
+	margin-top: 10px;
+}
+
 </style>
 
-<form name="salesform" id="salesform" action="/sales/managesalesform" method="POST">
+<h1 id="saleHeader">
+	<img src="/public/images/icons/wallet.png" />
+	<div>Sales Form</div>
+</h1>
+
+
+<form name="salesForm" id="salesForm" action="/sales/managesalesform" method="POST">
+	<table id="salesForm" width="80%">
+		<thead>
+			<tr>
+				<th>Item</th>
+				<th width="10%">Price</th>
+				<th width="10%">Qty</th>
+				<th width="10%">Discount</th>
+				<th width="10%">VAT</th>
+				<th width="10%">Subtotal</th>
+				<th width="2%">&nbsp;</th>
+			</tr>
+		</thead>
+		<tbody id="salesFormBody">
+			<tr id="row_-rowCtr-">
+				<td>
+					<select id="item_-rowCtr-" name="item[]" onchange="updatePrice(this)">
+						<option value="0" selected="selected">Select an item</option>
+						<?php foreach ($itemDetails as $itemDetail): ?>
+						<option value="<?php echo $itemDetail['itemDetailId'] ?>">
+							<?php echo $itemDetail['description'] ?>
+						</option>
+						<?php endforeach; ?>
+					</select>
+				</td>
+				<td>
+					<span id="price_-rowCtr-">----</span>
+				</td>
+				<td>
+					<input type="text" class="smallTxt rightAligned" id="quantity_-rowCtr-"/>
+				</td>
+				<td>
+					<input type="text" class="smallTxt rightAligned" id="discount_-rowCtr-" />
+				</td>
+				<td>
+					<input type="checkbox" id="vat_-rowCtr-" />
+				</td>
+				<td>
+					<span id="subtotal_-rowCtr-">----</span>
+				</td>
+				<td>
+					<div class="removeBtn" id="remove_-rowCtr-" onclick="removeRow(this)"></div>
+				</td>			
+			</tr>
+		</tbody>
+	</table>
+	<div id="salesControls" class="rightAligned">
+		<a href="javascript:addRow()">Add a New Row</a> | <a href="javascript:openDialog()">Credit Payment</a> | <a href="javascript:openDialog()">Checkout</a>
+	</div>
+</form>
+
+
+<div id="creditFormContainer">
+	<h1>Credit Form</h1>
+	<form action="">
+		<table id="creditForm">
+			<tr>
+				<td class="rightAligned">Name:</td>
+				<td><input type="text"/></td>
+			</tr>
+			<tr>		
+				<td class="rightAligned">Contact Info:</td>
+				<td><input type="text"/></td>				
+			</tr>
+		</table>
+	</form>
+</div>
+	
+	
+	
+<script type="text/javascript">
+	// creates a lookup so that we can update the price
+	// without an ajax call
+	var priceLookup = new Array();
+	<?php foreach ($itemDetails as $itemDetail):?>
+		priceLookup["<?php echo $itemDetail['itemDetailId']; ?>"] = "<?php echo $itemDetail['sellingPrice'] ?>";
+	<? endforeach; ?>
+
+	var rowCtr = 1;
+	
+	$(document).ready(function(){
+		$("#row_-rowCtr-").hide();
+		addRow();
+		$("#creditFormContainer").hide();
+	});	
+
+	function updatePrice(obj) {
+		var itemSelectedVal = $(obj).val();
+		var price = priceLookup[itemSelectedVal];
+		var rowId = getRowCtr(obj);
+		if (itemSelectedVal == 0) {
+			clearRow(rowId);
+			return;
+		}
+		$("#price_" + rowId).html(price);
+	}
+
+	function addRow() {
+		var template = $("#row_-rowCtr-").html();
+		template = template.replace(/-rowCtr-/g, rowCtr);
+		template = '<tr id="row_' + rowCtr + '">' + template + '</tr>';
+		$("#salesFormBody").append(template);
+		rowCtr++;
+	}
+
+	function removeRow(obj) {
+		rowId = getRowCtr(obj);
+		 $("#row_" + rowId).remove();
+	}
+
+	function clearRow(rowId) {
+		$("#price_" + rowId).html("----");
+		$("#qty_" + rowId).val(null);
+		$("#discount_" + rowId).val(null);
+		$("#vat_" + rowId).attr("checked", false);
+		$("#subtotal_" + rowId).html("----");
+	}
+
+	function getRowCtr(obj) {
+		var parts = $(obj).attr("id").split("_");
+		return rowId = parts[1];
+	}
+
+	function openDialog() {
+		//$("#creditFormContainer").dialog("open");
+		$("#creditFormContainer").slideToggle('slow');
+	}
+	
+</script>	
+	
+	
+	
+	
+	<?php /*?>
+	
 	<ul class="sales_form_container">
 		<li>
-			<ul>
+			<ul id="salesFormHeader">
 				<li>Item</li>
 				<li>Price</li>
 				<li>Qty</li>
@@ -270,3 +474,4 @@ function getRowNo(obj){
 
 
 </script>
+<?php*/?>

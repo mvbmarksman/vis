@@ -11,6 +11,7 @@
 	background: #6997BF;
 	color: #fff;	
 	padding: 5px;
+	width: 181px;
 }
 
 #search input {
