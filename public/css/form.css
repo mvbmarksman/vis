@@ -1,0 +1,28 @@
+@CHARSET "UTF-8";
+input { 
+	border: 1px solid #8EA7D1;
+}
+
+input[type="submit"] {
+	background: #BDC7D8;
+	cursor: pointer;
+}
+
+input[type="submit"]:hover {
+	background: #F0E8D1;
+	cursor: pointer;
+}
+
+input[type="button"] {
+	background: #BDC7D8;
+	cursor: pointer;
+}
+
+input[type="button"]:hover {
+	background: #F0E8D1;
+	cursor: pointer;
+}
+
+select {
+	border: 1px solid #8EA7D1;
+}

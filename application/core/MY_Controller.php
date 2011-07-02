@@ -27,7 +27,7 @@ class MY_Controller extends CI_Controller {
 		$this->load->library('view');
 		$this->view->layout = 'layout';
 		$this->view->load('menu', 'common/menu', array());
-
+		$this->view->load('search', 'common/search', array());
 		$this->view->load('content', $this->_controllerName . '/' . $template, $data);
 		$this->view->render();
 

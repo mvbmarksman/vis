@@ -8,20 +8,24 @@
  * 73DBFE
  */
 @CHARSET "UTF-8";
+body {
+	font-family: arial, sans-serif;
+	font-size: 12px;
+}
 #wrapper {
 	width: 100%;
 	overflow: auto;
 }
 
 #header {
-	height: 40px;
-	background-color: #2D4469;
+	height: 65px;
+	background-color: #004F94;
 	/*border: 1px solid orange;*/
 }
 
 #header h1 {
 	margin: 0px 0px 0px 10px;
-	padding: 11px 0px 0px 0px;
+	padding: 35px 0px 0px 0px;
 	font-size: 15px;
 	font-family: arial, sans-serif;
 	font-weight: bold;
@@ -29,27 +33,32 @@
 	color: #fff;
 }
 
+#accountBar {
+   	border-bottom: 1px solid silver;
+    padding: 5px 10px;
+    background-color: #E4EDF5;
+    text-align: right;
+}
+
 #sidebar {
 	float: left;	
-	width: 15%;
-	background: #5CB9F2;
+	width: 13%;
 	min-height: 700px;
-	/*border: 1px solid blue;*/
+	border-right: 1px solid silver;
 }
 
 #content {
 	float: left;
-	width: 84%;
-	background: #73DBFE;
-	min-height: 700px;	
-	/*border: 1px solid red;*/
+	width: 86%;
+	min-height: 700px;
+	padding: 7px;
 }
 
 #footer {
 	background: #C4CCBB;
-	/*border: 1px solid green;*/	
 }
 
 .clear {
 	clear: both;
 }
+
