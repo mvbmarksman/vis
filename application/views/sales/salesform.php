@@ -84,8 +84,19 @@
 	padding-top: 3px;
 }
 
+#error{
+	text-align: center;
+	font-size: 15px;
+	width : 40%;
+	margin : auto;
+}
 </style>
-
+<div id ="error">
+	<div id = "itemerror"></div>
+	<div id = "qtyerror"></div>
+	<div id = "discounterror"></div>
+	<div id = "crediterror"></div>
+</div>
 <h1 id="saleHeader">
 	<img src="/public/images/icons/wallet.png" />
 	<div>Sales Form</div>
@@ -202,7 +213,7 @@
 		addRow();
 		addSalesSummary();
 		$("#creditFormContainer").hide();
-		$(".subtotalvat").hide()
+		$(".subtotalvat").hide();
 	});
 
 	function updatePrice(obj) {
@@ -329,44 +340,46 @@
 		$("select[id ^= 'item_' ]:visible").each(function(){
 			var item = $(this).val();
 			if (item == 0){
-				$(this).focus();
-				alert ("You must choose an item");
+				$("#itemerror").show().html("<p style = 'margin : 3px; background-color:red; border-radius:5px'>You must choose an item ");
+				$("#itemerror").delay(2000).fadeOut(1000);
+				$(this).css("border-color","#F5646C");
 				isValid = false;
-				return ;
 			}
 		});
+		var qtyNaNError = false;
+		var qtyNotCountingNoError
 		$("input[id ^= 'quantity_' ]:visible").each(function(){
 			var quantity = $(this).val();
 			if (quantity <= 0){
-				$(this).val("");
+				$(this).css("border-color","#F5646C");
 				$(this).focus();
-				alert ("Quantity must be greater than 0");
+				$("#qtyerror").show().html("<p style = 'margin : 3px; background-color:red; border-radius:5px'>Quantity must be greater than 0 ");
+				$("#qtyerror").delay(3000).fadeOut(1000);
 				isValid = false;
-				return ;
 			}
 			else if (isNaN(quantity)){
-				$(this).val("");
+				$(this).css("border-color","#F5646C");
 				$(this).focus();
-				alert ("Quantity must be a number");
+				$("#qtyerror").show().html("<p style = 'margin : 3px; background-color:red; border-radius:5px'>Quantity must be a number ");
+				$("#qtyerror").delay(3000).fadeOut(1000);
 				isValid = false;
-				return ;
 			}
 		});
 		$("input[id ^= 'discount_' ]:visible").each(function(){
 			var discount = $(this).val();
 			if (discount < 0){
-				$(this).val("0.00");
+				$(this).css("border-color","#F5646C");
 				$(this).focus();
-				alert ("Discount must be greater or equal to 0");
+				$("#discounterror").show().html("<p style = 'margin : 3px; background-color:red; border-radius:5px'>Discount must be greater or equal to 0 ");
+				$("#discounterror").delay(4000).fadeOut(1000);
 				isValid = false;
-				return ;
 			}
 			else if (isNaN(discount)){
-				$(this).val("0.00");
+				$(this).css("border-color","#F5646C");
 				$(this).focus();
-				alert ("Discount must be a number");
+				$("#discounterror").show().html("<p style = 'margin : 3px; background-color:red; border-radius:5px'>Discount must be a number ");
+				$("#discounterror").delay(4000).fadeOut(1000);
 				isValid = false;
-				return ;
 			}
 		});
 
@@ -376,21 +389,30 @@
 
 		if (isNaN(($("input#amountpaid")).val()))
 		{
-			$("input#amountpaid").focus();
+			$("input#amountpaid").css("border-color","#F5646C");
 			$("input#amountpaid").val("");
-			alert ("Amount Paid must be a number");
+			$("#crediterror").show().html("<p style = 'margin : 3px; background-color:red; border-radius:5px'>Amount Paid must be a number ");
+			$("#crediterror").delay(4000).fadeOut(1000);
 			isValid = false;
-			return ;
 		}
 
 		if ((($("input#amountpaid")).val())>= parseInt(($("#totalprice").html())))
 		{
-			$("input#amountpaid").focus();
+			$("input#amountpaid").css("border-color","#F5646C");
 			$("input#amountpaid").val("");
-			alert ("Amount paid must be less than the total price");
+			$("#crediterror").show().html("<p style = 'margin : 3px; background-color:red; border-radius:5px'>Amount paid must be less than the total price ").delay(1000).fade(5000);
+			$("#crediterror").delay(4000).fadeOut(1000);
 			isValid = false;
-			return ;
 		}
+		if (($("input#amountpaid").val()) == "")
+		{
+			$("input#amountpaid").css("border-color","#F5646C");
+			$("input#amountpaid").val("");
+			$("#crediterror").show().html("<p style = 'margin : 3px; background-color:red; border-radius:5px'>Amount paid should not be empty <p>");
+			$("#crediterror").delay(4000).fadeOut(1000);
+			isValid = false;
+		}
+		$("#error").fadeout(10000);
 		return isValid;
 	}
 
