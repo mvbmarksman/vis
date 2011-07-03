@@ -79,7 +79,7 @@
 </h1>
 
 
-<form name="salesForm" id="salesForm" action="/sales/managesalesform" method="POST">
+<form name="salesForm" id="salesForms" action="/sales/managesalesform" method="POST">
 	<table id="salesForm" width="80%">
 		<thead>
 			<tr>
@@ -108,27 +108,37 @@
 					<span id="price_-rowCtr-">----</span>
 				</td>
 				<td>
-					<input type="text" class="smallTxt rightAligned" id="quantity_-rowCtr-"/>
+					<input name = "qty[]" type="text" class="smallTxt rightAligned" id="quantity_-rowCtr-" onblur = "updateSubTotal(this)"/>
 				</td>
 				<td>
-					<input type="text" class="smallTxt rightAligned" id="discount_-rowCtr-" />
+					<input name = "discount[]" type="text" class="smallTxt rightAligned" id="discount_-rowCtr-" onblur = "updateSubTotal(this)" />
 				</td>
 				<td>
-					<input type="checkbox" id="vat_-rowCtr-" />
+					<input name = "vat[]" type="checkbox" id="vat_-rowCtr-" value="vat_-rowCtr-" onclick = "updateSubTotal(this)" />
 				</td>
 				<td>
-					<span id="subtotal_-rowCtr-">----</span>
+					<span class = "subtotal" id="subtotal_-rowCtr-">----</span>
 				</td>
 				<td>
 					<div class="removeBtn" id="remove_-rowCtr-" onclick="removeRow(this)"></div>
-				</td>			
+				</td>
+				<td>
+					<span class = "subtotalvat" id="subtotalvat_-rowCtr-">----</span>
+				</td>
 			</tr>
 		</tbody>
 	</table>
 	<div id="salesControls" class="rightAligned">
-		<a href="javascript:addRow()">Add a New Row</a> | <a href="javascript:openDialog()">Credit Payment</a> | <a href="javascript:openDialog()">Checkout</a>
+		<a href="javascript:addRow()" >Add a New Row</a> | <a href="javascript:openDialog()">Credit Payment</a> | <a href="javascript:submitForm()">Checkout</a>
 	</div>
-
+	<div id = "salesSummary">
+		<ul>
+			<li id = "vatable"></li>
+			<li id = "totalvat"></li>
+			<li id = "totalprice"></li>
+		</ul>
+		<input type="button" onclick="submitForm()" />
+	</div>
 	<div id="creditFormContainer">
 		<h1>Credit Form</h1>
 		<table id="creditForm">
@@ -136,16 +146,24 @@
 				<td class="rightAligned">Name:</td>
 				<td><input type="text"/></td>
 			</tr>
-			<tr>		
-				<td class="rightAligned">Contact Info:</td>
-				<td><input type="text"/></td>				
+			<tr>
+				<td class="rightAligned">Address:</td>
+				<td><input type="text"/></td>
+			</tr>
+			<tr>
+				<td class="rightAligned">Contact Number:</td>
+				<td><input type="text"/></td>
+			</tr>
+			<tr>
+				<td class="rightAligned">Amount Paid</td>
+				<td><input type="text"/></td>
 			</tr>
 		</table>
 	</div>
-	
+
 </form>
-	
-	
+
+
 <script type="text/javascript">
 	// creates a lookup so that we can update the price
 	// without an ajax call
@@ -155,12 +173,14 @@
 	<? endforeach; ?>
 
 	var rowCtr = 1;
-	
+
 	$(document).ready(function(){
 		$("#row_-rowCtr-").hide();
 		addRow();
+		addSalesSummary();
 		$("#creditFormContainer").hide();
-	});	
+		$(".subtotalvat").hide()
+	});
 
 	function updatePrice(obj) {
 		var itemSelectedVal = $(obj).val();
@@ -193,6 +213,141 @@
 		$("#vat_" + rowId).attr("checked", false);
 		$("#subtotal_" + rowId).html("----");
 	}
+	function submitForm(){
+		if (validateForm() == true) {
+		$("#salesForms").submit();
+		}
+	}
+	function updateSubTotal(obj){
+		var rowId = getRowCtr(obj);
+		var subtotal = computeSubTotal(rowId);
+		if (isNaN(subtotal)){
+			subtotal = "----";
+		}
+		else{
+			subtotal = subtotal.toFixed(2);
+		}1
+		$("#subtotal_"+rowId).html(subtotal);
+		updateVatSubTotal(obj);
+	}
+
+	function updateVatSubTotal(obj){
+		var rowId = getRowCtr(obj);
+		var subtotal = parseFloat(computeSubTotal(rowId));
+		var subtotalVAT = subtotal - subtotal / 1.12;
+		subtotalVAT = subtotalVAT.toFixed(2);
+		if ($("#vat_"+rowId).first().prop("checked")){
+			$("#subtotalvat_"+rowId).html(subtotalVAT);
+		}
+		else {
+			$("#subtotalvat_"+rowId).html("0");
+		}
+		computeTotal();
+	}
+
+
+	function computeTotal() {
+		var total = 0.00;
+		var totalvat = 0.00;
+		$(".subtotalvat").each(function(){
+			if (isNaN(parseFloat($(this).html()))){
+				totalvat += 0 ;
+			}
+			else {
+				totalvat += parseFloat($(this).html());
+			}
+			});
+		$(".subtotal:visible").each(function(){
+			total += parseFloat($(this).html());
+			});
+		if (totalvat > 0){
+			vatable = total - totalvat;
+			}
+		else{
+			vatable = 0;
+			}
+		if (isNaN(total)){
+			addSalesSummary();
+			return;
+		}
+		else{
+			total = total.toFixed(2);
+			totalvat = totalvat.toFixed(2);
+		}
+		$("#vatable").html("Vatable:	" + vatable);
+		$("#totalvat").html("Total VAT:	" + totalvat);
+		$("#totalprice").html("Total Price:	" + total);
+
+	}
+
+	function computeSubTotal(rowId) {
+		var discount = parseFloat($("#discount_"+rowId).val());
+		var quantity = parseFloat($("#quantity_"+rowId).val());
+		var price = parseFloat($("#price_"+rowId).html());
+		if (isNaN(quantity)){
+			quantity = 0;
+		}
+		if (isNaN(discount)){
+			discount = 0;
+		}
+		var subtotal = quantity * price -discount;
+		if (isNaN(subtotal)){
+			subtotal = "---";
+		}
+		console.log(rowCtr);
+		return subtotal;
+	}
+
+
+
+	function validateForm(){
+		var isValid = true;
+		$("select[id ^= 'item_' ]:visible").each(function(){
+			var item = $(this).val();
+			if (item == 0){
+				$(this).focus();
+				alert ("You must choose an item");
+				isValid = false;
+				return ;
+			}
+		});
+		$("input[id ^= 'quantity_' ]:visible").each(function(){
+			var quantity = $(this).val();
+			if (quantity <= 0){
+				$(this).val("");
+				$(this).focus();
+				alert ("Quantity must be greater than 0");
+				isValid = false;
+				return ;
+			}
+			else if (isNaN(quantity)){
+				$(this).val("");
+				$(this).focus();
+				alert ("Quantity must be a number");
+				isValid = false;
+				return ;
+			}
+		});
+		$("input[id ^= 'discount_' ]:visible").each(function(){
+			var discount = $(this).val();
+			if (discount < 0){
+				$(this).val("0.00");
+				$(this).focus();
+				alert ("Discount must be greater or equal to 0");
+				isValid = false;
+				return ;
+			}
+			else if (isNaN(discount)){
+				$(this).val("0.00");
+				$(this).focus();
+				alert ("Discount must be a number");
+				isValid = false;
+				return ;
+			}
+		});
+
+		return isValid;
+	}
 
 	function getRowCtr(obj) {
 		var parts = $(obj).attr("id").split("_");
@@ -203,14 +358,20 @@
 		//$("#creditFormContainer").dialog("open");
 		$("#creditFormContainer").slideToggle('slow');
 	}
-	
-</script>	
-	
-	
-	
-	
+	function addSalesSummary() {
+		$("#vatable").html("Vatable: ---- ");
+		$("#totalvat").html("Total VAT: ----")
+		$("#totalprice").html("Total Price: ----")
+	}
+
+
+</script>
+
+
+
+
 	<?php /*?>
-	
+
 	<ul class="sales_form_container">
 		<li>
 			<ul id="salesFormHeader">

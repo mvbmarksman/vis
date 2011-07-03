@@ -18,8 +18,15 @@ class Sales extends MY_Controller {
 		$this->load->model('item_detail_model');
 		$this->load->model('sales_model');
 
-
 		$sales_transaction= new Sales_transaction_model();
+		$sales_transaction->date = date("Y-m-d H:i:s");
+		$sales_transaction->userId = 1; //TODO CHANGED
+		$sales_transaction->isFullyPaid = 1;//TODO CHANGED
+		$this->sales_transaction_model->save($sales_transaction);
+
+		debug :: dump($sales_transaction);
+
+/*		$sales_transaction= new Sales_transaction_model();
 		$sales_transaction->date = date("Y-m-d H:i:s");
 		$sales_transaction->userId = 1; //TODO CHANGED
 		$sales_transaction->isFullyPaid = 1;//TODO CHANGED
@@ -63,6 +70,8 @@ class Sales extends MY_Controller {
 		$sales_transaction ->salesTransactionId = $salesTransactionId;
 		$sales_transaction ->totalPrice = $totalPrice;
 		$this->sales_transaction_model->save($sales_transaction);
-		//debug :: dump('success');
+		//debug :: dump('success');*/
 	}
+
+
  }
