@@ -199,8 +199,7 @@
 
 
 <script type="text/javascript">
-	// creates a lookup so that we can update the price
-	// without an ajax call
+	// creates a lookup so that we can update the price without an ajax call
 	var priceLookup = new Array();
 	<?php foreach ($itemDetails as $itemDetail):?>
 		priceLookup["<?php echo $itemDetail['itemDetailId']; ?>"] = "<?php echo $itemDetail['sellingPrice'] ?>";
@@ -262,7 +261,7 @@
 		}
 		else{
 			subtotal = subtotal.toFixed(2);
-		}1
+		}
 		$("#subtotal_"+rowId).html(subtotal);
 		updateVatSubTotal(obj);
 	}
@@ -384,7 +383,7 @@
 		});
 
 		if (!($("#creditFormContainer")).is(":visible")) {
-			return isValid
+			return isValid;
 		}
 
 		if (isNaN(($("input#amountpaid")).val()))
