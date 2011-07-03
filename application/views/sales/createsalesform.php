@@ -1,6 +1,7 @@
 <style>
 #salesForm {
-	margin: 5px 10px 10px 10px;
+	margin: 5px 10px 10px 5px;
+	width: 750px;
 }
 
 #salesForm th {
@@ -67,9 +68,22 @@
 }
 
 #salesControls {
-	width: 80%;
-	margin-top: 10px;
+	width: 750px;
+	margin-left: 35px;
 }
+
+#salesSummary {
+	margin-top: 5px;
+	margin-left: 570px;
+}
+
+.salesSummaryLabel {
+	font-weight:bold;
+	width: 70px;
+	padding-right: 10px;
+	padding-top: 3px;
+}
+
 
 </style>
 
@@ -80,16 +94,16 @@
 
 
 <form name="salesForm" id="salesForms" action="/sales/managesalesform" method="POST">
-	<table id="salesForm" width="80%">
+	<table id="salesForm">
 		<thead>
 			<tr>
 				<th>Item</th>
-				<th width="10%">Price</th>
-				<th width="10%">Qty</th>
-				<th width="10%">Discount</th>
-				<th width="10%">VAT</th>
-				<th width="10%">Subtotal</th>
-				<th width="2%">&nbsp;</th>
+				<th width="100px">Price</th>
+				<th width="20px">Qty</th>
+				<th width="50px">Discount</th>
+				<th width="20px">VAT</th>
+				<th width="100px">Subtotal</th>
+				<th width="10px">&nbsp;</th>
 			</tr>
 		</thead>
 		<tbody id="salesFormBody">
@@ -108,13 +122,13 @@
 					<span id="price_-rowCtr-">----</span>
 				</td>
 				<td>
-					<input name = "qty[]" type="text" class="smallTxt rightAligned" id="quantity_-rowCtr-" onblur = "updateSubTotal(this)"/>
+					<input name = "qty[]" type="text" class="smallTxt rightAligned" id="quantity_-rowCtr-" onblur="updateSubTotal(this)"/>
 				</td>
 				<td>
-					<input name = "discount[]" type="text" class="smallTxt rightAligned" id="discount_-rowCtr-" onblur = "updateSubTotal(this)" />
+					<input name = "discount[]" type="text" class="smallTxt rightAligned" id="discount_-rowCtr-" onblur="updateSubTotal(this)" />
 				</td>
 				<td>
-					<input name = "vat[]" type="checkbox" id="vat_-rowCtr-" value="vat_-rowCtr-" onclick = "updateSubTotal(this)" />
+					<input name = "vat[]" type="checkbox" id="vat_-rowCtr-" value="vat_-rowCtr-" onclick="updateSubTotal(this)" />
 				</td>
 				<td>
 					<span class = "subtotal" id="subtotal_-rowCtr-">----</span>
@@ -123,22 +137,33 @@
 					<div class="removeBtn" id="remove_-rowCtr-" onclick="removeRow(this)"></div>
 				</td>
 				<td>
-					<span class = "subtotalvat" id="subtotalvat_-rowCtr-">----</span>
+					<span class="subtotalvat" id="subtotalvat_-rowCtr-">----</span>
 				</td>
 			</tr>
 		</tbody>
 	</table>
-	<div id="salesControls" class="rightAligned">
-		<a href="javascript:addRow()" >Add a New Row</a> | <a href="javascript:openDialog()">Credit Payment</a> | <a href="javascript:submitForm()">Checkout</a>
+	
+	<div id="salesControls">
+		<a href="javascript:addRow()" >Add a New Row</a>
 	</div>
-	<div id = "salesSummary">
-		<ul>
-			<li id = "vatable"></li>
-			<li id = "totalvat"></li>
-			<li id = "totalprice"></li>
-		</ul>
-		<input type="button" onclick="submitForm()" />
+	
+	<div id="salesSummaryContainer">
+		<table id="salesSummary">
+			<tr>
+				<td class="rightAligned salesSummaryLabel">Vatable:</td>
+				<td><div class="salesSummaryValue" id="vatable"></div></td>
+			</tr>
+			<tr>
+				<td class="rightAligned salesSummaryLabel">Total Vat:</td>
+				<td><div class="salesSummaryValue" id="totalvat"></div></td>
+			</tr>
+			<tr>
+				<td class="rightAligned salesSummaryLabel">Total Price:</td>
+				<td><div class="salesSummaryValue" id="totalprice"></div></td>
+			</tr>
+		</table>
 	</div>
+	
 	<div id="creditFormContainer">
 		<h1>Credit Form</h1>
 		<table id="creditForm">
@@ -274,9 +299,9 @@
 			total = total.toFixed(2);
 			totalvat = totalvat.toFixed(2);
 		}
-		$("#vatable").html("Vatable:	" + vatable);
-		$("#totalvat").html("Total VAT:	" + totalvat);
-		$("#totalprice").html("Total Price:	" + total);
+		$("#vatable").html(vatable);
+		$("#totalvat").html(totalvat);
+		$("#totalprice").html(total);
 
 	}
 
@@ -359,9 +384,9 @@
 		$("#creditFormContainer").slideToggle('slow');
 	}
 	function addSalesSummary() {
-		$("#vatable").html("Vatable: ---- ");
-		$("#totalvat").html("Total VAT: ----")
-		$("#totalprice").html("Total Price: ----")
+		$("#vatable").html("---- ");
+		$("#totalvat").html("----")
+		$("#totalprice").html("----")
 	}
 
 
