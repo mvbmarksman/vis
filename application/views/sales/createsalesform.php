@@ -321,7 +321,6 @@
 		if (isNaN(subtotal)){
 			subtotal = "---";
 		}
-		console.log(rowCtr);
 		return subtotal;
 	}
 

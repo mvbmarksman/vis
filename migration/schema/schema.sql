@@ -1,3 +1,6 @@
+DROP DATABASE vis;
+CREATE DATABASE vis;
+
 DROP TABLE IF EXISTS `Credit`;
 CREATE TABLE `Credit` (
   `creditId` INT UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -84,7 +87,7 @@ CREATE TABLE `SalesTransaction` (
   `date` DATETIME,
   `userId` INT UNSIGNED NOT NULL,
   `creditId` INT UNSIGNED NULL DEFAULT NULL,
-  `totalPrice` DECIMAL(18,4) NOT NULL,
+  `totalPrice` DECIMAL(18,4),
   `isFullyPaid` Boolean NOT NULL,
   PRIMARY KEY (`salesTransactionID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
