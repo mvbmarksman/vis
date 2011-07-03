@@ -19,8 +19,8 @@ class Sales extends MY_Controller {
 		$this->load->model('sales_model');
 		$this->load->model('credit_model');
 
-		if (isset($this->input->post('name'))){
-		debug :: dump($name);
+//		if (isset($this->input->post('name'))){
+//		debug :: dump($name);
 
 
 		/*$sales_transaction= new Sales_transaction_model();
