@@ -167,19 +167,19 @@
 		<table id="creditForm">
 			<tr>
 				<td class="rightAligned">Name:</td>
-				<td><input type="text"/ name="name"></td>
+				<td><input type="text" name="name" id="name"></td>
 			</tr>
 			<tr>
 				<td class="rightAligned">Address:</td>
-				<td><textarea rows="3" cols="22" name="address"></textarea></td>
+				<td><textarea rows="3" cols="22" name="address" id="address"></textarea></td>
 			</tr>
 			<tr>
 				<td class="rightAligned">Contact Number:</td>
-				<td><input type="text" name="phoneno"/></td>
+				<td><input type="text" name="phoneno" id="phoneno" /></td>
 			</tr>
 			<tr>
 				<td class="rightAligned">Amount Paid</td>
-				<td><input type="text" name="amountpaid"/></td>
+				<td><input type="text" name="amountpaid" id="amountpaid"/></td>
 			</tr>
 		</table>
 	</div>
@@ -188,8 +188,7 @@
 
 
 <script type="text/javascript">
-	// creates a lookup so that we can update the price
-	// without an ajax call
+	// creates a lookup so that we can update the price without an ajax call
 	var priceLookup = new Array();
 	<?php foreach ($itemDetails as $itemDetail):?>
 		priceLookup["<?php echo $itemDetail['itemDetailId']; ?>"] = "<?php echo $itemDetail['sellingPrice'] ?>";
@@ -202,7 +201,7 @@
 		addRow();
 		addSalesSummary();
 		$("#creditFormContainer").hide();
-		$(".subtotalvat").hide()
+		$(".subtotalvat").hide();
 	});
 
 	function updatePrice(obj) {
@@ -251,7 +250,7 @@
 		}
 		else{
 			subtotal = subtotal.toFixed(2);
-		}1
+		}
 		$("#subtotal_"+rowId).html(subtotal);
 		updateVatSubTotal(obj);
 	}
@@ -370,6 +369,27 @@
 			}
 		});
 
+		if (!($("#creditFormContainer")).is(":visible")) {
+			return isValid;
+		}
+
+		if (isNaN(($("input#amountpaid")).val()))
+		{
+			$("input#amountpaid").focus();
+			$("input#amountpaid").val("");
+			alert ("Amount Paid must be a number");
+			isValid = false;
+			return ;
+		}
+
+		if ((($("input#amountpaid")).val())>= parseInt(($("#totalprice").html())))
+		{
+			$("input#amountpaid").focus();
+			$("input#amountpaid").val("");
+			alert ("Amount paid must be less than the total price");
+			isValid = false;
+			return ;
+		}
 		return isValid;
 	}
 
