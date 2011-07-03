@@ -169,19 +169,19 @@
 		<table id="creditForm">
 			<tr>
 				<td class="rightAligned">Name:</td>
-				<td><input type="text"/ name="name"></td>
+				<td><input type="text" name="name" id="name"></td>
 			</tr>
 			<tr>
 				<td class="rightAligned">Address:</td>
-				<td><textarea rows="3" cols="22" name="address"></textarea></textarea></td>
+				<td><textarea rows="3" cols="22" name="address" id="address"></textarea></td>
 			</tr>
 			<tr>
 				<td class="rightAligned">Contact Number:</td>
-				<td><input type="text" name="phoneno"/></td>
+				<td><input type="text" name="phoneno" id="phoneno" /></td>
 			</tr>
 			<tr>
 				<td class="rightAligned">Amount Paid</td>
-				<td><input type="text" name="amountpaid"/></td>
+				<td><input type="text" name="amountpaid" id="amountpaid"/></td>
 			</tr>
 		</table>
 	</div>
@@ -371,6 +371,7 @@
 				return ;
 			}
 		});
+		if($("#creditFormContainer"))
 
 		return isValid;
 	}
