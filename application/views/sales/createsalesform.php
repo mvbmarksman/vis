@@ -142,11 +142,11 @@
 			</tr>
 		</tbody>
 	</table>
-	
+
 	<div id="salesControls">
-		<a href="javascript:addRow()" >Add a New Row</a>
+		<a href="javascript:addRow()" >Add a New Row</a> | <a href="javascript:openDialog()">Credit Payment</a> | <a href="javascript:submitForm()">Checkout</a>-
 	</div>
-	
+
 	<div id="salesSummaryContainer">
 		<table id="salesSummary">
 			<tr>
@@ -163,7 +163,7 @@
 			</tr>
 		</table>
 	</div>
-	
+
 	<div id="creditFormContainer">
 		<h1>Credit Form</h1>
 		<table id="creditForm">
