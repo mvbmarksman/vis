@@ -66,7 +66,7 @@ class Sales extends MY_Controller {
 			if (isset($isVAT[$ctr])){
 				$sales->isVAT = $isVAT[$ctr];
 			}
-			$totalPrice = $totalPrice + $qty[$ctr] * $unitPrice[0]['sellingPrice'] -$discount[$ctr];
+			$totalPrice = $totalPrice + $qty[$ctr] * $unitPrice[0]['sellingPrice'] - $discount[$ctr];
 			$ctr++;
 			$this->sales_model->save($sales);
 		}
@@ -83,6 +83,7 @@ class Sales extends MY_Controller {
 		$salesTransactionId = $this->input->get('transactionId');
 		$transactionDetails = $this->sales_transaction_model->getDetailed($salesTransactionId);
 		Debug::dump($transactionDetails);
+		$this->renderView('summary', array('items' => $transactionDetails));
 	}
 	
  }

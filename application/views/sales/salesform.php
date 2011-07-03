@@ -171,7 +171,7 @@
 			</tr>
 			<tr>
 				<td class="rightAligned">Address:</td>
-				<td><textarea rows="3" cols="22" name="address"></textarea></textarea></td>
+				<td><textarea rows="3" cols="22" name="address"></textarea></td>
 			</tr>
 			<tr>
 				<td class="rightAligned">Contact Number:</td>
