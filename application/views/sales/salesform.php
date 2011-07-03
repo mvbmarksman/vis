@@ -369,8 +369,28 @@
 				return ;
 			}
 		});
-		if($("#creditFormContainer"))
 
+		if (!($("#creditFormContainer")).is(":visible")) {
+			return isValid
+		}
+
+		if (isNaN(($("input#amountpaid")).val()))
+		{
+			$("input#amountpaid").focus();
+			$("input#amountpaid").val("");
+			alert ("Amount Paid must be a number");
+			isValid = false;
+			return ;
+		}
+
+		if ((($("input#amountpaid")).val())>= parseInt(($("#totalprice").html())))
+		{
+			$("input#amountpaid").focus();
+			$("input#amountpaid").val("");
+			alert ("Amount paid must be less than the total price");
+			isValid = false;
+			return ;
+		}
 		return isValid;
 	}
 
