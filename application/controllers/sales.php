@@ -17,8 +17,13 @@ class Sales extends MY_Controller {
 		$this->load->model('sales_transaction_model');
 		$this->load->model('item_detail_model');
 		$this->load->model('sales_model');
+		$this->load->model('credit_model');
 
-		$sales_transaction= new Sales_transaction_model();
+		if (isset($this->input->post('name'))){
+		debug :: dump($name);
+
+
+		/*$sales_transaction= new Sales_transaction_model();
 		$sales_transaction->date = date("Y-m-d H:i:s");
 		$sales_transaction->userId = 1; //TODO CHANGED
 		$sales_transaction->isFullyPaid = 1;//TODO CHANGED
@@ -35,8 +40,10 @@ class Sales extends MY_Controller {
 		$ctr = 1; //initialize the array to the index
 		$totalPrice = 0;
 
-		foreach ($vatquery as $no){
-			$isVAT[substr($no,4)] = 1;
+		if (($vatquery)!= null){
+				foreach ($vatquery as $no){
+				$isVAT[substr($no,4)] = 1;
+			}
 		}
 
 		while (isset($itemDetailId[$ctr])){
@@ -63,5 +70,7 @@ class Sales extends MY_Controller {
 		$this->sales_model->save($sales);
 		debug :: dump('success');
 		}
+		*/
+
 	}
  }
