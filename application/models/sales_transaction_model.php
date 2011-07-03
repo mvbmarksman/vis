@@ -30,9 +30,9 @@ class Sales_transaction_model extends MY_Model
 			return $this->db->insert_id();
 		}
 
-
 		$this->db->insert(self::TBL_NAME, $salesTransactionModel);
-		return $this->db->insert_id();
+		$transactionId = $this->db->insert_id();
+		return $transactionId;
 	}
 
 
@@ -60,4 +60,14 @@ class Sales_transaction_model extends MY_Model
 		}
 		$this->db->delete(self:: TBL_NAME, array('salesTransactionId' => $salesTransactionId));
 	}
+	
+	
+	public function getDetailed($transactionId) {
+		$this->db->select();
+		$this->db->from(self::TBL_NAME . ' as st');
+		$this->db->join('Sales as s', 'st.salesTransactionId = s.salesTransactionId');
+		$this->db->where('s.salesTransactionId', $transactionId);
+		$query = $this->db->get();
+		return $query->result_array();
+	}	
 }
