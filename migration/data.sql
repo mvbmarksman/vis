@@ -26,17 +26,6 @@ INSERT INTO `Credit` VALUES (1,'erick','erick','129838','100.0000'),(3,'','','',
 UNLOCK TABLES;
 
 --
--- Dumping data for table `DailyExpenseTransaction`
---
-
-LOCK TABLES `DailyExpenseTransaction` WRITE;
-/*!40000 ALTER TABLE `DailyExpenseTransaction` DISABLE KEYS */;
-/*!40000 ALTER TABLE `DailyExpenseTransaction` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Dumping data for table `Expense`
---
 
 LOCK TABLES `Expense` WRITE;
 /*!40000 ALTER TABLE `Expense` DISABLE KEYS */;

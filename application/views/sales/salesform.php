@@ -84,7 +84,6 @@
 	padding-top: 3px;
 }
 
-
 </style>
 
 <h1 id="saleHeader">
@@ -92,8 +91,7 @@
 	<div>Sales Form</div>
 </h1>
 
-
-<form name="salesForm" id="salesForms" action="/sales/managesalesform" method="POST">
+<form name="salesForm" id="salesForms" action="/sales/processsalesform" method="POST">
 	<table id="salesForm">
 		<thead>
 			<tr>

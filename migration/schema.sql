@@ -1,5 +1,6 @@
 DROP DATABASE vis;
 CREATE DATABASE vis;
+USE vis;
 
 DROP TABLE IF EXISTS `Credit`;
 CREATE TABLE `Credit` (
