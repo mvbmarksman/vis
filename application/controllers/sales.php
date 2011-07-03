@@ -19,15 +19,29 @@ class Sales extends MY_Controller {
 		$this->load->model('sales_model');
 		$this->load->model('credit_model');
 
-//		if (isset($this->input->post('name'))){
-//		debug :: dump($name);
-
-
-		/*$sales_transaction= new Sales_transaction_model();
+		$name = $this->input->post('name');
+		$creditId = null;
+		if (($name) != ''){
+			$credit = new Credit_model();
+			$credit ->fullName		= $name;
+			$credit ->address		= $this->input->post('address');
+			$credit ->phoneNo	 	= $this->input->post('phoneno');
+			$credit ->amountPaid	= $this->input->post('amountpaid');
+			$this->credit_model->save($credit);
+			$creditId = $this->db->insert_id();
+		}
+		$sales_transaction= new Sales_transaction_model();
 		$sales_transaction->date = date("Y-m-d H:i:s");
 		$sales_transaction->userId = 1; //TODO CHANGED
-		$sales_transaction->isFullyPaid = 1;//TODO CHANGED
+		if (isset($creditId)){
+			$sales_transaction->isFullyPaid = 0;
+		}
+		else{
+			$sales_transaction->isFullyPaid = 1;
+		}
+		$sales_transaction->creditId = $creditId;
 		$this->sales_transaction_model->save($sales_transaction);
+		debug :: dump($sales_transaction);
 
 		$itemDetailId = $this->input->post('item');
 		$qty = $this->input->post('qty');
@@ -70,7 +84,5 @@ class Sales extends MY_Controller {
 		$this->sales_model->save($sales);
 		debug :: dump('success');
 		}
-		*/
-
 	}
  }
