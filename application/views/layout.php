@@ -16,7 +16,7 @@
     <script type="text/javascript" src="/public/js/flexigrid/js/flexigrid.js"></script>
 	<link rel="stylesheet" type="text/css" href="/public/js/flexigrid/css/flexigrid.css" />
 	
-	<script type="text/javascript" src="/public/js/flexigrid/js/numberformat.js"></script>
+	<script type="text/javascript" src="/public/js/utils.js"></script>
   </head>
 
   <body>
