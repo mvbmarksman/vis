@@ -65,14 +65,24 @@ body {
 .rightAligned {
 	text-align:right;
 }
+.centered {
+	text-align: center;
+}
 
 #content h1 {
-/*    border-bottom: 1px dotted silver;*/
     color: #C45002;
     font-family: Arial;
     font-size: 18px;
     font-weight: bold;
     letter-spacing: 0.5px;
     padding-bottom: 2px;
+}
+
+#content h2 {
+    color: #004F94;
+    font-size: 13px;
+    font-weight: bold;
+    padding: 5px 0;
+	letter-spacing: 0.5px;
 }
 
