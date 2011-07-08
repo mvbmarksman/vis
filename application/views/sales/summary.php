@@ -83,7 +83,7 @@
 		</tr>
 	</thead>
 	<tbody id="salesFormBody">
-		<?php $ctr = 0;?>
+		<?php $ctr = 0;$vatTotal = 0; ?>
 		<?php foreach ($items as $item): ?>
 		<?php $ctr ++; ?>
 		<tr class="<?php echo $ctr % 2 == 0 ? 'even' : 'odd'?>">
@@ -94,6 +94,9 @@
 			<td class="centered"><img src="/public/images/icons/<?php echo $item['isVAT'] ? "accept.png" : "cross.png" ?>"/></td>
 			<td class="rightAligned"><?php echo number_Format($item['qty'] * $item['unitPrice'] - $item['discount'], 2) ?></td>
 		</tr>
+		<?php
+			if ($item['isVAT'])
+				$vatTotal += ($item['qty'] * $item['unitPrice'] - $item['discount']) / 1.12; ?>
 		<?php endforeach; ?>
 	</tbody>
 </table>
@@ -103,11 +106,11 @@
 	<table id="salesSummary">
 		<tr>
 			<td class="rightAligned salesSummaryLabel">Vatable:</td>
-			<td><div class="salesSummaryValue" id="vatable">TODO</div></td>
+			<td><div class="salesSummaryValue" id="vatable"><?php echo number_Format($vatTotal , 2)?> </div></td>
 		</tr>
 		<tr>
 			<td class="rightAligned salesSummaryLabel">Total Vat:</td>
-			<td><div class="salesSummaryValue" id="totalvat">TODO</div></td>
+			<td><div class="salesSummaryValue" id="totalvat"><?php echo number_Format($vatTotal * 0.12 , 2)?></div></td>
 		</tr>
 		<tr>
 			<td class="rightAligned salesSummaryLabel">Total Price:</td>
