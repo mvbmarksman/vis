@@ -56,19 +56,32 @@ class Sales extends MY_Controller {
 		while (isset($itemDetailId[$ctr])) {
 			$sales = new Sales_model();
 			$sales->salesTransactionId = $salesTransactionId;
+
 			$sales->itemDetailId = $itemDetailId[$ctr];
 			$unitPrice = $this->item_detail_model->fetch($itemDetailId[$ctr]);
 			$sales->unitPrice = $unitPrice[0]['sellingPrice'];
-			$sales->qty = $qty[$ctr];
 			$sales->discount = $discount[$ctr];
 			$sales->storeId = $storeId;
 			$sales->isVAT = 0;
+			$sales->itemDetailId = $itemDetailId[$ctr];
+			$sales->qty = $qty[$ctr];
 			if (isset($isVAT[$ctr])){
 				$sales->isVAT = $isVAT[$ctr];
 			}
 			$totalPrice = $totalPrice + $qty[$ctr] * $unitPrice[0]['sellingPrice'] - $discount[$ctr];
-			$ctr++;
+			$repeat = 0;
+			for ($idCtr = 1;$idCtr < $ctr && $repeat != 1;$idCtr++){
+				if ($itemDetailId[$idCtr] == $itemDetailId[$ctr]){
+					$sales->salesId =$salesId[$idCtr];
+					$sales->itemDetailId = $itemDetailId[$ctr];
+					$qtyDuplicate = $this->sales_model->fetch($salesId[$idCtr]);
+					$sales->qty = $qty[$ctr] + $qtyDuplicate[0]['qty'];
+					$repeat = 1;
+				}
+			}
 			$this->sales_model->save($sales);
+			$salesId[$ctr] = $this->db->insert_id();
+			$ctr++;
 		}
 		$sales_transaction->salesTransactionId = $salesTransactionId;
 		$sales_transaction->totalPrice = $totalPrice;
@@ -86,4 +99,4 @@ class Sales extends MY_Controller {
 		$this->renderView('summary', array('items' => $transactionDetails));
 	}
 
- }
+}
