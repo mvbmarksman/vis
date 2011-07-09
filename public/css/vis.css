@@ -16,7 +16,6 @@ body {
 	background-repeat: repeat-x;
 }
 #wrapper {
-	background: white;
 	width: 980px;
 	overflow: hidden;
 	margin: auto auto
@@ -45,6 +44,7 @@ body {
 }
 
 #sidebar {
+	background: white;
 	float: left;	
 	width: 200px;
 	min-height: 700px;
@@ -53,6 +53,7 @@ body {
 }
 
 #content {
+	background: white;
 	float: left;
 	width: 746px;
 	min-height: 700px;
@@ -92,3 +93,8 @@ body {
 	letter-spacing: 0.5px;
 }
 
+.controls {
+	margin-top:40px;
+	padding-top:10px;
+	border-top: 1px dashed #004F94;
+}

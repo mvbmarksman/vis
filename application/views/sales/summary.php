@@ -58,7 +58,7 @@
 
 #salesSummary {
 	margin-top: 5px;
-	margin-left: 630px;
+	margin-left: 618px;
 }
 
 .salesSummaryLabel {
@@ -105,16 +105,16 @@
 <div id="salesSummaryContainer">
 	<table id="salesSummary">
 		<tr>
-			<td class="rightAligned salesSummaryLabel">Vatable:</td>
-			<td><div class="salesSummaryValue" id="vatable"><?php echo number_Format($vatTotal , 2)?> </div></td>
+			<td class="rightAligned salesSummaryLabel" width="100px">Vatable:</td>
+			<td><div class="salesSummaryValue rightAligned" id="vatable"><?php echo number_Format($vatTotal , 2)?> </div></td>
 		</tr>
 		<tr>
 			<td class="rightAligned salesSummaryLabel">Total Vat:</td>
-			<td><div class="salesSummaryValue" id="totalvat"><?php echo number_Format($vatTotal * 0.12 , 2)?></div></td>
+			<td><div class="salesSummaryValue rightAligned" id="totalvat"><?php echo number_Format($vatTotal * 0.12 , 2)?></div></td>
 		</tr>
 		<tr>
 			<td class="rightAligned salesSummaryLabel">Total Price:</td>
-			<td><div class="salesSummaryValue" id="totalprice"><?php echo number_Format($item['totalPrice'], 2)?></div></td>
+			<td><div class="salesSummaryValue rightAligned" id="totalprice"><?php echo number_Format($item['totalPrice'], 2)?></div></td>
 		</tr>
 	</table>
 </div>

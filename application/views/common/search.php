@@ -5,11 +5,11 @@
 	margin: 7px auto;
 	border: 1px solid silver;
 	border-top: none;
-	font-size: 14px;
+	font-size: 12px;
 }
 #search h1 {
 	background: #6997BF;
-	color: #fff;	
+	color: #fff;
 	padding: 5px;
 	width: 181px;
 }

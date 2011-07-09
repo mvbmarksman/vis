@@ -12,8 +12,13 @@
 	padding: 5px 3px;
 }
 
+#salesForm tr:hover {
+	background: #E4EDF5;
+}
+
 #salesForm tr td {
 	padding: 5px 3px;
+	border-bottom: 1px dotted #ddd;
 }
 
 #salesControls {
@@ -48,8 +53,7 @@
 }
 
 #salesControls {
-	width: 750px;
-	margin-left: 35px;
+	margin-left: 10px;
 }
 
 #salesSummary {
@@ -142,7 +146,7 @@
 	</table>
 
 	<div id="salesControls">
-		<a href="javascript:addRow()" >Add a New Row</a> | <a href="javascript:openDialog()">Credit Payment</a> | <a href="javascript:submitForm()">Checkout</a>-
+		<a href="javascript:addRow()" >Add a New Row</a>
 	</div>
 
 	<div id="salesSummaryContainer">
@@ -162,6 +166,15 @@
 		</table>
 	</div>
 </form>
+
+<div class="controls">
+	<div class="btnClear" style="margin-left: 415px; width: 335px" >
+		<a class="button" href="javascript:openDialog()"><span><img src="/public/images/icons/add.png"/><p>Add Credit Details</p></span></a>
+		<a class="button" href="javascript:submitForm()"><span><img src="/public/images/icons/drive_go.png"/><p>Process Sales Form</p></span></a>
+	</div>
+</div>
+
+
 
 <div id="creditFormContainer">
 	<table id="creditForm">
@@ -265,7 +278,7 @@
 		var subtotal = computeSubTotal(rowId);
 		var quantityVal = $("#quantity_" + rowId).val();
 
-		if (quantityVal <= 0 || isNan(quantityVal)) {
+		if (quantityVal <= 0 || isNaN(quantityVal)) {
 			$("#qtyerror").show().html("<p style = 'margin : 3px; background-color:red; border-radius:5px'>Quantity must be greater than 0 ");
 			$("#quantity_" + rowId).css("border-color","#F5646C");
 			$("#quantity_" + rowId).focus();

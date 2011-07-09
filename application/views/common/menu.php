@@ -1,7 +1,7 @@
 <style>
 	#sidebar #menu {
 		margin: 10px auto;
-		font-size: 14px;
+		font-size: 12px;
 	}
 
 	ul#menu, ul#menu ul {
