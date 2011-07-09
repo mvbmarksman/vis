@@ -7,7 +7,7 @@ class Sales_transaction_model extends MY_Model
 	public $salesTransactionId;
 	public $date;
 	public $userId;
-	public $creditId;
+	public $creditDetailId;
 	public $totalPrice;
 	public $isFullyPaid;
 
@@ -60,16 +60,16 @@ class Sales_transaction_model extends MY_Model
 		}
 		$this->db->delete(self:: TBL_NAME, array('salesTransactionId' => $salesTransactionId));
 	}
-	
-	
+
+
 	public function getDetailed($transactionId) {
 		$this->db->select();
 		$this->db->from(self::TBL_NAME . ' as st');
 		$this->db->join('Sales as s', 'st.salesTransactionId = s.salesTransactionId');
 		$this->db->join('ItemDetail as id', 'id.itemDetailId = s.itemDetailId');
-		$this->db->join('Credit as c', 'c.creditId = st.creditId', 'left');
+		$this->db->join('Credit as c', 'c.creditDetailId = st.creditDetailId', 'left');
 		$this->db->where('s.salesTransactionId', $transactionId);
 		$query = $this->db->get();
 		return $query->result_array();
-	}	
+	}
 }

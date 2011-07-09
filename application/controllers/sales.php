@@ -13,9 +13,9 @@ class Sales extends MY_Controller {
 		$this->load->model('sales_transaction_model');
 		$this->load->model('item_detail_model');
 		$this->load->model('sales_model');
-		$this->load->model('credit_model');
+		$this->load->model('credit_detail_model');
 		$name = $this->input->post('name');
-		$creditId = null;
+		$creditDetailId = null;
 
 		// TODO extract to fxn
 		if (($name) != ''){
@@ -23,16 +23,15 @@ class Sales extends MY_Controller {
 			$credit->fullName		= $name;
 			$credit->address		= $this->input->post('address');
 			$credit->phoneNo	 	= $this->input->post('phoneno');
-			$credit->amountPaid	= $this->input->post('amountpaid');
 			$this->credit_model->save($credit);
-			$creditId = $this->db->insert_id();
+			$creditDetailId = $this->db->insert_id();
 		}
 
 		$sales_transaction= new Sales_transaction_model();
 		$sales_transaction->date = date("Y-m-d H:i:s");
 		$sales_transaction->userId = 1; //TODO CHANGE
-		$sales_transaction->isFullyPaid = $creditId ? 0 : 1;
-		$sales_transaction->creditId = $creditId;
+		$sales_transaction->isFullyPaid = $creditDetailId ? 0 : 1;
+		$sales_transaction->creditDetailId = $creditDetailId;
 
 		$this->sales_transaction_model->save($sales_transaction);
 		$itemDetailId = $this->input->post('item');
