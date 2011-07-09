@@ -27,26 +27,6 @@
 	cursor: pointer;
 }
 
-#creditFormContainer {
-    background-color: #EDEFF4;
-    border: 1px solid silver;
-    border-radius: 5px 5px 5px 5px;
-    margin: 40px 10px 10px;
-    min-height: 200px;
-    padding: 10px 0;
-    width: 500px;
-}
-
-#creditFormContainer h1 {
-    background-color: #6997BF;
-    color: #FFFFFF;
-    font-size: 12px;
-    font-weight: bold;
-    margin: 0;
-    padding: 3px;
-    width: 99%;
-}
-
 #creditForm {
 	padding: 10px;
 }
@@ -174,7 +154,6 @@
 	</div>
 
 	<div id="creditFormContainer">
-		<h1>Credit Form</h1>
 		<table id="creditForm">
 			<tr>
 				<td class="rightAligned">Name:</td>
@@ -213,7 +192,18 @@
 		addSalesSummary();
 		$("#creditFormContainer").hide();
 		$(".subtotalvat").hide();
+		$("#creditFormContainer").dialog({
+			autoOpen: false,
+			modal: true,
+			title: "Credit Information",
+			width: 500,
+			height: 300
+		});
 	});
+
+	function openDialog() {
+		$("#creditFormContainer").dialog("open");
+	}
 
 	function updatePrice(obj) {
 		var itemSelectedVal = $(obj).val();
@@ -420,9 +410,6 @@
 		return rowId = parts[1];
 	}
 
-	function openDialog() {
-		$("#creditFormContainer").slideToggle('slow');
-	}
 	function addSalesSummary() {
 		$("#vatable").html("---- ");
 		$("#totalvat").html("----");
