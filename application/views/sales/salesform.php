@@ -18,7 +18,7 @@
 
 #salesForm tr td {
 	padding: 5px 3px;
-	border-bottom: 1px dotted #ddd;
+	border-bottom: 1px solid #ddd;
 }
 
 #salesControls {
