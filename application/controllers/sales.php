@@ -76,6 +76,7 @@ class Sales extends MY_Controller {
 					$sales->itemDetailId = $itemDetailId[$ctr];
 					$qtyDuplicate = $this->sales_model->fetch($salesId[$idCtr]);
 					$sales->qty = $qty[$ctr] + $qtyDuplicate[0]['qty'];
+					$sales->discount = $discount[$ctr] + $discount[$idCtr] ;
 					$repeat = 1;
 				}
 			}
