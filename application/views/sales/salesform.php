@@ -232,6 +232,7 @@
 		price = parseFloat(price).toFixed(2);
 		price = addCommas(price);
 		$("#price_" + rowId).html(price);
+		$("#qty_" + rowId).focus();
 	}
 
 	function addRow() {
