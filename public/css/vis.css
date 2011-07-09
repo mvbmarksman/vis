@@ -12,7 +12,7 @@ body {
 	font-family: arial, sans-serif;
 	font-size: 12px;
 	color: #545454;
-	background-image: url("/public/images/components/main-bg.png");
+	background-image: url("/public/images/components/main-bg.jng");
 	background-repeat: repeat-x;
 }
 #wrapper {
@@ -54,7 +54,7 @@ body {
 
 #content {
 	float: left;
-	width: 747px;
+	width: 746px;
 	min-height: 700px;
 	padding: 7px 15px;
 	border: 1px solid silver;
