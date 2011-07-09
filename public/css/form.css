@@ -29,7 +29,18 @@ select {
 	font-size: 12px;
 }
 
+textarea {
+	resize: none;
+}
+
  .smallTxt {
  	width: 40px;
+ }
+ 
+ .mediumTxt {
+ 	width: 100px;
+ }
+ .longTxt {
+ 	width: 200px;
  }
  

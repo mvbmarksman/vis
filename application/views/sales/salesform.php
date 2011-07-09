@@ -70,6 +70,15 @@
 	width : 40%;
 	margin : auto;
 }
+
+#creditForm tr td {
+	vertical-align: top;
+}
+#creditFormContainer div {
+	margin-top: 20px;
+	text-align: right;
+}
+
 </style>
 <div id ="error">
 	<div id = "itemerror"></div>
@@ -157,7 +166,7 @@
 		<table id="creditForm">
 			<tr>
 				<td class="rightAligned">Name:</td>
-				<td><input type="text" name="name" id="name"></td>
+				<td><input type="text" name="name" id="name" class="longTxt"></td>
 			</tr>
 			<tr>
 				<td class="rightAligned">Address:</td>
@@ -165,13 +174,16 @@
 			</tr>
 			<tr>
 				<td class="rightAligned">Contact Number:</td>
-				<td><input type="text" name="phoneno" id="phoneno" /></td>
+				<td><input type="text" name="phoneno" id="phoneno" class="longTxt"/></td>
 			</tr>
 			<tr>
 				<td class="rightAligned">Amount Paid</td>
-				<td><input type="text" name="amountpaid" id="amountpaid"/></td>
+				<td><input type="text" name="amountpaid" id="amountpaid" class="longTxt"/></td>
 			</tr>
 		</table>
+		<div>
+			<input type="button" onclick="javascript:saveCredit()" value="Save Credit Details"/>
+		</div>
 	</div>
 
 </form>
@@ -196,13 +208,18 @@
 			autoOpen: false,
 			modal: true,
 			title: "Credit Information",
-			width: 500,
-			height: 300
+			width: 400,
+			height: 300,
+			resizable: false
 		});
 	});
 
 	function openDialog() {
 		$("#creditFormContainer").dialog("open");
+	}
+
+	function saveCredit() {
+		$("#creditFormContainer").dialog("close");
 	}
 
 	function updatePrice(obj) {
