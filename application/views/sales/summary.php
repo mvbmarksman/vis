@@ -119,7 +119,7 @@
 	</table>
 </div>
 
-<?php if ($item['creditId']): ?>
+<?php if ($item['creditDetailId']): ?>
 	<div id="creditContainer">
 		<h2>Credit Information</h2>
 		<table id="creditTable">
