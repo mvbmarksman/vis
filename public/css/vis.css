@@ -12,10 +12,14 @@ body {
 	font-family: arial, sans-serif;
 	font-size: 12px;
 	color: #545454;
+	background-image: url("/public/images/components/main-bg.png");
+	background-repeat: repeat-x;
 }
 #wrapper {
-	width: 100%;
-	overflow: auto;
+	background: white;
+	width: 980px;
+	overflow: hidden;
+	margin: auto auto
 }
 
 #header {
@@ -35,7 +39,6 @@ body {
 }
 
 #accountBar {
-   	border-bottom: 1px solid silver;
     padding: 5px 10px;
     background-color: #E4EDF5;
     text-align: right;
@@ -45,14 +48,17 @@ body {
 	float: left;	
 	width: 200px;
 	min-height: 700px;
-	border-right: 1px solid silver;
+	border-top: 1px solid silver;
+	border-left: 1px solid silver;
 }
 
 #content {
 	float: left;
-	width: 72%;
+	width: 747px;
 	min-height: 700px;
-	padding: 7px;
+	padding: 7px 15px;
+	border: 1px solid silver;
+	border-bottom: none;
 }
 
 #footer {
