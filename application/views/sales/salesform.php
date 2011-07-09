@@ -54,7 +54,7 @@
 
 #salesSummary {
 	margin-top: 5px;
-	margin-left: 570px;
+	margin-left: 537px;
 }
 
 .salesSummaryLabel {
@@ -90,80 +90,78 @@
 	<img src="/public/images/icons/wallet.png" />
 	<div>Sales Form</div>
 </h1>
+<div class="clear"></div>
+<form name="salesForm" id="salesForms" action="/sales/processsalesform" method="POST">
+	<table id="salesForm">
+		<thead>
+			<tr>
+				<th>Item</th>
+				<th width="100px">Price</th>
+				<th width="20px">Qty</th>
+				<th width="50px">Discount</th>
+				<th width="20px">VAT</th>
+				<th width="100px">Subtotal</th>
+				<th width="10px">&nbsp;</th>
+			</tr>
+		</thead>
+		<tbody id="salesFormBody">
+			<tr id="row_-rowCtr-">
+				<td>
+					<select id="item_-rowCtr-" name="item[]" onchange="updatePrice(this)">
+						<option value="0" selected="selected">Select an item</option>
+						<?php foreach ($itemDetails as $itemDetail): ?>
+						<option value="<?php echo $itemDetail['itemDetailId'] ?>">
+							<?php echo $itemDetail['description'] ?>
+						</option>
+						<?php endforeach; ?>
+					</select>
+				</td>
+				<td>
+					<span id="price_-rowCtr-">----</span>
+				</td>
+				<td>
+					<input name = "qty[]" type="text" class="smallTxt rightAligned" id="quantity_-rowCtr-" onblur="updateSubTotal(this)"/>
+				</td>
+				<td>
+					<input name = "discount[]" type="text" class="smallTxt rightAligned" id="discount_-rowCtr-" onblur="updateSubTotal(this)" />
+				</td>
+				<td>
+					<input name = "vat[]" type="checkbox" id="vat_-rowCtr-" value="vat_-rowCtr-" onclick="updateSubTotal(this)" />
+				</td>
+				<td>
+					<span class = "subtotal" id="subtotal_-rowCtr-">----</span>
+				</td>
+				<td>
+					<div class="removeBtn" id="remove_-rowCtr-" onclick="removeRow(this)"></div>
+				</td>
+				<td>
+					<span class="subtotalvat" id="subtotalvat_-rowCtr-">----</span>
+				</td>
+			</tr>
+		</tbody>
+	</table>
 
-<div>
-	<form name="salesForm" id="salesForms" action="/sales/processsalesform" method="POST">
-		<table id="salesForm">
-			<thead>
-				<tr>
-					<th>Item</th>
-					<th width="100px">Price</th>
-					<th width="20px">Qty</th>
-					<th width="50px">Discount</th>
-					<th width="20px">VAT</th>
-					<th width="100px">Subtotal</th>
-					<th width="10px">&nbsp;</th>
-				</tr>
-			</thead>
-			<tbody id="salesFormBody">
-				<tr id="row_-rowCtr-">
-					<td>
-						<select id="item_-rowCtr-" name="item[]" onchange="updatePrice(this)">
-							<option value="0" selected="selected">Select an item</option>
-							<?php foreach ($itemDetails as $itemDetail): ?>
-							<option value="<?php echo $itemDetail['itemDetailId'] ?>">
-								<?php echo $itemDetail['description'] ?>
-							</option>
-							<?php endforeach; ?>
-						</select>
-					</td>
-					<td>
-						<span id="price_-rowCtr-">----</span>
-					</td>
-					<td>
-						<input name = "qty[]" type="text" class="smallTxt rightAligned" id="quantity_-rowCtr-" onblur="updateSubTotal(this)"/>
-					</td>
-					<td>
-						<input name = "discount[]" type="text" class="smallTxt rightAligned" id="discount_-rowCtr-" onblur="updateSubTotal(this)" />
-					</td>
-					<td>
-						<input name = "vat[]" type="checkbox" id="vat_-rowCtr-" value="vat_-rowCtr-" onclick="updateSubTotal(this)" />
-					</td>
-					<td>
-						<span class = "subtotal" id="subtotal_-rowCtr-">----</span>
-					</td>
-					<td>
-						<div class="removeBtn" id="remove_-rowCtr-" onclick="removeRow(this)"></div>
-					</td>
-					<td>
-						<span class="subtotalvat" id="subtotalvat_-rowCtr-">----</span>
-					</td>
-				</tr>
-			</tbody>
+	<div id="salesControls">
+		<a href="javascript:addRow()" >Add a New Row</a> | <a href="javascript:openDialog()">Credit Payment</a> | <a href="javascript:submitForm()">Checkout</a>-
+	</div>
+
+	<div id="salesSummaryContainer">
+		<table id="salesSummary">
+			<tr>
+				<td class="rightAligned salesSummaryLabel">Vatable:</td>
+				<td><div class="salesSummaryValue" id="vatable"></div></td>
+			</tr>
+			<tr>
+				<td class="rightAligned salesSummaryLabel">Total Vat:</td>
+				<td><div class="salesSummaryValue" id="totalvat"></div></td>
+			</tr>
+			<tr>
+				<td class="rightAligned salesSummaryLabel">Total Price:</td>
+				<td><div class="salesSummaryValue" id="totalprice"></div></td>
+			</tr>
 		</table>
-
-		<div id="salesControls">
-			<a href="javascript:addRow()" >Add a New Row</a> | <a href="javascript:openDialog()">Credit Payment</a> | <a href="javascript:submitForm()">Checkout</a>-
-		</div>
-
-		<div id="salesSummaryContainer">
-			<table id="salesSummary">
-				<tr>
-					<td class="rightAligned salesSummaryLabel">Vatable:</td>
-					<td><div class="salesSummaryValue" id="vatable"></div></td>
-				</tr>
-				<tr>
-					<td class="rightAligned salesSummaryLabel">Total Vat:</td>
-					<td><div class="salesSummaryValue" id="totalvat"></div></td>
-				</tr>
-				<tr>
-					<td class="rightAligned salesSummaryLabel">Total Price:</td>
-					<td><div class="salesSummaryValue" id="totalprice"></div></td>
-				</tr>
-			</table>
-		</div>
-	</form>
-</div>
+	</div>
+</form>
 
 <div id="creditFormContainer">
 	<table id="creditForm">
