@@ -232,7 +232,7 @@
 		price = parseFloat(price).toFixed(2);
 		price = addCommas(price);
 		$("#price_" + rowId).html(price);
-		$("#qty_" + rowId).focus();
+		$("#quantity_" + rowId).focus();
 	}
 
 	function addRow() {
@@ -263,6 +263,16 @@
 	function updateSubTotal(obj){
 		var rowId = getRowCtr(obj);
 		var subtotal = computeSubTotal(rowId);
+		var quantityVal = $("#quantity_" + rowId).val();
+
+		if (quantityVal <= 0 || isNan(quantityVal)) {
+			$("#qtyerror").show().html("<p style = 'margin : 3px; background-color:red; border-radius:5px'>Quantity must be greater than 0 ");
+			$("#quantity_" + rowId).css("border-color","#F5646C");
+			$("#quantity_" + rowId).focus();
+		} else {
+			$("#quantity_" + rowId).css("border-color","#8EA7D1");
+		}
+
 		if (isNaN(subtotal)){
 			subtotal = "----";
 		}
