@@ -58,11 +58,13 @@ class Sales_transaction_model extends MY_Model
 
 
 	public function getDetailed($transactionId) {
-		$this->db->select();
+		$this->db->select('st.*, s.*, id.*, c.*, cp.*, cp.amount as amountPaid');
 		$this->db->from(self::TBL_NAME . ' as st');
 		$this->db->join('Sales as s', 'st.salesTransactionId = s.salesTransactionId');
 		$this->db->join('ItemDetail as id', 'id.itemDetailId = s.itemDetailId');
 		$this->db->join('CreditDetail as c', 'c.creditDetailId = st.creditDetailId', 'left');
+		$this->db->join('CreditPayment as cp',
+			'cp.creditDetailId = c.creditDetailId and cp.salesTransactionId = s.salesTransactionId');
 		$this->db->where('s.salesTransactionId', $transactionId);
 		$query = $this->db->get();
 		return $query->result_array();

@@ -129,6 +129,7 @@ class Sales extends MY_Controller {
 		return $flattened;
 	}
 
+
 	public function summary() {
 		$transactionId = $this->input->get('transactionId');
 		$model = 'sales_transaction_model';
