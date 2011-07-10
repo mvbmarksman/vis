@@ -1,11 +1,9 @@
 <?php
-class Sales extends MY_Controller {
+class Credit_payment extends MY_Controller {
 
-	public function salesform() {
-		$this->load->model('item_detail_model');
-		$this->load->model('sales_model');
-		$this->load->model('item_model');
-		$itemDetails = $this->item_detail_model->fetch();
-		$this->renderView('salesform', array('itemDetails' => $itemDetails));
+	public function creditpaymentform() {
+		$this->load->model('credit_detail_model');
+		$creditDetails = $this->credit_detail_model->fetch();
+		$this->renderView('creditpaymentform', array('creditDetails' => $creditDetails));
 	}
 }
