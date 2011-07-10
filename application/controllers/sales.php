@@ -106,7 +106,7 @@ class Sales extends MY_Controller {
 			$merged[$item->itemDetailId][$item->isVAT]['salesTransactionId'] = $item->salesTransactionId;
 			$merged[$item->itemDetailId][$item->isVAT]['itemDetailId'] = $item->itemDetailId;
 			$merged[$item->itemDetailId][$item->isVAT]['unitPrice'] = $item->unitPrice;
-			$merged[$item->itemDetailId][$item->isVAT]['storeId'] = $item->itemDetailId;
+			$merged[$item->itemDetailId][$item->isVAT]['storeId'] = $item->storeId;
 			$merged[$item->itemDetailId][$item->isVAT]['isVAT'] = $item->isVAT;
 			@$merged[$item->itemDetailId][$item->isVAT]['qty'] += $item->qty;
 			@$merged[$item->itemDetailId][$item->isVAT]['discount'] += $item->discount;
@@ -115,7 +115,15 @@ class Sales extends MY_Controller {
 		$flattened = array();
 		foreach ($merged as $item) {
 			foreach ($item as $i) {
-				$flattened[] = $i;
+				$sales = new Sales_model();
+				$sales->salesTransactionId = $i['salesTransactionId'];
+				$sales->itemDetailId = $i['itemDetailId'];
+				$sales->unitPrice = $i['unitPrice'];
+				$sales->storeId = $i['storeId'];
+				$sales->isVAT = $i['isVAT'];
+				$sales->qty = $i['qty'];
+				$sales->discount = $i['discount'];
+				$flattened[] = $sales;
 			}
 		}
 		return $flattened;
