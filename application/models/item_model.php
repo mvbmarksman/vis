@@ -40,7 +40,12 @@ class Item_model extends CI_Model
 			$this->db->where('itemId', $itemId);
 		}
 		$query = $this->db->get();
-		return $query->result_array();
+		$result = $query->result_array();
+
+		if ($itemId) {
+			return array_pop($result);
+		}
+		return $result;
 	}
 
 

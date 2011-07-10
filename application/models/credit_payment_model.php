@@ -5,7 +5,7 @@ class Credit_payment_model extends CI_Model
 
 	public $creditPaymentId;
 	public $creditDetailId;	// required
-	public $salesTransactionId;
+	public $salesTransactionId; // required
 	public $datePaid;
 	public $amount;
 
