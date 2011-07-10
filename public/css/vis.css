@@ -85,6 +85,17 @@ body {
     padding-bottom: 2px;
 }
 
+#content h1 img {
+	float: left;
+	width: 64px;
+	height: 64px;
+}
+
+#content h1 div {
+    padding-left: 71px;
+    padding-top: 25px;
+}
+
 #content h2 {
     color: #004F94;
     font-size: 13px;

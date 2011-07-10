@@ -44,14 +44,6 @@
 	text-align: right;
 }
 
-#saleHeader img {
-	float: left;
-}
-#saleHeader div {
-    padding-left: 40px;
-    padding-top: 5px;
-}
-
 #salesControls {
 	margin-left: 10px;
 }
@@ -111,7 +103,7 @@
 	<div id = "discounterror"></div>
 	<div id = "crediterror"></div>
 </div>
-<h1 id="saleHeader">
+<h1>
 	<img src="/public/images/icons/wallet.png" />
 	<div>Sales Form</div>
 </h1>

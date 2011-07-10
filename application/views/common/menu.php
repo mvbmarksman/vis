@@ -27,7 +27,7 @@
 	}
 
 	ul#menu li a:hover {
-	  background: #F2DEA0;
+	  background: #FAF1D7;
 	  color: #545454;
 	}
 
@@ -53,33 +53,18 @@
 		<a href="#">Sales</a>
 		<ul>
 			<li><a href="/sales/salesform">Sales Form</a></li>
-			<li><a href="http://www.php.net/">Sub Menu</a></li>
+			<li><a href="/credit_payment/showform">Credit Payment</a></li>
 			<li><a href="http://www.php.net/">Sub Menu</a></li>
 		</ul>
 	</li>
 	<li>
 		<a href="#">Expenses</a>
-		<ul>
-			<li><a href="http://www.php.net/">Sub Menu</a></li>
-			<li><a href="http://www.php.net/">Sub Menu</a></li>
-			<li><a href="http://www.php.net/">Sub Menu</a></li>
-		</ul>
 	</li>
 	<li>
 		<a href="#">Transfer</a>
-		<ul>
-			<li><a href="http://www.php.net/">Sub Menu</a></li>
-			<li><a href="http://www.php.net/">Sub Menu</a></li>
-			<li><a href="http://www.php.net/">Sub Menu</a></li>
-		</ul>
 	</li>
 	<li>
 		<a href="#">Reports</a>
-		<ul>
-			<li><a href="http://www.php.net/">Sub Menu</a></li>
-			<li><a href="http://www.php.net/">Sub Menu</a></li>
-			<li><a href="http://www.php.net/">Sub Menu</a></li>
-		</ul>
 	</li>
 </ul>
 

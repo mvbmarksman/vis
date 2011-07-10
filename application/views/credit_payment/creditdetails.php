@@ -1,8 +1,4 @@
-<table id="creditPaymentForm">
-	<tr>
-		<td>
-		</td>
-	</tr>
+<table id="creditPayment">
 	<tr>
 		<td>Contact Info</td>
 	</tr>
@@ -13,19 +9,20 @@
 		<td id="phoneno">Phone No: <?php echo $creditDetail['phoneNo'] ?></td>
 	</tr>
 </table>
+
+<h2>Credit Information</h2>
 <table>
-	<tr>
-		<td >Credit Info</td>
-	</tr>
 	<tr>
 		<th width="100px"></th>
 		<th width="150px">Date</th>
 		<th width="200px">Credit</th>
 	</tr>
-	<?php $ctr = 1 ?>
-	<?php $totalCredit = 0 ?>
-	<?php $totalPayment = 0 ?>
-	<?php foreach ($transactionDetails as $transactionDetail): ?>
+	<?php
+		$ctr = 1;
+		$totalCredit = 0;
+		$totalPayment = 0;
+		foreach ($transactionDetails as $transactionDetail):
+	?>
 	<tr>
 		<td></td>
 		<td><?php echo date("M-d-Y",strtotime( $transactionDetail['date'] ) )?></td>
