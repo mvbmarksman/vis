@@ -306,6 +306,7 @@
 			clearRow(rowId);
 			return;
 		}
+		$("#item_"+rowId).css("border-color","#8EA7D1");
 		price = parseFloat(price).toFixed(2);
 		price = addCommas(price);
 		$("#price_" + rowId).html(price);
@@ -341,14 +342,24 @@
 		var rowId = getRowCtr(obj);
 		var subtotal = computeSubTotal(rowId);
 		var quantityVal = $("#quantity_" + rowId).val();
+		var discountVal = $("#discount_" + rowId).val();
 
 		if (quantityVal <= 0 || isNaN(quantityVal)) {
-			$("#qtyerror").show().html("<p style = 'margin : 3px; background-color:red; border-radius:5px'>Quantity must be greater than 0 ");
+			$("#qtyerror").show().html("<p style = 'margin : 3px; background-color:red; border-radius:5px'>Quantity error");
 			$("#quantity_" + rowId).css("border-color","#F5646C");
 			$("#qtyerror").delay(3000).fadeOut(1000);
 			$("#quantity_" + rowId).focus();
 		} else {
 			$("#quantity_" + rowId).css("border-color","#8EA7D1");
+		}
+
+		if (discountVal < 0 || isNaN(discountVal)) {
+			$("#discounterror").show().html("<p style = 'margin : 3px; background-color:red; border-radius:5px'>Discount error");
+			$("#discount_" + rowId).css("border-color","#F5646C");
+			$("#discounterror").delay(3000).fadeOut(1000);
+			$("#discount_" + rowId).focus();
+		} else {
+			$("#discount_" + rowId).css("border-color","#8EA7D1");
 		}
 
 		if (isNaN(subtotal)){
