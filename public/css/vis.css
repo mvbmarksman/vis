@@ -98,3 +98,21 @@ body {
 	padding-top:10px;
 	border-top: 1px dotted #004F94;
 }
+
+.hiliteRow {
+	background: #FAF4E1;
+}
+
+
+
+dl dt {
+float:left;
+width: 120px;
+text-align: right;
+padding: 3px 10px 3px 3px;
+font-weight: bold;
+}
+
+dl dd {
+padding: 3px 10px 3px 3px;
+}

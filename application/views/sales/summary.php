@@ -20,12 +20,6 @@
 	border: 1px solid silver;
 }
 
-.odd {
-	background: #fff;
-}
-.even {
-	background: #FAF4E1;
-}
 
 #creditContainer {
 	margin-top: 20px;
@@ -86,7 +80,7 @@
 		<?php $ctr = 0;$vatTotal = 0; ?>
 		<?php foreach ($items as $item): ?>
 		<?php $ctr ++; ?>
-		<tr class="<?php echo $ctr % 2 == 0 ? 'even' : 'odd'?>">
+		<tr class="<?php echo $ctr % 2 == 0 ? 'hiliteRow' : ''?>">
 			<td><?php echo $item['description'] ?></td>
 			<td class="rightAligned"><?php echo number_format($item['unitPrice'], 2) ?></td>
 			<td class="rightAligned"><?php echo $item['qty'] ?></td>

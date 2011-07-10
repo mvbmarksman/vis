@@ -61,6 +61,10 @@
 	margin-left: 537px;
 }
 
+#salesSummaryContainer {
+	margin-bottom: 20px;
+}
+
 .salesSummaryLabel {
 	font-weight:bold;
 	width: 70px;
@@ -81,6 +85,23 @@
 #creditFormContainer div {
 	margin-top: 20px;
 	text-align: right;
+}
+
+#creditTable {
+	font-size: 12px;
+	margin-top: 5px;
+	width: 750px;
+}
+
+#creditTable tr {
+	color: #333;
+}
+#creditTable td {
+	padding: 3px;
+}
+
+#creditContainer dl {
+	margin: 10px 0px;
 }
 
 </style>
@@ -165,11 +186,22 @@
 			</tr>
 		</table>
 	</div>
+
+	<div id="creditContainer">
+		<h2>Credit Details</h2>
+		<dl>
+			<dt>Name:</dt><dd id="creditName"><span></span><input type="hidden" name="creditName"/></dd>
+			<dt class="hiliteRow">Address:</dt><dd id="creditAddress" class="hiliteRow"><span></span><input type="hidden" name="creditAddress"/></dd>
+			<dt>Contact Number:</dt><dd id="creditContact"><span></span><input type="hidden" name="creditContact"/></dd>
+			<dt class="hiliteRow">Amount Paid:</dt><dd id="creditAmount" class="hiliteRow"><span></span><input type="hidden" name="creditAmount"/></dd>
+		</dl>
+	</div>
+
 </form>
 
 <div class="controls">
-	<div class="btnClear" style="margin-left: 415px; width: 335px" >
-		<a class="button" href="javascript:openDialog()"><span><img src="/public/images/icons/add.png"/><p>Add Credit Details</p></span></a>
+	<div class="btnClear" style="margin-left: 410px;" >
+		<a class="button" href="javascript:openDialog()" id="creditDetailsBtn"><span><img src="/public/images/icons/add.png"/><p>Add Credit Details</p></span></a>
 		<a class="button" href="javascript:submitForm()"><span><img src="/public/images/icons/drive_go.png"/><p>Process Sales Form</p></span></a>
 	</div>
 </div>
@@ -180,19 +212,19 @@
 	<table id="creditForm">
 		<tr>
 			<td class="rightAligned">Name:</td>
-			<td><input type="text" name="name" id="name" class="longTxt"></td>
+			<td><input type="text" id="name" class="longTxt"></td>
 		</tr>
 		<tr>
 			<td class="rightAligned">Address:</td>
-			<td><textarea rows="3" cols="22" name="address" id="address"></textarea></td>
+			<td><textarea rows="3" cols="22" id="address"></textarea></td>
 		</tr>
 		<tr>
 			<td class="rightAligned">Contact Number:</td>
-			<td><input type="text" name="phoneno" id="phoneno" class="longTxt"/></td>
+			<td><input type="text" id="contact" class="longTxt"/></td>
 		</tr>
 		<tr>
-			<td class="rightAligned">Amount Paid</td>
-			<td><input type="text" name="amountpaid" id="amountpaid" class="longTxt"/></td>
+			<td class="rightAligned">Amount Paid:</td>
+			<td><input type="text" id="amountpaid" class="longTxt"/></td>
 		</tr>
 	</table>
 	<div>
@@ -224,6 +256,7 @@
 			height: 280,
 			resizable: false
 		});
+		$("#creditContainer").hide();
 	});
 
 	function openDialog() {
@@ -231,7 +264,38 @@
 	}
 
 	function saveCredit() {
+		var name = $("#name").val();
+		$("#creditName span").html(name);
+		$("#creditName input").val(name);
+
+		var address = $("#address").val();
+		$("#creditAddress span").html(address);
+		$("#creditAddress input").val(address);
+
+		var contact = $("#contact").val();
+		$("#creditContact span").html(contact);
+		$("#creditContact input").val(contact);
+
+		var amount = $("#amountpaid").val();
+		$("#creditAmount span").html(amount);
+		$("#creditAmount input").val(amount);
+
+		$("#creditContainer").fadeIn();
 		$("#creditFormContainer").dialog("close");
+
+		$("#creditDetailsBtn img").prop("src", "/public/images/icons/delete2.png");
+		$("#creditDetailsBtn p").html("Clear Credit Details");
+		$("#creditDetailsBtn").prop("href", "javascript:clearCredit()");
+	}
+
+	function clearCredit() {
+		$("#creditContainer input").each(function(){
+			$(this).val("");
+		});
+		$("#creditContainer").hide();
+		$("#creditDetailsBtn img").prop("src", "/public/images/icons/add.png");
+		$("#creditDetailsBtn p").html("Add Credit Details");
+		$("#creditDetailsBtn").prop("href", "javascript:openDialog()");
 	}
 
 	function updatePrice(obj) {
@@ -281,6 +345,7 @@
 		if (quantityVal <= 0 || isNaN(quantityVal)) {
 			$("#qtyerror").show().html("<p style = 'margin : 3px; background-color:red; border-radius:5px'>Quantity must be greater than 0 ");
 			$("#quantity_" + rowId).css("border-color","#F5646C");
+			$("#qtyerror").delay(3000).fadeOut(1000);
 			$("#quantity_" + rowId).focus();
 		} else {
 			$("#quantity_" + rowId).css("border-color","#8EA7D1");
