@@ -41,7 +41,11 @@ class Credit_detail_model extends CI_Model
 			$this->db->where('creditDetailId', $creditDetailId);
 		}
 		$query = $this->db->get();
-		return $query->result_array();
+		$result = $query->result_array();
+		if ($creditDetailId) {
+			return array_pop($result);
+		}
+		return $result;
 	}
 
 

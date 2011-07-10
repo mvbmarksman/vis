@@ -67,4 +67,13 @@ class Sales_transaction_model extends MY_Model
 		$query = $this->db->get();
 		return $query->result_array();
 	}
+
+	public function gettransactiondetail($creditDetailId) {
+		$this->db->select();
+		$this->db->from(self::TBL_NAME);
+		$this->db->where('creditDetailId', $creditDetailId);
+		$query = $this->db->get();
+		$result = $query->result_array();
+		return $result;
+	}
 }

@@ -10,12 +10,20 @@ class Credit_payment extends MY_Controller {
 
 	public function getcreditdetail() {
 		$creditDetailId = $this->input->post('creditDetailId');
+		$this->load->model('credit_detail_model');
+		$this->load->model('sales_transaction_model');
+		$this->load->model('credit_payment_model');
 		$this->load->library('view');
 
 		// TODO query details
-		$data['name'] = 'Mark';
-
-		$contents = $this->view->load('creditdetails', 'credit_payment/creditdetails', array('data' => $data));
-		echo $contents;
+		$creditDetail = $this->credit_detail_model->fetch($creditDetailId);
+		$transactionDetails = $this->sales_transaction_model->gettransactiondetail($creditDetailId);
+		$paymentDetails = $this->credit_payment_model -> getpaymentdetails($creditDetailId);
+		$content = $this->view->load('creditdetails', 'credit_payment/creditdetails', array(
+			'creditDetail' 			=> $creditDetail,
+			'transactionDetails' 	=> $transactionDetails,
+			'paymentDetails'		=> $paymentDetails
+		));
+		$this->view->render();
 	}
 }

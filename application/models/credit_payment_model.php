@@ -52,4 +52,13 @@ class Credit_payment_model extends CI_Model
 		}
 		$this->db->delete(self:: TBL_NAME, array('creditPaymentId' => $creditPaymentId));
 	}
+
+	public function getpaymentdetails($creditDetailId){
+		$this->db->select();
+		$this->db->from(self::TBL_NAME);
+		$this->db->where('creditDetailId', $creditDetailId);
+		$query = $this->db->get();
+		$result = $query->result_array();
+		return $result;
+	}
 }

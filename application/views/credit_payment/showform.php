@@ -19,9 +19,14 @@
 
 	function getCreditDetail() {
 		var creditDetailId = $("#creditDetail").val();
-		$.post("/credit_payment/getcreditdetail/", {creditDetailId : creditDetailId}, function(data) {
-			$("#creditDetails").html(data);
-		});
+		if (creditDetailId != 0){
+			$.post("/credit_payment/getcreditdetail/", {creditDetailId : creditDetailId}, function(data) {
+				$("#creditDetails").html(data);
+			});
+		}
+		else{
+			$("#creditDetails").html("");
+		}
 	}
 
 
