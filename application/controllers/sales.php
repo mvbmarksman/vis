@@ -1,94 +1,124 @@
 <?php
 class Sales extends MY_Controller {
 
-	public function salesform() {
+
+	public function __construct() {
+		parent::__construct();
+		$this->load->model('sales_transaction_model');
 		$this->load->model('item_detail_model');
 		$this->load->model('sales_model');
+		$this->load->model('credit_detail_model');
+		$this->load->model('credit_payment_model');
 		$this->load->model('item_model');
+	}
+
+	public function salesform() {
 		$itemDetails = $this->item_detail_model->fetch();
 		$this->renderView('salesform', array('itemDetails' => $itemDetails));
 	}
 
 	public function processsalesform() {
-		$this->load->model('sales_transaction_model');
-		$this->load->model('item_detail_model');
-		$this->load->model('sales_model');
-		$this->load->model('credit_detail_model');
-		$name = $this->input->post('name');
-		$creditDetailId = null;
+		$creditDetailId = $this->_saveCreditDetail($this->input->post());
 
-		// TODO extract to fxn
-		if (($name) != ''){
-			$credit = new Credit_model();
-			$credit->fullName		= $name;
-			$credit->address		= $this->input->post('address');
-			$credit->phoneNo	 	= $this->input->post('phoneno');
-			$this->credit_model->save($credit);
-			$creditDetailId = $this->db->insert_id();
-		}
-
+		// save Sales data
 		$sales_transaction= new Sales_transaction_model();
-		$sales_transaction->date = date("Y-m-d H:i:s");
-		$sales_transaction->userId = 1; //TODO CHANGE
+		$sales_transaction->userId = 1; //TODO stub data
 		$sales_transaction->isFullyPaid = $creditDetailId ? 0 : 1;
 		$sales_transaction->creditDetailId = $creditDetailId;
 
 		$this->sales_transaction_model->save($sales_transaction);
-		$itemDetailId = $this->input->post('item');
-		$qty = $this->input->post('qty');
 		$salesTransactionId = $this->db->insert_id();
 
+		$itemDetailIds = $this->input->post('item');
+		$qty = $this->input->post('qty');
 		$discount = $this->input->post('discount');
-		$storeId = 1;  //TODO change this pls
+		$storeId = 1;  //TODO stub data
+		$vats = $this->input->post('vat');
 
-		$vat = $this->input->post('vat');
-		$unitPrice = $this->item_detail_model->fetch($itemDetailId[0]);
-		$totalPrice = 0;
-
-		if (!empty($vat)) {
-			foreach ($vat as $no){
-				$isVAT[substr($no, 4)] = 1;
+		if (!empty($vats)) {
+			foreach ($vats as $vatId){
+				$isVAT[substr($vatId, 4)] = true;
 			}
 		}
 
-		$ctr = 1;
-		while (isset($itemDetailId[$ctr])) {
+		// save sale transactions
+		$row = 1;
+		$totalPrice = 0;
+		unset($itemDetailIds[0]);	// remove the data coming from the template
+		$salesObjs = array();
+		foreach ($itemDetailIds as $itemDetailId) {
 			$sales = new Sales_model();
 			$sales->salesTransactionId = $salesTransactionId;
-
-			$sales->itemDetailId = $itemDetailId[$ctr];
-			$unitPrice = $this->item_detail_model->fetch($itemDetailId[$ctr]);
-			$sales->unitPrice = $unitPrice[0]['sellingPrice'];
-			$sales->discount = $discount[$ctr];
+			$sales->itemDetailId = $itemDetailId;
+			$itemDetailRow = $this->item_detail_model->fetch($itemDetailId);
+			$sales->unitPrice = $itemDetailRow['sellingPrice'];
+			$sales->discount = $discount[$row];
 			$sales->storeId = $storeId;
-			$sales->isVAT = 0;
-			$sales->itemDetailId = $itemDetailId[$ctr];
-			$sales->qty = $qty[$ctr];
-			if (isset($isVAT[$ctr])){
-				$sales->isVAT = $isVAT[$ctr];
-			}
-			$totalPrice = $totalPrice + $qty[$ctr] * $unitPrice[0]['sellingPrice'] - $discount[$ctr];
-			$repeat = 0;
-			for ($idCtr = 1;$idCtr < $ctr && $repeat != 1;$idCtr++){
-				if ($itemDetailId[$idCtr] == $itemDetailId[$ctr]){
-					$sales->salesId =$salesId[$idCtr];
-					$sales->itemDetailId = $itemDetailId[$ctr];
-					$qtyDuplicate = $this->sales_model->fetch($salesId[$idCtr]);
-					$sales->qty = $qty[$ctr] + $qtyDuplicate[0]['qty'];
-					$sales->discount = $discount[$ctr] + $discount[$idCtr] ;
-					$repeat = 1;
-				}
-			}
+			$sales->isVAT = (empty($isVAT[$row])) ? 0 : 1;
+			$sales->qty = $qty[$row];
+			$totalPrice += $qty[$row] * $itemDetailRow['sellingPrice'] - $discount[$row];
+			$salesObjs[] = $sales;
+			$row++;
+		}
+
+		$salesObjs = $this->_mergeSimilarItems($salesObjs);
+		foreach ($salesObjs as $sales) {
 			$this->sales_model->save($sales);
-			$salesId[$ctr] = $this->db->insert_id();
-			$ctr++;
 		}
 		$sales_transaction->salesTransactionId = $salesTransactionId;
 		$sales_transaction->totalPrice = $totalPrice;
 		$this->sales_transaction_model->save($sales_transaction);
-
+		$this->_saveCreditPayment($creditDetailId, $salesTransactionId, $this->input->post('creditAmount'));
 		$this->load->helper('url');
 		redirect('/sales/summary/?transactionId=' . $salesTransactionId, 'refresh');
+	}
+
+	private function _saveCreditDetail($data) {
+		if (empty($data['creditName'])) {
+			return;
+		}
+		$credit = new Credit_detail_model();
+		$credit->fullName = $data['creditName'];
+		$credit->address = $data['creditAddress'];
+		$credit->phoneNo = $data['creditContact'];
+		$this->credit_detail_model->save($credit);
+		return $this->db->insert_id();
+	}
+
+	private function _saveCreditPayment($creditDetailId, $saleTransactionId, $amount) {
+		if (empty($creditDetailId) || empty($saleTransactionId) || empty($amount)) {
+			return;
+		}
+		$creditPayment = new Credit_payment_model();
+		$creditPayment->amount = $amount;
+		$creditPayment->creditDetailId = $creditDetailId;
+		$creditPayment->salesTransactionId = $saleTransactionId;
+		$this->credit_payment_model->save($creditPayment);
+	}
+
+
+	private function _mergeSimilarItems($items) {
+		if (empty($items) || count($items) <= 1) {
+			return $items;
+		}
+		$merged = array();
+		foreach ($items as $item) {
+			$merged[$item->itemDetailId][$item->isVAT]['salesTransactionId'] = $item->salesTransactionId;
+			$merged[$item->itemDetailId][$item->isVAT]['itemDetailId'] = $item->itemDetailId;
+			$merged[$item->itemDetailId][$item->isVAT]['unitPrice'] = $item->unitPrice;
+			$merged[$item->itemDetailId][$item->isVAT]['storeId'] = $item->itemDetailId;
+			$merged[$item->itemDetailId][$item->isVAT]['isVAT'] = $item->isVAT;
+			@$merged[$item->itemDetailId][$item->isVAT]['qty'] += $item->qty;
+			@$merged[$item->itemDetailId][$item->isVAT]['discount'] += $item->discount;
+		}
+
+		$flattened = array();
+		foreach ($merged as $item) {
+			foreach ($item as $i) {
+				$flattened[] = $i;
+			}
+		}
+		return $flattened;
 	}
 
 	public function summary() {

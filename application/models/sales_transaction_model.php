@@ -5,7 +5,6 @@ class Sales_transaction_model extends MY_Model
 	const TBL_NAME = 'SalesTransaction';
 
 	public $salesTransactionId;
-	public $date;
 	public $userId;
 	public $creditDetailId;
 	public $totalPrice;
@@ -18,10 +17,6 @@ class Sales_transaction_model extends MY_Model
 		if (!$salesTransactionModel) {
 			throw new DAOException("Must specify salesTransactionModel.");
 		}
-
-		$date = $salesTransactionModel->date;
-		$formatted = date( 'Y-m-d H:i:s', strtotime($date));
-		$salesTransactionModel->date = $formatted;
 
 		if ($salesTransactionModel->salesTransactionId) {
 			$salesTransactionId = $salesTransactionModel->salesTransactionId;

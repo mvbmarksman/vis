@@ -46,7 +46,11 @@ class Item_detail_model extends MY_Model implements IAbstractDAO
 			$this->db->where('itemDetailId', $itemDetailId);
 		}
 		$query = $this->db->get();
-		return $query->result_array();
+		$result = $query->result_array();
+		if ($itemDetailId) {
+			return array_pop($result);
+		}
+		return $result;
 	}
 
 
