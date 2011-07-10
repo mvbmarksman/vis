@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.1.49, for debian-linux-gnu (i686)
+-- MySQL dump 10.13  Distrib 5.1.54, for debian-linux-gnu (i686)
 --
 -- Host: localhost    Database: vis
 -- ------------------------------------------------------
--- Server version	5.1.49-1ubuntu8
+-- Server version	5.1.54-1ubuntu4
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -28,7 +28,7 @@ CREATE TABLE `CreditDetail` (
   `address` varchar(200) COLLATE utf8_bin DEFAULT NULL,
   `phoneNo` varchar(20) COLLATE utf8_bin DEFAULT NULL,
   PRIMARY KEY (`creditDetailId`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -37,7 +37,6 @@ CREATE TABLE `CreditDetail` (
 
 LOCK TABLES `CreditDetail` WRITE;
 /*!40000 ALTER TABLE `CreditDetail` DISABLE KEYS */;
-INSERT INTO `CreditDetail` VALUES (1,'erick','erick','129838'),(3,'','',''),(4,'Erick Masanque','Port-Area','11203-12912-12'),(5,'asdas','asdsad','122'),(6,'asdas','asdsad','122'),(7,'','',''),(8,'','','');
 /*!40000 ALTER TABLE `CreditDetail` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -52,7 +51,7 @@ CREATE TABLE `CreditPayment` (
   `creditPaymentId` int(11) NOT NULL AUTO_INCREMENT,
   `creditDetailId` int(11) NOT NULL,
   `salesTransactionId` int(11) NOT NULL,
-  `datePaid` datetime NOT NULL,
+  `datePaid` datetime DEFAULT NULL,
   `amount` decimal(10,0) NOT NULL,
   PRIMARY KEY (`creditPaymentId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -66,6 +65,22 @@ LOCK TABLES `CreditPayment` WRITE;
 /*!40000 ALTER TABLE `CreditPayment` DISABLE KEYS */;
 /*!40000 ALTER TABLE `CreditPayment` ENABLE KEYS */;
 UNLOCK TABLES;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = '' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER trig_credit_payment_insert BEFORE INSERT ON `CreditPayment`
+    FOR EACH ROW SET NEW.datePaid = NOW() */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
 -- Table structure for table `DailyExpenseTransaction`
@@ -261,7 +276,7 @@ CREATE TABLE `Sales` (
   CONSTRAINT `Sales_ibfk_1` FOREIGN KEY (`salesTransactionId`) REFERENCES `SalesTransaction` (`salesTransactionID`),
   CONSTRAINT `Sales_ibfk_2` FOREIGN KEY (`itemDetailId`) REFERENCES `ItemDetail` (`itemDetailId`),
   CONSTRAINT `Sales_ibfk_3` FOREIGN KEY (`storeId`) REFERENCES `Store` (`storeId`)
-) ENGINE=InnoDB AUTO_INCREMENT=77 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -270,7 +285,6 @@ CREATE TABLE `Sales` (
 
 LOCK TABLES `Sales` WRITE;
 /*!40000 ALTER TABLE `Sales` DISABLE KEYS */;
-INSERT INTO `Sales` VALUES (5,1,1,'0.0000',0,20,1,0),(6,1,1,'1.0000',1,20,1,0),(7,1,1,'1.0000',1,20,1,0),(9,1,2,'1.0000',1,20,1,0),(12,1,1,'1.0000',1,50,1,0),(13,1,2,'1.0000',1,50,1,0),(14,1,2,'1.0000',1,50,1,1),(15,1,2,'1.0000',1,50,1,1),(16,1,2,'1.0000',1,50,1,1),(17,1,2,'1.0000',1,50,1,1),(18,1,1,'1.0000',1,20,1,0),(19,14,3,'1.0000',1,50,1,1),(20,15,3,'1.0000',1,50,1,1),(21,16,3,'1.0000',1,50,1,1),(22,18,1,'1.0000',1,1,1,1),(23,19,2,'2.0000',2,2,2,1),(24,24,1,'1.0000',1,1,2,0),(25,25,1,'1.0000',1,1,2,0),(26,26,1,'1.0000',1,1,2,0),(27,28,2,'2.0000',2,2,2,0),(28,29,2,'2.0000',2,2,2,0),(29,30,2,'2.0000',2,2,2,0),(30,1,1,'1.0000',1,20,1,0),(31,53,1,'300.0000',1,3,1,0),(32,53,2,'300.0000',2,2,1,1),(33,53,3,'100.0000',3,1,1,1),(34,54,2,'300.0000',12,12,1,0),(35,55,2,'300.0000',12,12,1,0),(36,56,2,'300.0000',12,12,1,0),(37,57,1,'300.0000',2,0,1,0),(38,58,2,'300.0000',12,0,1,1),(39,59,2,'300.0000',12,0,1,1),(40,60,2,'300.0000',12,0,1,1),(41,62,2,'300.0000',12,0,1,1),(42,63,2,'300.0000',12,0,1,1),(43,64,2,'300.0000',12,0,1,1),(44,65,2,'300.0000',12,0,1,1),(45,66,2,'300.0000',12,0,1,1),(46,67,2,'300.0000',2,0,1,0),(47,68,2,'300.0000',2,0,1,0),(48,71,2,'300.0000',2,0,1,0),(49,72,1,'300.0000',12,0,1,0),(50,73,1,'300.0000',12,0,1,0),(51,74,2,'300.0000',12,0,1,0),(52,75,1,'300.0000',1,0,1,0),(53,76,2,'300.0000',12,0,1,0),(54,77,1,'300.0000',12,0,1,0),(55,77,2,'300.0000',1,0,1,1),(56,78,1,'300.0000',4,0,1,0),(57,78,2,'300.0000',2,0,1,0),(58,79,1,'300.0000',6,0,1,0),(59,79,2,'300.0000',3,0,1,0),(60,79,3,'100.0000',2,0,1,0),(61,79,1,'300.0000',3,0,1,0),(62,80,1,'300.0000',2,0,1,0),(63,81,1,'300.0000',1,0,1,0),(64,82,1,'300.0000',6,0,1,0),(65,83,1,'300.0000',2,0,1,0),(66,83,2,'300.0000',1,0,1,0),(67,83,3,'100.0000',1,0,1,0),(68,84,1,'300.0000',2,0,1,0),(69,84,2,'300.0000',111,0,1,0),(70,84,3,'100.0000',1,0,1,0),(71,85,1,'300.0000',2,200,1,0),(72,86,1,'300.0000',2,100,1,0),(73,87,1,'300.0000',3,200,1,0),(74,88,2,'300.0000',2,0,1,0),(75,89,3,'100.0000',2,0,1,0),(76,90,2,'300.0000',1,0,1,0);
 /*!40000 ALTER TABLE `Sales` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -291,7 +305,7 @@ CREATE TABLE `SalesTransaction` (
   PRIMARY KEY (`salesTransactionID`),
   KEY `userId` (`userId`),
   CONSTRAINT `SalesTransaction_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `User` (`userId`)
-) ENGINE=InnoDB AUTO_INCREMENT=91 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -300,9 +314,24 @@ CREATE TABLE `SalesTransaction` (
 
 LOCK TABLES `SalesTransaction` WRITE;
 /*!40000 ALTER TABLE `SalesTransaction` DISABLE KEYS */;
-INSERT INTO `SalesTransaction` VALUES (1,'0000-00-00 00:00:00',1,NULL,NULL,1),(2,'2011-06-26 00:00:00',1,NULL,NULL,1),(3,'1970-01-01 08:00:00',1,NULL,NULL,1),(4,'1970-01-01 08:00:00',1,NULL,NULL,1),(5,'1970-01-01 08:00:00',1,NULL,NULL,1),(6,'1970-01-01 08:00:00',1,NULL,NULL,1),(7,'1970-01-01 08:00:00',1,NULL,NULL,1),(8,'1970-01-01 08:00:00',1,NULL,NULL,1),(9,'1970-01-01 08:00:00',1,NULL,NULL,1),(10,'1970-01-01 08:00:00',1,NULL,NULL,1),(11,'1970-01-01 08:00:00',1,NULL,NULL,1),(12,'1970-01-01 08:00:00',1,NULL,NULL,1),(13,'2011-06-26 21:58:21',1,NULL,NULL,1),(14,'2011-06-26 22:00:43',1,NULL,NULL,1),(15,'2011-06-27 22:36:28',1,NULL,NULL,1),(16,'2011-06-27 22:36:48',1,NULL,NULL,1),(17,'2011-06-27 22:38:42',1,NULL,'100.0000',1),(18,'2011-06-27 22:39:27',1,NULL,NULL,1),(19,'2011-06-28 07:20:22',1,NULL,NULL,1),(20,'2011-06-28 07:22:49',1,NULL,NULL,1),(21,'2011-06-28 07:23:34',1,NULL,'5200.0000',1),(22,'2011-06-28 07:30:43',1,NULL,'5200.0000',1),(23,'2011-07-02 15:21:31',1,NULL,'0.0000',1),(24,'2011-07-02 17:53:31',1,NULL,'0.0000',1),(25,'2011-07-02 17:53:57',1,NULL,'3600.0000',1),(26,'2011-07-02 17:55:08',1,NULL,'4800.0000',1),(27,'2011-07-02 17:56:45',1,NULL,'3600.0000',1),(28,'2011-07-02 19:55:56',1,NULL,'3600.0000',1),(29,'2011-07-02 19:56:11',1,NULL,'3500.0000',1),(30,'2011-07-02 19:57:57',1,NULL,'0.0000',1),(31,'2011-07-02 20:02:52',1,NULL,'0.0000',1),(32,'2011-07-02 20:03:07',1,NULL,'0.0000',1),(33,'2011-07-02 20:03:17',1,NULL,'0.0000',1),(34,'2011-07-02 20:11:14',1,NULL,'0.0000',1),(35,'2011-07-02 20:52:54',1,NULL,'0.0000',1),(36,'2011-07-02 20:54:06',1,NULL,'0.0000',1),(37,'2011-07-02 20:54:30',1,NULL,'0.0000',1),(38,'2011-07-02 21:07:22',1,NULL,'3600.0000',1),(39,'2011-07-02 21:11:01',1,NULL,'0.0000',1),(40,'2011-07-02 21:11:42',1,NULL,'0.0000',1),(41,'2011-07-02 21:11:48',1,NULL,'3600.0000',1),(42,'2011-07-02 21:12:39',1,NULL,'0.0000',1),(43,'2011-07-02 21:13:49',1,NULL,'0.0000',1),(44,'2011-07-02 21:16:01',1,NULL,'3600.0000',1),(45,'2011-07-03 11:15:41',1,NULL,'0.0000',1),(46,'2011-07-03 11:15:53',1,NULL,'0.0000',1),(47,'2011-07-03 12:00:22',1,NULL,'3600.0000',1),(48,'2011-07-03 12:01:49',1,NULL,NULL,1),(49,'2011-07-03 12:02:50',1,NULL,NULL,1),(50,'2011-07-03 12:03:39',1,NULL,NULL,1),(51,'2011-07-03 12:04:38',1,NULL,NULL,1),(52,'2011-07-03 12:35:33',1,NULL,'297.0000',1),(53,'2011-07-03 12:36:54',1,NULL,'1194.0000',1),(54,'2011-07-03 13:09:39',1,NULL,'3588.0000',1),(55,'2011-07-03 13:11:23',1,NULL,'3588.0000',1),(56,'2011-07-03 13:11:48',1,NULL,'3588.0000',1),(57,'2011-07-03 15:38:33',1,6,'600.0000',0),(58,'2011-07-03 15:39:12',1,7,'3600.0000',0),(59,'2011-07-03 15:39:28',1,8,'3600.0000',0),(60,'2011-07-03 15:40:10',1,NULL,'3600.0000',1),(62,'2011-07-03 15:41:54',1,NULL,'3600.0000',1),(63,'2011-07-03 15:42:00',1,NULL,'3600.0000',1),(64,'2011-07-03 15:42:02',1,NULL,'3600.0000',1),(65,'2011-07-03 15:42:03',1,NULL,'3600.0000',1),(66,'2011-07-03 16:07:30',1,NULL,'3600.0000',1),(67,'2011-07-03 16:07:45',1,NULL,'600.0000',1),(68,'2011-07-03 17:13:22',1,NULL,'600.0000',1),(69,'2011-07-03 17:15:49',1,NULL,NULL,1),(70,'2011-07-03 17:16:01',1,NULL,NULL,1),(71,'2011-07-03 17:17:15',1,NULL,'600.0000',1),(72,'2011-07-03 18:41:04',1,NULL,'3600.0000',1),(73,'2011-07-03 20:53:36',1,NULL,'3600.0000',1),(74,'2011-07-03 20:53:49',1,NULL,'3600.0000',1),(75,'2011-07-03 20:54:26',1,NULL,'300.0000',1),(76,'2011-07-07 20:36:46',1,NULL,'3600.0000',1),(77,'2011-07-07 20:37:25',1,NULL,'3900.0000',1),(78,'2011-07-09 05:16:12',1,NULL,'1800.0000',1),(79,'2011-07-09 05:17:28',1,NULL,'3800.0000',1),(80,'2011-07-09 05:18:42',1,NULL,'900.0000',1),(81,'2011-07-09 05:23:52',1,NULL,'33900.0000',1),(82,'2011-07-09 05:25:20',1,NULL,'1800.0000',1),(83,'2011-07-09 05:26:20',1,NULL,'1000.0000',1),(84,'2011-07-09 05:27:10',1,NULL,'34000.0000',1),(85,'2011-07-09 22:10:15',1,NULL,'400.0000',1),(86,'2011-07-09 22:10:30',1,NULL,'500.0000',1),(87,'2011-07-09 22:10:47',1,NULL,'700.0000',1),(88,'2011-07-10 00:26:16',1,NULL,'600.0000',1),(89,'2011-07-10 00:27:45',1,NULL,'200.0000',1),(90,'2011-07-10 00:29:34',1,NULL,'300.0000',1);
 /*!40000 ALTER TABLE `SalesTransaction` ENABLE KEYS */;
 UNLOCK TABLES;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = '' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER trig_sales_transaction_insert BEFORE INSERT ON `SalesTransaction`
+    FOR EACH ROW SET NEW.date = NOW() */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
 -- Table structure for table `Store`
@@ -390,4 +419,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-07-10  0:30:50
+-- Dump completed on 2011-07-10 18:01:21
