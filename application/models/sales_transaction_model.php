@@ -64,7 +64,7 @@ class Sales_transaction_model extends MY_Model
 		$this->db->join('ItemDetail as id', 'id.itemDetailId = s.itemDetailId');
 		$this->db->join('CreditDetail as c', 'c.creditDetailId = st.creditDetailId', 'left');
 		$this->db->join('CreditPayment as cp',
-			'cp.creditDetailId = c.creditDetailId and cp.salesTransactionId = s.salesTransactionId');
+			'cp.creditDetailId = c.creditDetailId and cp.salesTransactionId = s.salesTransactionId', 'left');
 		$this->db->where('s.salesTransactionId', $transactionId);
 		$query = $this->db->get();
 		return $query->result_array();
