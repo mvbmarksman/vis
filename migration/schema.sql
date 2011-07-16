@@ -16,31 +16,6 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `CreditDetail`
---
-
-DROP TABLE IF EXISTS `CreditDetail`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `CreditDetail` (
-  `creditDetailId` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `fullName` varchar(100) COLLATE utf8_bin NOT NULL DEFAULT '',
-  `address` varchar(200) COLLATE utf8_bin DEFAULT NULL,
-  `phoneNo` varchar(20) COLLATE utf8_bin DEFAULT NULL,
-  PRIMARY KEY (`creditDetailId`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `CreditDetail`
---
-
-LOCK TABLES `CreditDetail` WRITE;
-/*!40000 ALTER TABLE `CreditDetail` DISABLE KEYS */;
-/*!40000 ALTER TABLE `CreditDetail` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `CreditPayment`
 --
 
@@ -49,12 +24,12 @@ DROP TABLE IF EXISTS `CreditPayment`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `CreditPayment` (
   `creditPaymentId` int(11) NOT NULL AUTO_INCREMENT,
-  `creditDetailId` int(11) NOT NULL,
+  `customerId` int(11) NOT NULL,
   `salesTransactionId` int(11) NOT NULL,
   `datePaid` datetime DEFAULT NULL,
   `amount` decimal(10,0) NOT NULL,
   PRIMARY KEY (`creditPaymentId`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -63,6 +38,7 @@ CREATE TABLE `CreditPayment` (
 
 LOCK TABLES `CreditPayment` WRITE;
 /*!40000 ALTER TABLE `CreditPayment` DISABLE KEYS */;
+INSERT INTO `CreditPayment` VALUES (1,1,1,'2011-07-10 19:10:10','100');
 /*!40000 ALTER TABLE `CreditPayment` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -81,6 +57,33 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+
+--
+-- Table structure for table `Customer`
+--
+
+DROP TABLE IF EXISTS `Customer`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Customer` (
+  `customerId` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `firstname` varchar(100) COLLATE utf8_bin NOT NULL,
+  `lastname` varchar(100) COLLATE utf8_bin NOT NULL,
+  `address` varchar(200) COLLATE utf8_bin DEFAULT NULL,
+  `phoneNo` varchar(20) COLLATE utf8_bin DEFAULT NULL,
+  PRIMARY KEY (`customerId`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Customer`
+--
+
+LOCK TABLES `Customer` WRITE;
+/*!40000 ALTER TABLE `Customer` DISABLE KEYS */;
+INSERT INTO `Customer` VALUES (1,'marky','','test','12345');
+/*!40000 ALTER TABLE `Customer` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `DailyExpenseTransaction`
@@ -208,7 +211,6 @@ CREATE TABLE `ItemDetail` (
   `unit` varchar(10) COLLATE utf8_bin NOT NULL,
   `buyingPrice` decimal(18,4) NOT NULL,
   `isUsed` tinyint(1) NOT NULL,
-  `sellingPrice` decimal(18,4) NOT NULL,
   `supplierId` int(10) unsigned DEFAULT NULL,
   PRIMARY KEY (`itemDetailId`),
   KEY `itemTypeId` (`itemTypeId`),
@@ -225,7 +227,7 @@ CREATE TABLE `ItemDetail` (
 
 LOCK TABLES `ItemDetail` WRITE;
 /*!40000 ALTER TABLE `ItemDetail` DISABLE KEYS */;
-INSERT INTO `ItemDetail` VALUES (1,'ADP01',1,'Bosskit Adaptor Toyota T2','pcs','280.0000',0,'300.0000',NULL),(2,'ADP02',1,'Bosskit Adaptor Toyota T16','pcs','280.0000',0,'300.0000',NULL),(3,NULL,2,'Tree Frog Jasmine Cherry','pcs','46.0000',0,'100.0000',NULL),(5,'sampleCode',1,'Keyboard','dozen','100.0000',1,'200.0000',NULL);
+INSERT INTO `ItemDetail` VALUES (1,'ADP01',1,'Bosskit Adaptor Toyota T2','pcs','280.0000',0,NULL),(2,'ADP02',1,'Bosskit Adaptor Toyota T16','pcs','280.0000',0,NULL),(3,NULL,2,'Tree Frog Jasmine Cherry','pcs','46.0000',0,NULL),(5,'sampleCode',1,'Keyboard','dozen','100.0000',1,NULL);
 /*!40000 ALTER TABLE `ItemDetail` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -264,7 +266,7 @@ CREATE TABLE `Sales` (
   `salesId` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `salesTransactionId` int(10) unsigned NOT NULL,
   `itemDetailId` int(10) unsigned NOT NULL,
-  `unitPrice` decimal(18,4) unsigned NOT NULL,
+  `sellingPrice` decimal(18,4) unsigned NOT NULL,
   `qty` int(10) unsigned NOT NULL,
   `discount` int(10) unsigned DEFAULT NULL,
   `storeId` int(10) unsigned NOT NULL,
@@ -299,9 +301,11 @@ CREATE TABLE `SalesTransaction` (
   `salesTransactionID` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `date` datetime DEFAULT NULL,
   `userId` int(10) unsigned NOT NULL,
-  `creditDetailId` int(10) unsigned DEFAULT NULL,
+  `customerId` int(10) unsigned DEFAULT NULL,
   `totalPrice` decimal(18,4) DEFAULT NULL,
   `isFullyPaid` tinyint(1) NOT NULL,
+  `isCredit` tinyint(1) NOT NULL,
+  `creditTerm` int(11) NOT NULL,
   PRIMARY KEY (`salesTransactionID`),
   KEY `userId` (`userId`),
   CONSTRAINT `SalesTransaction_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `User` (`userId`)
@@ -419,4 +423,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-07-10 18:01:21
+-- Dump completed on 2011-07-17  2:35:30
