@@ -1,0 +1,97 @@
+@CHARSET "UTF-8";
+#salesForm {
+	margin: 5px 10px 10px 5px;
+	width: 750px;
+}
+
+#salesForm th {
+	border-bottom: 1px solid silver;
+	text-align: left;
+	color: #545454;
+	font-weight:bold;
+	padding: 5px 3px;
+}
+
+#salesForm tr:hover {
+	background: #E4EDF5;
+}
+
+#salesForm tr td {
+	padding: 5px 3px;
+	border-bottom: 1px solid #ddd;
+}
+
+#salesControls {
+	margin-left: 15px;
+}
+
+.removeBtn {
+	width: 16px;
+	height: 16px;
+	background-image: url("/public/images/icons/delete.png");
+	cursor: pointer;
+}
+
+#creditForm {
+	padding: 10px;
+}
+
+#creditForm tr td {
+	padding: 8px 5px;
+}
+
+#creditForm .rightAligned {
+	text-align: right;
+}
+
+#salesControls {
+	margin-left: 10px;
+}
+
+#salesSummary {
+	margin-top: 5px;
+	margin-left: 537px;
+}
+
+#salesSummaryContainer {
+	margin-bottom: 20px;
+}
+
+.salesSummaryLabel {
+	font-weight:bold;
+	width: 70px;
+	padding-right: 10px;
+	padding-top: 3px;
+}
+
+#error{
+	text-align: center;
+	font-size: 15px;
+	width : 40%;
+	margin : auto;
+}
+
+#creditForm tr td {
+	vertical-align: top;
+}
+#creditFormContainer div {
+	margin-top: 20px;
+	text-align: right;
+}
+
+#creditTable {
+	font-size: 12px;
+	margin-top: 5px;
+	width: 750px;
+}
+
+#creditTable tr {
+	color: #333;
+}
+#creditTable td {
+	padding: 3px;
+}
+
+#creditContainer dl {
+	margin: 10px 0px;
+}

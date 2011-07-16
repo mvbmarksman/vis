@@ -7,9 +7,18 @@ class MY_Controller extends CI_Controller {
 	private $_controllerName;
 	private $_model;
 
+	public $models;
+	public $libs;
+
 	public function __construct() {
 		parent::__construct();
 		$this->_controllerName = strtolower(get_class($this));
+		foreach ($this->models as $model) {
+			$this->load->model($model);
+		}
+		foreach ($this->libs as $lib) {
+			$this->load->library($lib);
+		}
 	}
 
 

@@ -8,14 +8,18 @@
     <link href="/public/css/vis.css" rel="stylesheet" type="text/css" media="screen"/>
     <link href="/public/css/form.css" rel="stylesheet" type="text/css" media="screen"/>
 
+    <?php foreach ($cssFiles as $css): ?>
+    	<link href="/public/css/<?php echo $css ?>" rel="stylesheet" type="text/css" media="screen"/>
+    <?php endforeach; ?>
+
     <script type="text/javascript" src="/public/js/jquery-1.6.1.min.js"></script>
-    
+
     <script type="text/javascript" src="/public/js/jquery-ui-1.8.14.redmond/js/jquery-ui-1.8.14.custom.min.js"></script>
     <link rel="stylesheet" type="text/css" href="/public/js/jquery-ui-1.8.14.redmond/css/redmond/jquery-ui-1.8.14.custom.css" />
-    
+
     <script type="text/javascript" src="/public/js/flexigrid/js/flexigrid.js"></script>
 	<link rel="stylesheet" type="text/css" href="/public/js/flexigrid/css/flexigrid.css" />
-	
+
 	<script type="text/javascript" src="/public/js/utils.js"></script>
   </head>
 
@@ -25,7 +29,7 @@
       <div id="header">
       	<h1>Vieva Auto Parts Inventory System</h1>
       </div>
-      
+
       <div id="accountBar">
       	Logged in as Mark [ <a href="#">Logout</a> ]
       </div>

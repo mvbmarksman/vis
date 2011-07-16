@@ -1,21 +1,29 @@
 <?php
-class Sales extends MY_Controller {
+class Sales extends MY_Controller
+{
+	public $models = array(
+		'sales_transaction_model',
+		'item_detail_model',
+		'sales_model',
+		'credit_detail_model',
+		'credit_payment_model',
+		'item_model',
+	);
 
-
-	public function __construct() {
-		parent::__construct();
-		$this->load->model('sales_transaction_model');
-		$this->load->model('item_detail_model');
-		$this->load->model('sales_model');
-		$this->load->model('credit_detail_model');
-		$this->load->model('credit_payment_model');
-		$this->load->model('item_model');
-	}
+	public $libs = array(
+		'view',
+	);
 
 	public function salesform() {
 		$itemDetails = $this->item_detail_model->fetch();
-		$this->renderView('salesform', array('itemDetails' => $itemDetails));
+		$this->view->addCss('salesform.css');
+		$creditDetailsForm = $this->view->load('creditdetailsform', 'sales/_creditdetailsform', array());
+		$this->renderView('salesform', array(
+			'itemDetails' => $itemDetails,
+			'creditDetailsForm' => $creditDetailsForm)
+		);
 	}
+
 
 	public function processsalesform() {
 		$creditDetailId = $this->_saveCreditDetail($this->input->post());

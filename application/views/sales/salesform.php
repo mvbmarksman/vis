@@ -1,102 +1,3 @@
-<style>
-#salesForm {
-	margin: 5px 10px 10px 5px;
-	width: 750px;
-}
-
-#salesForm th {
-	border-bottom: 1px solid silver;
-	text-align: left;
-	color: #545454;
-	font-weight:bold;
-	padding: 5px 3px;
-}
-
-#salesForm tr:hover {
-	background: #E4EDF5;
-}
-
-#salesForm tr td {
-	padding: 5px 3px;
-	border-bottom: 1px solid #ddd;
-}
-
-#salesControls {
-	margin-left: 15px;
-}
-
-.removeBtn {
-	width: 16px;
-	height: 16px;
-	background-image: url("/public/images/icons/delete.png");
-	cursor: pointer;
-}
-
-#creditForm {
-	padding: 10px;
-}
-
-#creditForm tr td {
-	padding: 8px 5px;
-}
-
-#creditForm .rightAligned {
-	text-align: right;
-}
-
-#salesControls {
-	margin-left: 10px;
-}
-
-#salesSummary {
-	margin-top: 5px;
-	margin-left: 537px;
-}
-
-#salesSummaryContainer {
-	margin-bottom: 20px;
-}
-
-.salesSummaryLabel {
-	font-weight:bold;
-	width: 70px;
-	padding-right: 10px;
-	padding-top: 3px;
-}
-
-#error{
-	text-align: center;
-	font-size: 15px;
-	width : 40%;
-	margin : auto;
-}
-
-#creditForm tr td {
-	vertical-align: top;
-}
-#creditFormContainer div {
-	margin-top: 20px;
-	text-align: right;
-}
-
-#creditTable {
-	font-size: 12px;
-	margin-top: 5px;
-	width: 750px;
-}
-
-#creditTable tr {
-	color: #333;
-}
-#creditTable td {
-	padding: 3px;
-}
-
-#creditContainer dl {
-	margin: 10px 0px;
-}
-
-</style>
 <div id ="error">
 	<div id = "itemerror"></div>
 	<div id = "qtyerror"></div>
@@ -198,30 +99,8 @@
 	</div>
 </div>
 
-
-
 <div id="creditFormContainer">
-	<table id="creditForm">
-		<tr>
-			<td class="rightAligned">Name:</td>
-			<td><input type="text" id="name" class="longTxt"></td>
-		</tr>
-		<tr>
-			<td class="rightAligned">Address:</td>
-			<td><textarea rows="3" cols="22" id="address"></textarea></td>
-		</tr>
-		<tr>
-			<td class="rightAligned">Contact Number:</td>
-			<td><input type="text" id="contact" class="longTxt"/></td>
-		</tr>
-		<tr>
-			<td class="rightAligned">Amount Paid:</td>
-			<td><input type="text" id="amountpaid" class="longTxt"/></td>
-		</tr>
-	</table>
-	<div>
-		<input type="button" onclick="javascript:saveCredit()" value="Save Credit Details"/>
-	</div>
+	<?php $creditdetailsform->render() ?>
 </div>
 
 
@@ -229,7 +108,7 @@
 	// creates a lookup so that we can update the price without an ajax call
 	var priceLookup = new Array();
 	<?php foreach ($itemDetails as $itemDetail):?>
-		priceLookup["<?php echo $itemDetail['itemDetailId']; ?>"] = "<?php echo $itemDetail['sellingPrice'] ?>";
+		priceLookup["<?php echo $itemDetail['itemDetailId']; ?>"] = "<?php echo $itemDetail['buyingPrice'] ?>";
 	<? endforeach; ?>
 
 	var rowCtr = 1;
