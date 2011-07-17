@@ -35,7 +35,7 @@
 					</select>
 				</td>
 				<td>
-					<span id="price_-rowCtr-">----</span>
+					<span id="price_-rowCtr-"></span>
 				</td>
 				<td>
 					<input name = "qty[]" type="text" class="smallTxt rightAligned" id="quantity_-rowCtr-" onblur="updateSubTotal(this)"/>
@@ -47,13 +47,13 @@
 					<input name = "vat[]" type="checkbox" id="vat_-rowCtr-" value="vat_-rowCtr-" onclick="updateSubTotal(this)" />
 				</td>
 				<td>
-					<span class = "subtotal" id="subtotal_-rowCtr-">----</span>
+					<span class = "subtotal" id="subtotal_-rowCtr-"></span>
 				</td>
 				<td>
 					<div class="removeBtn" id="remove_-rowCtr-" onclick="removeRow(this)"></div>
 				</td>
 				<td>
-					<span class="subtotalvat" id="subtotalvat_-rowCtr-">----</span>
+					<span class="subtotalvat" id="subtotalvat_-rowCtr-"></span>
 				</td>
 			</tr>
 		</tbody>
@@ -198,11 +198,11 @@
 	}
 
 	function clearRow(rowId) {
-		$("#price_" + rowId).html("----");
+		$("#price_" + rowId).html("");
 		$("#qty_" + rowId).val(null);
 		$("#discount_" + rowId).val(null);
 		$("#vat_" + rowId).attr("checked", false);
-		$("#subtotal_" + rowId).html("----");
+		$("#subtotal_" + rowId).html("");
 	}
 	function submitForm(){
 		if (validateForm() == true) {
@@ -234,7 +234,7 @@
 		}
 
 		if (isNaN(subtotal)){
-			subtotal = "----";
+			subtotal = "";
 		}
 		else{
 			subtotal = subtotal.toFixed(2);
@@ -398,8 +398,8 @@
 	}
 
 	function addSalesSummary() {
-		$("#vatable").html("---- ");
-		$("#totalvat").html("----");
-		$("#totalprice").html("----");
+		$("#vatable").html(" ");
+		$("#totalvat").html("");
+		$("#totalprice").html("");
 	}
 </script>
