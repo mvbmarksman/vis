@@ -21,6 +21,10 @@
 	<link rel="stylesheet" type="text/css" href="/public/js/flexigrid/css/flexigrid.css" />
 
 	<script type="text/javascript" src="/public/js/utils.js"></script>
+
+    <?php foreach ($jsFiles as $js): ?>
+    	<script type="text/javascript" src="/public/js/<?php echo $js ?>"></script>
+    <?php endforeach; ?>
   </head>
 
   <body>
