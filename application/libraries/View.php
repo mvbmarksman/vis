@@ -2,7 +2,6 @@
 require_once APPPATH . 'libraries/BaseView.php';
 class View extends BaseView {
 
-
 	public function addCss($cssFile) {
 		$cssFiles = $this->fetch('cssFiles');
 		if (empty($cssFiles)) {

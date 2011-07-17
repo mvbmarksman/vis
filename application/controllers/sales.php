@@ -16,6 +16,7 @@ class Sales extends MY_Controller
 
 	public function salesform() {
 		$this->view->addCss('salesform.css');
+		$this->view->addJs('salesform.js');
 		$itemDetails = $this->item_detail_model->fetch();
 		$creditDetailsForm = $this->view->load('creditdetailsform', 'sales/_creditdetailsform', array());
 		$this->renderView('salesform', array(
