@@ -1,15 +1,25 @@
 <?php
 class Store_model extends CI_Model
 {
+	const TBL_NAME = 'Store';
+
 	public $storeId;
 	public $name;
 	public $location;
 
-	private $_name = 'Store';
+	public function fetch($storeId = null) {
 
-	public function __construct()
-	{
-		$this->load->database();
-		parent::__construct();
+		$this->db->select();
+		$this->db->from(self::TBL_NAME);
+		if ($storeId) {
+			$this->db->where('storeId', $storeId);
+		}
+		$query = $this->db->get();
+		$result = $query->result_array();
+
+		if ($storeId) {
+			return array_pop($result);
+		}
+		return $result;
 	}
 }

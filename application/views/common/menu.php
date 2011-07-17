@@ -61,7 +61,7 @@
 		<a href="#">Expenses</a>
 	</li>
 	<li>
-		<a href="#">Transfer</a>
+		<a href="/items/transferform">Transfer</a>
 	</li>
 	<li>
 		<a href="#">Reports</a>
