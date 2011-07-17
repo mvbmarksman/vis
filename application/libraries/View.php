@@ -17,4 +17,20 @@ class View extends BaseView {
 
 		$this->set('cssFiles', $cssFiles);
 	}
+
+
+	public function addJs($jsFile) {
+		$jsFiles = $this->fetch('jsFiles');
+		if (empty($jsFiles)) {
+			$jsFiles = array();
+		}
+
+		if (is_array($jsFile)) {
+			$jsFiles = array_merge($jsFiles, $jsFile);
+		} else {
+			$jsFiles[] = $jsFile;
+		}
+
+		$this->set('jsFiles', $jsFiles);
+	}
 }
