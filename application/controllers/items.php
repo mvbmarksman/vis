@@ -14,7 +14,6 @@ class Items extends MY_Controller
 	public function transferform() {
 		$itemDetails = $this->item_detail_model->fetch();
 		$storeDetails = $this->store_model->fetch();
-		$this->view->addCss('salesform.css');
 		$this->renderView('transferform', array(
 							'itemDetails' => $itemDetails,
 							'storeDetails' => $storeDetails));

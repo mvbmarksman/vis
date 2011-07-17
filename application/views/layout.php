@@ -9,7 +9,7 @@
     <link href="/public/css/form.css" rel="stylesheet" type="text/css" media="screen"/>
     <link href="/public/css/thickbox.css" rel="stylesheet" type="text/css" media="screen"/>
 
-	<?php $cssFiles = $cssFiles == null ? array() : $cssFiles ?>
+	<?php $cssFiles = !isset($cssFiles) ? array() : $cssFiles ?>
     <?php foreach ($cssFiles as $css): ?>
     	<link href="/public/css/<?php echo $css ?>" rel="stylesheet" type="text/css" media="screen"/>
     <?php endforeach; ?>
@@ -32,7 +32,7 @@
 
 	<script type="text/javascript" src="/public/js/utils.js"></script>
 
-	<?php $jsFiles = $jsFiles == null ? array() : $jsFiles ?>
+	<?php $jsFiles = !isset($jsFiles) ? array() : $jsFiles ?>
     <?php foreach ($jsFiles as $js): ?>
     	<script type="text/javascript" src="/public/js/<?php echo $js ?>"></script>
     <?php endforeach; ?>
