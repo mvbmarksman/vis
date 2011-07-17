@@ -2,12 +2,12 @@
 class Sales extends MY_Controller
 {
 	public $models = array(
-		'sales_transaction_model',
-		'item_detail_model',
 		'sales_model',
+		'sales_transaction_model',
+		'item_model',
+		'item_detail_model',
 		'credit_detail_model',
 		'credit_payment_model',
-		'item_model',
 	);
 
 	public $libs = array(
@@ -25,6 +25,12 @@ class Sales extends MY_Controller
 		);
 	}
 
+	public function getautocompletedata() {
+		$data = $this->item_detail_model->fetch();
+		echo json_encode($data);
+//		echo "[{description: 'Bosskit', itemDetailId: 1}, {description: 'Asskit', itemDetailId: 2}]";
+//		echo "[ {text:'Link A', url:'/page1'}, {text:'Link B', url: '/page2'} ]";
+	}
 
 	public function processsalesform() {
 		$creditDetailId = $this->_saveCreditDetail($this->input->post());

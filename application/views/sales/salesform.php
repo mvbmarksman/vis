@@ -31,7 +31,7 @@
 			<tr id="row_-rowCtr-">
 				<td>
 					<input type="text" id="item_-rowCtr-"/>
-					<input type="hidden" id="item_id-rowCtr-" name="item[]"/>
+					<input type="hidden" id="item_id_-rowCtr-" name="item[]"/>
 				</td>
 				<td>
 					<span id="price_-rowCtr-"></span>

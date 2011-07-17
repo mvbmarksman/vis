@@ -5,8 +5,7 @@ $(document).ready(function(){
 	$("#row_-rowCtr-").hide();
 	$(".subtotalvat").hide();
 	initCreditDialog();
-	autoCompleteData = getAutoCompleteData();
-	addRow();
+	initAutoCompleteData();
 });
 
 
@@ -14,8 +13,11 @@ $(document).ready(function(){
  * Fetches the data used for autocomplete suggestions
  * @returns JSON
  */
-function getAutoCompleteData() {
-	return [ {text:'Link A', url:'/page1'}, {text:'Link B', url: '/page2'} ];
+function initAutoCompleteData() {
+	$.post('/sales/getautocompletedata', {}, function(data){
+		autoCompleteData = eval(data);
+		addRow();
+	});
 }
 
 /**
@@ -36,11 +38,11 @@ function addRow() {
  */
 function initAutoComplete(rowCtr) {
 	$("#item_" + rowCtr).autocomplete(autoCompleteData, {
-		  formatItem: function(item) {
-		    return item.text;
-	}
+		formatItem: function(item) {
+			return item.description;
+		}
 	}).result(function(event, item) {
-	  alert(item.url);
+		$("#item_id_" + rowCtr).val(item.itemDetailId);
 	});
 }
 
