@@ -22,16 +22,16 @@
 				</select>
 			</td>
 			<td>
-				<select name="fromstore">
+				<select name="toStore">
 					<?php $ctr = 1;
 						  foreach ($storeDetails as $storeDetail): ?>
 					<?php $store[$ctr] = $storeDetail['name'] ?>
 					<?php $ctr++ ?>
 					<?php endforeach; ?>
-					<option value="1">
+					<option value="2">
 						From <?php echo $store[1] ?> To <?php echo $store[2] ?>
 					</option>
-					<option value="2">
+					<option value="1">
 						From <?php echo $store[2] ?> To <?php echo $store[1] ?>
 					</option>
 
