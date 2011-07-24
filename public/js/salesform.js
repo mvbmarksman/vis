@@ -1,14 +1,85 @@
-var rowCtr = 1;
+// ....................................................................... init
+var rowCtr = 0;
 var autoCompleteData = null;
+var errors = new Array();
 
 $(document).ready(function(){
 	$("#row_-rowCtr-").hide();
 	$(".subtotalvat").hide();
+	$("#errors").hide();
 	initCreditDialog();
 	initAutoCompleteData();
 });
 
+/**
+ * Adds a new row in the sales form
+ */
+function addRow() {
+	rowCtr++;
+	var template = $("#row_-rowCtr-").html();
+	template = template.replace(/-rowCtr-/g, rowCtr);
+	template = '<tr id="row_' + rowCtr + '">' + template + '</tr>';
+	$("#salesFormBody").append(template);
+	initAutoComplete(rowCtr);
+	$("#vat_" + rowCtr).change(function(){
+		computeSubTotal(rowCtr);
+	});	
+	$("#remove_" + rowCtr).click(function(){
+		$("#row_" + rowCtr).remove();
+	});
+	bindValidators(rowCtr);
+}
 
+/**
+ * Binds validators to the form elements
+ * see validator.js
+ * @param rowCtr
+ */
+function bindValidators(rowCtr) {
+	var price = $("#price_" + rowCtr);
+	price.blur(function(){
+		if (isNaN(price.val())) {
+			resetSubTotal(rowCtr);
+			showError(price, "Selling price must be a valid number.");
+		} else if (price.val() <= 0) {
+			resetSubTotal(rowCtr);
+			showError(price, "Selling price must be a greater than zero.");
+		} else {
+			price.removeClass("formError");
+			computeSubTotal(rowCtr);
+		}
+	});
+	
+	var quantity = $("#quantity_" + rowCtr);
+	quantity.blur(function(){
+		if (isNaN(quantity.val())) {
+			resetSubTotal(rowCtr);
+			showError(quantity, "Quantity must be a valid number.");
+		} else if (quantity.val() <= 0) {
+			resetSubTotal(rowCtr);
+			showError(quantity, "Quantity must be a greater than zero.");
+		} else {
+			quantity.removeClass("formError");
+			computeSubTotal(rowCtr);
+		}
+	});
+
+	var discount = $("#discount_" + rowCtr);
+	discount.blur(function(){
+		if (isNaN(discount.val())) {
+			resetSubTotal(rowCtr);
+			showError(discount, "Discount must be a valid number.");
+		} else if (discount.val() > (quantity.val() * price.val())) {
+			resetSubTotal(rowCtr);
+			showError(discount, "Discount given cannot be greater than the selling price.");
+		} else {
+			discount.removeClass("formError");
+			computeSubTotal(rowCtr);
+		}
+	});	
+}
+
+// ............................................................... autocomplete
 /**
  * Fetches the data used for autocomplete suggestions
  * @returns JSON
@@ -21,18 +92,6 @@ function initAutoCompleteData() {
 }
 
 /**
- * Adds a new row in the sales form
- */
-function addRow() {
-	var template = $("#row_-rowCtr-").html();
-	template = template.replace(/-rowCtr-/g, rowCtr);
-	template = '<tr id="row_' + rowCtr + '">' + template + '</tr>';
-	$("#salesFormBody").append(template);
-	initAutoComplete(rowCtr);
-	rowCtr++;
-}
-
-/**
  * Initializes the autocomplete textbox for a particular sales form row
  * @param rowCtr
  */
@@ -42,31 +101,90 @@ function initAutoComplete(rowCtr) {
 			return item.description;
 		}
 	}).result(function(event, item) {
-		$("#item_id_" + rowCtr).val(item.itemDetailId);
+		doAutoCompleteAction(rowCtr, item);
 	});
 }
 
 /**
- * Removes a row in the sales form
- * @param obj
+ * Set of actions performed when an item gets selected using the autocomplete textbox
+ * @param rowCtr
+ * @param item the data container
  */
-function removeRow(obj) {
-	rowId = getRowCtr(obj);
-	 $("#row_" + rowId).remove();
+function doAutoCompleteAction(rowCtr, item) {
+	$("#item_id_" + rowCtr).val(item.itemDetailId);
+	$("#buyingPrice_" + rowCtr).html(parseFloat(item.buyingPrice).toFixed(2));
 }
 
-/**
- * Clears a sales form row
- * @param rowId
- */
-function clearRow(rowId) {
-	$("#price_" + rowId).html("");
-	$("#qty_" + rowId).val(null);
-	$("#discount_" + rowId).val(null);
-	$("#vat_" + rowId).attr("checked", false);
-	$("#subtotal_" + rowId).html("");
+// ......................................................... total computations
+function computeSubTotal(rowCtr) {
+	var price = getFloat($("#price_" + rowCtr).val());
+	var quantity = getFloat($("#quantity_" + rowCtr).val());
+	var discount = getFloat($("#discount_" + rowCtr).val());
+	if (price == null || quantity == null || isNaN(price) || isNaN(quantity)) {
+		return;
+	}
+	var subTotal = price * quantity - discount;
+	$("#subtotal_" + rowCtr).html(subTotal.toFixed(2));
+	
+	if ($("#vat_" + rowCtr).prop("checked")) {
+		var subTotalVat = subTotal - subTotal / 1.12;
+		subTotalVat = subTotalVat.toFixed(2);
+		$("#subtotalVat_" + rowCtr).val(subTotalVat);
+	} else {
+		$("#subtotalVat_" + rowCtr).val(0);
+	}
+	computeTotal();
 }
 
+
+function resetSubTotal(rowCtr) {
+	$("#subtotal_" + rowCtr).html("");
+	$("#subtotalVat_" + rowCtr).val(null);
+	computeTotal();
+}
+
+
+function computeTotal() {
+	var total = 0;
+	$('[id*="subtotal_"]:visible').each(function(){
+		total += getFloat($(this).html());
+	});
+	var totalVat = 0;
+	$('input[id*="subtotalVat_"]').each(function(){
+		totalVat += getFloat($(this).val());
+	});
+	vatable = total - totalVat;
+	$("#vatable").html(vatable);
+	$("#totalvat").html(totalVat);
+	$("#totalprice").html(total);	
+}
+
+
+function checkForm() {
+//	$('[id*="price_"]:visible').each(function(){
+//		numberValidator($(this), "Selling price must be a valid number.");
+//	});
+//	$('[id*="price_"]:visible').each(function(){
+//		greaterThanZeroValidator($(this), "Selling price must be greater than zero.");
+//	});
+//	$('[id*="quantity_"]:visible').each(function(){
+//		numberValidator($(this), "Quantity must be a valid number.");
+//	});
+//	$('[id*="quantity_"]:visible').each(function(){
+//		greaterThanZeroValidator($(this), "Quantity must be greater than zero.");
+//	});	
+}
+
+
+
+function submitForm(){
+	checkForm();
+//	if (checkForm() == true) {
+//	$("#salesForms").submit();
+//	}
+}
+
+//............................................................... Credit Detail
 /**
  * Initialize the modal dialog for getting credit detail information
  */
@@ -128,209 +246,7 @@ function clearCredit() {
 	$("#creditDetailsBtn").prop("href", "javascript:openDialog()");
 }
 
-function updatePrice(obj) {
-	var itemSelectedVal = $(obj).val();
-	var price = priceLookup[itemSelectedVal];
-	var rowId = getRowCtr(obj);
-	if (itemSelectedVal == 0) {
-		clearRow(rowId);
-		return;
-	}
-	$("#item_"+rowId).css("border-color","#8EA7D1");
-	price = parseFloat(price).toFixed(2);
-	price = addCommas(price);
-	$("#price_" + rowId).html(price);
-	$("#quantity_" + rowId).focus();
-}
-
-function submitForm(){
-	if (validateForm() == true) {
-	$("#salesForms").submit();
-	}
-}
-function updateSubTotal(obj){
-	var rowId = getRowCtr(obj);
-	var subtotal = computeSubTotal(rowId);
-	var quantityVal = $("#quantity_" + rowId).val();
-	var discountVal = $("#discount_" + rowId).val();
-
-	if (quantityVal <= 0 || isNaN(quantityVal)) {
-		$("#qtyerror").show().html("<p style = 'margin : 3px; background-color:red; border-radius:5px'>Quantity error");
-		$("#quantity_" + rowId).css("border-color","#F5646C");
-		$("#qtyerror").delay(3000).fadeOut(1000);
-		$("#quantity_" + rowId).focus();
-	} else {
-		$("#quantity_" + rowId).css("border-color","#8EA7D1");
-	}
-
-	if (discountVal < 0 || isNaN(discountVal)) {
-		$("#discounterror").show().html("<p style = 'margin : 3px; background-color:red; border-radius:5px'>Discount error");
-		$("#discount_" + rowId).css("border-color","#F5646C");
-		$("#discounterror").delay(3000).fadeOut(1000);
-		$("#discount_" + rowId).focus();
-	} else {
-		$("#discount_" + rowId).css("border-color","#8EA7D1");
-	}
-
-	if (isNaN(subtotal)){
-		subtotal = "";
-	}
-	else{
-		subtotal = subtotal.toFixed(2);
-	}
-	$("#subtotal_"+rowId).html(subtotal);
-	updateVatSubTotal(obj);
-}
-
-function updateVatSubTotal(obj){
-	var rowId = getRowCtr(obj);
-	var subtotal = getFloat(computeSubTotal(rowId));
-	var subtotalVAT = subtotal - subtotal / 1.12;
-	subtotalVAT = subtotalVAT.toFixed(2);
-	if ($("#vat_"+rowId).first().prop("checked")){
-		$("#subtotalvat_"+rowId).html(subtotalVAT);
-	}
-	else {
-		$("#subtotalvat_"+rowId).html("0");
-	}
-	computeTotal();
-}
-
-
-function computeTotal() {
-	var total = 0.00;
-	var totalvat = 0.00;
-	$(".subtotalvat").each(function(){
-		if (isNaN(getFloat($(this).html()))){
-			totalvat += 0 ;
-		}
-		else {
-			totalvat += getFloat($(this).html());
-		}
-		});
-	$(".subtotal:visible").each(function(){
-		total += getFloat($(this).html());
-		});
-	if (totalvat > 0){
-		vatable = total - totalvat;
-		}
-	else{
-		vatable = 0;
-		}
-	if (isNaN(total)){
-		addSalesSummary();
-		return;
-	}
-	else{
-		total = total.toFixed(2);
-		totalvat = totalvat.toFixed(2);
-	}
-	$("#vatable").html(vatable);
-	$("#totalvat").html(totalvat);
-	$("#totalprice").html(total);
-
-}
-
-function computeSubTotal(rowId) {
-	var discount = getFloat($("#discount_"+rowId).val());
-	var quantity = getFloat($("#quantity_"+rowId).val());
-	var price = getFloat($("#price_"+rowId).html());
-	if (isNaN(quantity)){
-		quantity = 0;
-	}
-	if (isNaN(discount)){
-		discount = 0;
-	}
-	var subtotal = quantity * price -discount;
-	if (isNaN(subtotal)){
-		subtotal = "---";
-	}
-	return subtotal;
-}
-
-
-
-function validateForm(){
-	var isValid = true;
-	$("select[id ^= 'item_' ]:visible").each(function(){
-		var item = $(this).val();
-		if (item == 0){
-			$("#itemerror").show().html("<p style = 'margin : 3px; background-color:red; border-radius:5px'>You must choose an item ");
-			$("#itemerror").delay(2000).fadeOut(1000);
-			$(this).css("border-color","#F5646C");
-			isValid = false;
-		}
-	});
-	var qtyNaNError = false;
-	var qtyNotCountingNoError
-	$("input[id ^= 'quantity_' ]:visible").each(function(){
-		var quantity = $(this).val();
-		if (quantity <= 0){
-			$(this).css("border-color","#F5646C");
-			$(this).focus();
-			$("#qtyerror").show().html("<p style = 'margin : 3px; background-color:red; border-radius:5px'>Quantity must be greater than 0 ");
-			$("#qtyerror").delay(3000).fadeOut(1000);
-			isValid = false;
-		}
-		else if (isNaN(quantity)){
-			$(this).css("border-color","#F5646C");
-			$(this).focus();
-			$("#qtyerror").show().html("<p style = 'margin : 3px; background-color:red; border-radius:5px'>Quantity must be a number ");
-			$("#qtyerror").delay(3000).fadeOut(1000);
-			isValid = false;
-		}
-	});
-	$("input[id ^= 'discount_' ]:visible").each(function(){
-		var discount = $(this).val();
-		if (discount < 0){
-			$(this).css("border-color","#F5646C");
-			$(this).focus();
-			$("#discounterror").show().html("<p style = 'margin : 3px; background-color:red; border-radius:5px'>Discount must be greater or equal to 0 ");
-			$("#discounterror").delay(4000).fadeOut(1000);
-			isValid = false;
-		}
-		else if (isNaN(discount)){
-			$(this).css("border-color","#F5646C");
-			$(this).focus();
-			$("#discounterror").show().html("<p style = 'margin : 3px; background-color:red; border-radius:5px'>Discount must be a number ");
-			$("#discounterror").delay(4000).fadeOut(1000);
-			isValid = false;
-		}
-	});
-
-	if (!($("#creditFormContainer")).is(":visible")) {
-		return isValid;
-	}
-
-	if (isNaN(($("input#amountpaid")).val()))
-	{
-		$("input#amountpaid").css("border-color","#F5646C");
-		$("input#amountpaid").val("");
-		$("#crediterror").show().html("<p style = 'margin : 3px; background-color:red; border-radius:5px'>Amount Paid must be a number ");
-		$("#crediterror").delay(4000).fadeOut(1000);
-		isValid = false;
-	}
-
-	if ((($("input#amountpaid")).val())>= parseInt(($("#totalprice").html())))
-	{
-		$("input#amountpaid").css("border-color","#F5646C");
-		$("input#amountpaid").val("");
-		$("#crediterror").show().html("<p style = 'margin : 3px; background-color:red; border-radius:5px'>Amount paid must be less than the total price ").delay(1000).fade(5000);
-		$("#crediterror").delay(4000).fadeOut(1000);
-		isValid = false;
-	}
-	if (($("input#amountpaid").val()) == "")
-	{
-		$("input#amountpaid").css("border-color","#F5646C");
-		$("input#amountpaid").val("");
-		$("#crediterror").show().html("<p style = 'margin : 3px; background-color:red; border-radius:5px'>Amount paid should not be empty <p>");
-		$("#crediterror").delay(4000).fadeOut(1000);
-		isValid = false;
-	}
-	$("#error").fadeout(10000);
-	return isValid;
-}
-
+//........................................................... Utility Functions
 function getRowCtr(obj) {
 	var parts = $(obj).attr("id").split("_");
 	return rowId = parts[1];

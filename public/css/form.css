@@ -90,7 +90,19 @@ a.button:active {
 
 a.button:active span {
     background-position: bottom left;
-    padding: 4px 0 1px 18px; /* push text down 1px 
+    padding: 4px 0 1px 18px; /* push text down 1px */
 }
 
+.formError {
+	border: 1px solid #BF0030;
+}
+#errors {
+    background: none repeat scroll 0 0 #F7E9EC;
+    border: 1px solid #BF0030;
+    border-radius: 5px 5px 5px 5px;
+    color: #BF0030;
+    margin-bottom: 5px;
+    padding: 3px;
+    text-align: center;
+}
  

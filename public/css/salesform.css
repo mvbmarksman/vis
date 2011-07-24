@@ -5,11 +5,12 @@
 }
 
 #salesForm th {
-	border-bottom: 1px solid silver;
 	text-align: left;
-	color: #545454;
+	color: #fff;
 	font-weight:bold;
 	padding: 5px 3px;
+	border: 1px solid silver;
+	background: #004F94;
 }
 
 #salesForm tr:hover {
@@ -18,7 +19,7 @@
 
 #salesForm tr td {
 	padding: 5px 3px;
-	border-bottom: 1px solid #ddd;
+	border: 1px solid silver;
 }
 
 #salesControls {

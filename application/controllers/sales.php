@@ -16,6 +16,7 @@ class Sales extends MY_Controller
 
 	public function salesform() {
 		$this->view->addCss('salesform.css');
+		$this->view->addJs('validator.js');
 		$this->view->addJs('salesform.js');
 		$itemDetails = $this->item_detail_model->fetch();
 		$creditDetailsForm = $this->view->load('creditdetailsform', 'sales/_creditdetailsform', array());
@@ -28,8 +29,6 @@ class Sales extends MY_Controller
 	public function getautocompletedata() {
 		$data = $this->item_detail_model->fetch();
 		echo json_encode($data);
-//		echo "[{description: 'Bosskit', itemDetailId: 1}, {description: 'Asskit', itemDetailId: 2}]";
-//		echo "[ {text:'Link A', url:'/page1'}, {text:'Link B', url: '/page2'} ]";
 	}
 
 	public function processsalesform() {

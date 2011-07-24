@@ -1,12 +1,6 @@
-<style>
-</style>
+<ul id ="errors">
+</ul>
 
-<div id ="error">
-	<div id = "itemerror"></div>
-	<div id = "qtyerror"></div>
-	<div id = "discounterror"></div>
-	<div id = "crediterror"></div>
-</div>
 <h1>
 	<img src="/public/images/icons/wallet.png" />
 	<div>Sales Form</div>
@@ -18,10 +12,11 @@
 		<thead>
 			<tr>
 				<th>Item</th>
-				<th width="100px">Price</th>
+				<th width="100px">Buying Price</th>
+				<th width="100px">Selling Price</th>
 				<th width="20px">Qty</th>
 				<th width="50px">Discount</th>
-				<th width="20px">VAT</th>
+				<th width="30px">VAT</th>
 				<th width="100px">Subtotal</th>
 				<th width="10px">&nbsp;</th>
 			</tr>
@@ -30,29 +25,30 @@
 			<!--  form template -->
 			<tr id="row_-rowCtr-">
 				<td>
-					<input type="text" id="item_-rowCtr-"/>
+					<input type="text" id="item_-rowCtr-" class="longTxt"/>
 					<input type="hidden" id="item_id_-rowCtr-" name="item[]"/>
 				</td>
 				<td>
-					<span id="price_-rowCtr-"></span>
+					<span id="buyingPrice_-rowCtr-"></span>
 				</td>
 				<td>
-					<input name = "qty[]" type="text" class="smallTxt rightAligned" id="quantity_-rowCtr-" onblur="updateSubTotal(this)"/>
+					<input type="text" id="price_-rowCtr-" name="price[]" class="mediumTxt rightAligned"/>
 				</td>
 				<td>
-					<input name = "discount[]" type="text" class="smallTxt rightAligned" id="discount_-rowCtr-" onblur="updateSubTotal(this)" />
+					<input name = "qty[]" type="text" class="smallTxt rightAligned" id="quantity_-rowCtr-"/>
 				</td>
 				<td>
-					<input name = "vat[]" type="checkbox" id="vat_-rowCtr-" value="vat_-rowCtr-" onclick="updateSubTotal(this)" />
+					<input name = "discount[]" type="text" class="smallTxt rightAligned" id="discount_-rowCtr-"/>
+				</td>
+				<td>
+					<input name = "vat[]" type="checkbox" id="vat_-rowCtr-" value="vat_-rowCtr-"/>
 				</td>
 				<td>
 					<span class = "subtotal" id="subtotal_-rowCtr-"></span>
+					<input type="hidden" id="subtotalVat_-rowCtr-"/>
 				</td>
 				<td>
-					<div class="removeBtn" id="remove_-rowCtr-" onclick="removeRow(this)"></div>
-				</td>
-				<td>
-					<span class="subtotalvat" id="subtotalvat_-rowCtr-"></span>
+					<div class="removeBtn" id="remove_-rowCtr-"></div>
 				</td>
 			</tr>
 		</tbody>
