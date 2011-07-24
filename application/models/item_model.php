@@ -55,4 +55,12 @@ class Item_model extends CI_Model
 		}
 		$this->db->delete(self:: TBL_NAME, array('itemId' => $itemId));
 	}
+
+	public function updateitems($itemdata){
+		$query ='update '. self::TBL_NAME .' set `storeId` = ' . $itemdata['toStore'] .
+				' where `storeId` != ' . $itemdata['toStore'].
+				' and `itemDetailId` = ' . $itemdata['item'].
+				' limit  '. $itemdata['qty'];
+		$this->db->query($query);
+	}
 }

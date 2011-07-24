@@ -18,4 +18,9 @@ class Items extends MY_Controller
 							'itemDetails' => $itemDetails,
 							'storeDetails' => $storeDetails));
 	}
+
+	public function processtransfer(){
+		$this->item_model->updateitems($this->input->post());
+		debug::dump('success');
+	}
 }
