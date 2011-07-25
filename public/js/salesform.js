@@ -28,55 +28,7 @@ function addRow() {
 		$("#row_" + rowCtr).remove();
 	});
 	bindValidators(rowCtr);
-}
-
-/**
- * Binds validators to the form elements
- * see validator.js
- * @param rowCtr
- */
-function bindValidators(rowCtr) {
-	var price = $("#price_" + rowCtr);
-	price.blur(function(){
-		if (isNaN(price.val())) {
-			resetSubTotal(rowCtr);
-			showError(price, "Selling price must be a valid number.");
-		} else if (price.val() <= 0) {
-			resetSubTotal(rowCtr);
-			showError(price, "Selling price must be a greater than zero.");
-		} else {
-			price.removeClass("formError");
-			computeSubTotal(rowCtr);
-		}
-	});
-	
-	var quantity = $("#quantity_" + rowCtr);
-	quantity.blur(function(){
-		if (isNaN(quantity.val())) {
-			resetSubTotal(rowCtr);
-			showError(quantity, "Quantity must be a valid number.");
-		} else if (quantity.val() <= 0) {
-			resetSubTotal(rowCtr);
-			showError(quantity, "Quantity must be a greater than zero.");
-		} else {
-			quantity.removeClass("formError");
-			computeSubTotal(rowCtr);
-		}
-	});
-
-	var discount = $("#discount_" + rowCtr);
-	discount.blur(function(){
-		if (isNaN(discount.val())) {
-			resetSubTotal(rowCtr);
-			showError(discount, "Discount must be a valid number.");
-		} else if (discount.val() > (quantity.val() * price.val())) {
-			resetSubTotal(rowCtr);
-			showError(discount, "Discount given cannot be greater than the selling price.");
-		} else {
-			discount.removeClass("formError");
-			computeSubTotal(rowCtr);
-		}
-	});	
+	$("#item_" + rowCtr).focus();
 }
 
 // ............................................................... autocomplete
@@ -113,6 +65,7 @@ function initAutoComplete(rowCtr) {
 function doAutoCompleteAction(rowCtr, item) {
 	$("#item_id_" + rowCtr).val(item.itemDetailId);
 	$("#buyingPrice_" + rowCtr).html(parseFloat(item.buyingPrice).toFixed(2));
+	$("#price_" + rowCtr).val(parseFloat(item.buyingPrice).toFixed(2));
 }
 
 // ......................................................... total computations
@@ -154,34 +107,122 @@ function computeTotal() {
 		totalVat += getFloat($(this).val());
 	});
 	vatable = total - totalVat;
-	$("#vatable").html(vatable);
-	$("#totalvat").html(totalVat);
-	$("#totalprice").html(total);	
+	$("#vatable").html(vatable.toFixed(2));
+	$("#totalvat").html(totalVat.toFixed(2));
+	$("#totalprice").html(total.toFixed(2));	
 }
 
+// ................................................................. validation
+/**
+ * Binds validators to the form elements
+ * see validator.js
+ * @param rowCtr
+ */
+function bindValidators(rowCtr) {
+	var price = $("#price_" + rowCtr);
+	var quantity = $("#quantity_" + rowCtr);
+	var discount = $("#discount_" + rowCtr);
+	var item = $("#item_" + rowCtr);
+	
+	item.blur(function(){
+		if ($.trim(item.val()) == "") {
+			showError(item, "Item is required.");
+		} else {
+			item.removeClass("formError");
+		}
+	});
+	
+	price.blur(function(){
+		if (isNaN(price.val())) {
+			resetSubTotal(rowCtr);
+			price.val(null);
+			showError(price, "Selling price must be a valid number.");
+		} else if (price.val() <= 0) {
+			resetSubTotal(rowCtr);
+			price.val(null);
+			showError(price, "Selling price must be a greater than zero.");
+		} else if (discount.val() > (quantity.val() * price.val())) {
+			resetSubTotal(rowCtr);
+			price.val(null);
+			showError(discount, "Discount given cannot be greater than the selling price.");
+		} else {
+			price.removeClass("formError");
+			computeSubTotal(rowCtr);
+		}
+	});
+	
+	quantity.blur(function(){
+		if (isNaN(quantity.val())) {
+			resetSubTotal(rowCtr);
+			quantity.val(null);
+			showError(quantity, "Quantity must be a valid number.");
+		} else if (quantity.val() <= 0) {
+			resetSubTotal(rowCtr);
+			quantity.val(null);
+			showError(quantity, "Quantity must be a greater than zero.");
+		} else if (discount.val() > (quantity.val() * price.val())) {
+			resetSubTotal(rowCtr);
+			quantity.val(null);
+			showError(discount, "Discount given cannot be greater than the selling price.");
+		} else {
+			quantity.removeClass("formError");
+			computeSubTotal(rowCtr);
+		}
+	});
+
+	discount.blur(function(){
+		if (isNaN(discount.val())) {
+			resetSubTotal(rowCtr);
+			discount.val(null);
+			showError(discount, "Discount must be a valid number.");
+			discount.removeClass("formError");
+		} else if (discount.val() > (quantity.val() * price.val())) {
+			resetSubTotal(rowCtr);
+			discount.val(null);
+			showError(discount, "Discount given cannot be greater than the selling price.");
+		} else {
+			discount.removeClass("formError");
+			computeSubTotal(rowCtr);
+		}
+	});	
+}
 
 function checkForm() {
-//	$('[id*="price_"]:visible').each(function(){
-//		numberValidator($(this), "Selling price must be a valid number.");
-//	});
-//	$('[id*="price_"]:visible').each(function(){
-//		greaterThanZeroValidator($(this), "Selling price must be greater than zero.");
-//	});
-//	$('[id*="quantity_"]:visible').each(function(){
-//		numberValidator($(this), "Quantity must be a valid number.");
-//	});
-//	$('[id*="quantity_"]:visible').each(function(){
-//		greaterThanZeroValidator($(this), "Quantity must be greater than zero.");
-//	});	
+	var errors = new Array();
+	$('[id*="price_"]:visible').each(function(){
+		var price = $(this);
+		if (getFloat($(this).val()) <= 0) {
+			resetSubTotal(rowCtr);
+			price.addClass("formError");
+			errors.push("Selling price must be greater than zero.");
+		}
+	});
+	$('[id*="quantity_"]:visible').each(function(){
+		var quantity = $(this);
+		if (getFloat($(this).val()) <= 0) {
+			resetSubTotal(rowCtr);
+			quantity.addClass("formError");
+			errors.push("Quantity must be greater than zero.");
+		}
+	});
+	if (errors.length > 0) {
+		errors = errors.unique();
+		$("#errors").html("");
+		for (var i = 0; i < errors.length; i++) {
+			 $("#errors").append("<li>" + errors[i] + "</li>");
+		}
+		$("#errors").show();
+		$("#errors").delay(5000).fadeOut(1000);
+		return false;
+	} else {
+		return true;
+	}
 }
 
-
-
 function submitForm(){
-	checkForm();
-//	if (checkForm() == true) {
-//	$("#salesForms").submit();
-//	}
+	if (checkForm() == true) {
+		$("#salesForms").submit();
+	}
 }
 
 //............................................................... Credit Detail

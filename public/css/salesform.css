@@ -96,3 +96,14 @@
 #creditContainer dl {
 	margin: 10px 0px;
 }
+
+#vatable {
+	text-align:right;
+}
+#totalvat {
+	text-align:right;
+}
+
+#total {
+	text-align:right;
+}
