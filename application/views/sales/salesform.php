@@ -84,16 +84,36 @@
 			<dt class="hiliteRow">Amount Paid:</dt><dd id="creditAmount" class="hiliteRow"><span></span><input type="hidden" name="creditAmount"/></dd>
 		</dl>
 	</div>
-
 </form>
 
-<div class="controls">
-	<div class="btnClear" style="margin-left: 410px;" >
-		<a class="button" href="javascript:openDialog()" id="creditDetailsBtn"><span><img src="/public/images/icons/add.png"/><p>Add Credit Details</p></span></a>
+<div id="separator"></div>
+<h1>
+	<img src="/public/images/icons/user.png" />
+	<div>Customer Information</div>
+</h1>
+<div class="clear"></div>
+<table id="creditForm">
+	<tr>
+		<td class="rightAligned">Name:</td>
+		<td><input type="text" id="name" class="longTxt"></td>
+	</tr>
+	<tr>
+		<td class="rightAligned">Address:</td>
+		<td><textarea rows="3" cols="22" id="address"></textarea></td>
+	</tr>
+	<tr>
+		<td class="rightAligned">Contact Number:</td>
+		<td><input type="text" id="contact" class="longTxt"/></td>
+	</tr>
+	<tr>
+		<td class="rightAligned">Amount Paid:</td>
+		<td><input type="text" id="amountpaid" class="longTxt"/></td>
+	</tr>
+</table>
+
+<div id="separator"></div>
+<div class="controls" style="margin-top:0px;padding-top: 0px;">
+	<div class="btnClear" style="margin-left: 580px;" >
 		<a class="button" href="javascript:submitForm()"><span><img src="/public/images/icons/drive_go.png"/><p>Process Sales Form</p></span></a>
 	</div>
-</div>
-
-<div id="creditFormContainer">
-	<?php $creditdetailsform->render() ?>
 </div>
