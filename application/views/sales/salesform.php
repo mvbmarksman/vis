@@ -80,16 +80,6 @@
 		</table>
 	</div>
 
-	<div id="creditContainer">
-		<h2>Credit Details</h2>
-		<dl>
-			<dt>Name:</dt><dd id="creditName"><span></span><input type="hidden" name="creditName"/></dd>
-			<dt class="hiliteRow">Address:</dt><dd id="creditAddress" class="hiliteRow"><span></span><input type="hidden" name="creditAddress"/></dd>
-			<dt>Contact Number:</dt><dd id="creditContact"><span></span><input type="hidden" name="creditContact"/></dd>
-			<dt class="hiliteRow">Amount Paid:</dt><dd id="creditAmount" class="hiliteRow"><span></span><input type="hidden" name="creditAmount"/></dd>
-		</dl>
-	</div>
-
 	<div id="separator"></div>
 	<h1>
 		<img src="/public/images/icons/user.png" />
@@ -97,10 +87,14 @@
 	</h1>
 	<div class="clear"></div>
 
-	<table id="creditForm" style="float:left">
+	<table id="creditForm">
 		<tr>
 			<td class="rightAligned">Name:</td>
-			<td><input type="text" id="name" class="longTxt"> <span class="required">(required)</span></td>
+			<td>
+				<input type="text" id="name" class="longTxt">
+				<input type="hidden" id="customerId" name="customerId"/>
+				<span class="required">(required)</span>
+			</td>
 		</tr>
 		<tr>
 			<td class="rightAligned">Address:</td>
@@ -113,23 +107,12 @@
 		<tr>
 			<td class="rightAligned">Amount Paid:</td>
 			<td>
-				<input type="text" id="amountPaid" name="amountPaid" class="longTxt rightAligned"/> <span class="required">(required)</span>
+				<input type="text" id="amountPaid" name="amountPaid" class="longTxt rightAligned"/>
 			</td>
 		</tr>
 	</table>
-
-<!--	<div id="creditPaymentSection" >-->
-<!--		<a href="#" class="action">-->
-<!--			<img src="/public/images/icons/tick.png">-->
-<!--			<span>Credit Payment</span>-->
-<!--		</a>-->
-<!--		<div class="clear"></div>-->
-<!--		<div>-->
-<!--			<label for="amountPaid">Amount Paid:</label><input type="text" id="amountPaid" name="amounPaid" class="longText rightAligned"/>-->
-<!--		</div>-->
-<!--	</div>-->
 </form>
-<div class="clear"></div>
+
 <div id="separator"></div>
 <div class="controls" style="margin-top:0px;padding-top: 0px;">
 	<div class="btnClear" style="margin-left: 580px;" >

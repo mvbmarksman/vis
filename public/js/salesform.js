@@ -1,13 +1,11 @@
 // ....................................................................... init
 var rowCtr = 0;
 var autoCompleteData = null;
-var errors = new Array();
 
 $(document).ready(function(){
 	$("#row_-rowCtr-").hide();
 	$(".subtotalvat").hide();
 	$("#errors").hide();
-	initCreditDialog();
 	initAutoCompleteData();
 	initCustomerAutoComplete();
 });
@@ -84,7 +82,7 @@ function initCustomerAutoComplete() {
 }
 
 function doCustomerAutoCompleteAction(item) {
-	console.log(item);
+	$("#customerId").val(item.customerId);
 	$("#address").val(item.address);
 	$("#contact").val(item.phoneNo);
 }
@@ -113,8 +111,8 @@ function computeSubTotal(rowCtr) {
 
 
 function resetSubTotal(rowCtr) {
-	$("#subtotal_" + rowCtr).html("");
-	$("#subtotalVat_" + rowCtr).val(null);
+	$("#subtotal_" + rowCtr).val(0);
+	$("#subtotalVat_" + rowCtr).val(0);
 	computeTotal();
 }
 
@@ -131,7 +129,8 @@ function computeTotal() {
 	vatable = total - totalVat;
 	$("#vatable").html(formatMoney(vatable));
 	$("#totalvat").html(formatMoney(totalVat));
-	$("#totalprice").html(formatMoney(total));	
+	$("#totalprice").html(formatMoney(total));
+	$("#amountPaid").val(total.toFixed(2));
 }
 
 // ................................................................. validation
@@ -195,18 +194,39 @@ function bindValidators(rowCtr) {
 	discount.blur(function(){
 		if (isNaN(discount.val())) {
 			resetSubTotal(rowCtr);
-			discount.val(null);
+			discount.val(0);
 			showError(discount, "Discount must be a valid number.");
 			discount.removeClass("formError");
 		} else if (discount.val() > (quantity.val() * price.val())) {
 			resetSubTotal(rowCtr);
-			discount.val(null);
+			discount.val(0);
 			showError(discount, "Discount given cannot be greater than the selling price.");
 		} else {
 			discount.removeClass("formError");
 			computeSubTotal(rowCtr);
 		}
-	});	
+	});
+	
+	// customer information bindings go here
+	var name = $("#name");
+	name.blur(function(){
+		if (empty(name.val())) {
+			showError(name, "Customer name is required.");
+			$("#address").val(null);
+			$("#contact").val(null);
+			$("#customerId").val(null);
+		} else {
+			name.removeClass("formError");
+		}
+	});
+	
+	var amountPaid = $("#amountPaid");
+	amountPaid.blur(function(){
+		if (isNaN(amountPaid.val())) {
+			amountPaid.val(0);
+			showError(amountPaid, "Amount paid should be a valid number.");
+		}
+	});
 }
 
 function checkForm() {
@@ -227,6 +247,20 @@ function checkForm() {
 			errors.push("Quantity must be greater than zero.");
 		}
 	});
+
+	$('[id*="item_"]:visible').each(function(){
+		var item = $(this);
+		if (empty(item.val())) {
+			item.addClass("formError");
+			errors.push("Item is required.");
+		}
+	});	
+	
+	if (empty($("#name").val())) {
+		$("#name").addClass("formError");
+		errors.push("Customer name is required.");
+	}
+	
 	if (errors.length > 0) {
 		errors = errors.unique();
 		$("#errors").html("");
@@ -262,51 +296,6 @@ function initCreditDialog() {
 		resizable: false
 	});
 	$("#creditContainer").hide();
-}
-
-/**
- * Launch the credit detail form modal dialog
- */
-function openDialog() {
-	$("#creditFormContainer").dialog("open");
-}
-
-/**
- * Saves the values entered in the credit modal dialog into the sales form
- */
-function saveCredit() {
-	var name = $("#name").val();
-	$("#creditName span").html(name);
-	$("#creditName input").val(name);
-
-	var address = $("#address").val();
-	$("#creditAddress span").html(address);
-	$("#creditAddress input").val(address);
-
-	var contact = $("#contact").val();
-	$("#creditContact span").html(contact);
-	$("#creditContact input").val(contact);
-
-	var amount = $("#amountpaid").val();
-	$("#creditAmount span").html(amount);
-	$("#creditAmount input").val(amount);
-
-	$("#creditContainer").fadeIn();
-	$("#creditFormContainer").dialog("close");
-
-	$("#creditDetailsBtn img").prop("src", "/public/images/icons/delete2.png");
-	$("#creditDetailsBtn p").html("Clear Credit Details");
-	$("#creditDetailsBtn").prop("href", "javascript:clearCredit()");
-}
-
-function clearCredit() {
-	$("#creditContainer input").each(function(){
-		$(this).val("");
-	});
-	$("#creditContainer").hide();
-	$("#creditDetailsBtn img").prop("src", "/public/images/icons/add.png");
-	$("#creditDetailsBtn p").html("Add Credit Details");
-	$("#creditDetailsBtn").prop("href", "javascript:openDialog()");
 }
 
 //........................................................... Utility Functions

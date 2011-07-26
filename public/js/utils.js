@@ -16,6 +16,14 @@ function formatMoney(amt) {
 }
 
 
+function empty(str) {
+	if ($.trim(str) == "") {
+		return true;
+	}
+	return false;
+}
+
+
 function getFloat(str, decimalPlaces) {
 	if (!str) {
 		return null;
