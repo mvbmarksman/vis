@@ -15,6 +15,11 @@ body {
 	background-image: url("/public/images/components/main-bg.jpg");
 	background-repeat: repeat-x;
 }
+
+em {
+	font-style: italic;
+}
+
 #wrapper {
 	width: 980px;
 	overflow: hidden;
@@ -132,3 +137,6 @@ padding: 3px 10px 3px 3px;
 	height: 5px;
 	margin: 10px auto;
 }
+
+.action img { float: left; }
+.action span { float: left; margin: 3px 0px 0px 1px; }

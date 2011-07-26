@@ -31,6 +31,7 @@ class Sales extends MY_Controller
 		echo json_encode($data);
 	}
 
+
 	public function processsalesform() {
 		$creditDetailId = $this->_saveCreditDetail($this->input->post());
 

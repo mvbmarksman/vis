@@ -38,7 +38,7 @@
 }
 
 #creditForm tr td {
-	padding: 8px 5px;
+	padding: 5px 5px;
 }
 
 #creditForm .rightAligned {
@@ -106,4 +106,9 @@
 
 #total {
 	text-align:right;
+}
+
+#creditPaymentSection {
+	float: left;
+	
 }

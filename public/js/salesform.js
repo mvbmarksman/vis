@@ -9,6 +9,7 @@ $(document).ready(function(){
 	$("#errors").hide();
 	initCreditDialog();
 	initAutoCompleteData();
+	initCustomerAutoComplete();
 });
 
 /**
@@ -68,6 +69,26 @@ function doAutoCompleteAction(rowCtr, item) {
 	$("#price_" + rowCtr).val(parseFloat(item.buyingPrice).toFixed(2));
 }
 
+
+function initCustomerAutoComplete() {
+	$.post('/customer/getcustomerautocompletedata', {}, function(data){
+		var customerData = eval(data);
+		$("#name").autocomplete(customerData, {
+			formatItem: function(item) {
+				return item.fullname;
+			}
+		}).result(function(event, item) {
+			doCustomerAutoCompleteAction(item);
+		});		
+	});
+}
+
+function doCustomerAutoCompleteAction(item) {
+	console.log(item);
+	$("#address").val(item.address);
+	$("#contact").val(item.phoneNo);
+}
+
 // ......................................................... total computations
 function computeSubTotal(rowCtr) {
 	var price = getFloat($("#price_" + rowCtr).val());
@@ -77,7 +98,8 @@ function computeSubTotal(rowCtr) {
 		return;
 	}
 	var subTotal = price * quantity - discount;
-	$("#subtotal_" + rowCtr).html(subTotal.toFixed(2));
+	$("#subtotaldisplay_" + rowCtr).html(formatMoney(subTotal));
+	$("#subtotal_" + rowCtr).html(subTotal);
 	
 	if ($("#vat_" + rowCtr).prop("checked")) {
 		var subTotalVat = subTotal - subTotal / 1.12;
@@ -99,7 +121,7 @@ function resetSubTotal(rowCtr) {
 
 function computeTotal() {
 	var total = 0;
-	$('[id*="subtotal_"]:visible').each(function(){
+	$('input[id*="subtotal_"]').each(function(){
 		total += getFloat($(this).html());
 	});
 	var totalVat = 0;
@@ -107,9 +129,9 @@ function computeTotal() {
 		totalVat += getFloat($(this).val());
 	});
 	vatable = total - totalVat;
-	$("#vatable").html(vatable.toFixed(2));
-	$("#totalvat").html(totalVat.toFixed(2));
-	$("#totalprice").html(total.toFixed(2));	
+	$("#vatable").html(formatMoney(vatable));
+	$("#totalvat").html(formatMoney(totalVat));
+	$("#totalprice").html(formatMoney(total));	
 }
 
 // ................................................................. validation

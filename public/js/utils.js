@@ -11,6 +11,10 @@ function addCommas(nStr)
 	return x1 + x2;
 }
 
+function formatMoney(amt) {
+	return addCommas(amt.toFixed(2));
+}
+
 
 function getFloat(str, decimalPlaces) {
 	if (!str) {
@@ -39,3 +43,4 @@ Array.prototype.unique =
 	    }
 	    return a;
 	  };
+	  

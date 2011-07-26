@@ -106,4 +106,9 @@ a.button:active span {
     padding: 3px;
     text-align: center;
 }
- 
+
+.required {
+	margin-left: 10px;
+	font-style: italic;
+	color: #999;
+}
