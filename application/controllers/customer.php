@@ -12,7 +12,8 @@ class Customer extends MY_Controller
 	public function getcustomerautocompletedata() {
 		$items = $this->customer_model->fetch();
 		foreach ($items as $key => $item) {
-			$items[$key]['fullname'] = $item['firstname'] . ' ' . $item['lastname'];
+			$items[$key]['label'] = $item['fullname'];
+			$items[$key]['value'] = $item['fullname'];
 		}
 		echo json_encode($items);
 	}

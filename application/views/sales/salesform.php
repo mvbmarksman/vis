@@ -1,5 +1,4 @@
-<ul id ="errors">
-</ul>
+<ul id ="errors"></ul>
 
 <h1>
 	<img src="/public/images/icons/wallet.png" />
@@ -89,18 +88,24 @@
 
 	<table id="creditForm">
 		<tr>
-			<td class="rightAligned">Name:</td>
+			<td>New Customer:</td>
 			<td>
-				<input type="text" id="name" class="longTxt">
-				<input type="hidden" id="customerId" name="customerId"/>
-				<span class="required">(required)</span>
+				<input type="radio" id="newCustomerYes" name="newCustomer" value="1"/><span style="margin-right: 10px; margin-left: 3px;">Yes</span>
+				<input type="radio" id="newCustomerNo" name="newCustomer" value="0"/><span style="margin-right: 10px; margin-left: 3px;">No</span>
 			</td>
 		</tr>
 		<tr>
+			<td class="rightAligned">Name:</td>
+			<td>
+				<input type="text" id="name" name="name" class="longTxt">
+				<input type="hidden" id="customerId" name="customerId"/>
+			</td>
+		</tr>
+		<tr id="addressRow">
 			<td class="rightAligned">Address:</td>
 			<td><textarea id="address" name="address" rows="2" cols="22" ></textarea></td>
 		</tr>
-		<tr>
+		<tr id="contactRow">
 			<td class="rightAligned">Contact Number:</td>
 			<td><input type="text" id="contact" name="contact" class="longTxt"/></td>
 		</tr>

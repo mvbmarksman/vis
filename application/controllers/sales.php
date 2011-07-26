@@ -6,7 +6,7 @@ class Sales extends MY_Controller
 		'sales_transaction_model',
 		'item_model',
 		'item_detail_model',
-		'credit_detail_model',
+		'customer_model',
 		'credit_payment_model',
 	);
 
@@ -27,14 +27,19 @@ class Sales extends MY_Controller
 	}
 
 	public function getautocompletedata() {
-		$data = $this->item_detail_model->fetch();
-		echo json_encode($data);
+		$items = $this->item_detail_model->fetch();
+		foreach ($items as $key => $item) {
+			$items[$key]['label'] = $item['description'];
+			$items[$key]['value'] = $item['description'];
+		}
+		echo json_encode($items);
 	}
 
 
 	public function processsalesform() {
-		$creditDetailId = $this->_saveCreditDetail($this->input->post());
-
+		Debug::dump($this->input->post());
+		$customerId = $this->_saveCustomer($this->input->post());
+die();
 		// save Sales data
 		$sales_transaction= new Sales_transaction_model();
 		$sales_transaction->userId = 1; //TODO stub data
@@ -88,15 +93,18 @@ class Sales extends MY_Controller
 		redirect('/sales/summary/?transactionId=' . $salesTransactionId, 'refresh');
 	}
 
-	private function _saveCreditDetail($data) {
-		if (empty($data['creditName'])) {
-			return;
-		}
-		$credit = new Credit_detail_model();
-		$credit->fullName = $data['creditName'];
-		$credit->address = $data['creditAddress'];
-		$credit->phoneNo = $data['creditContact'];
-		$this->credit_detail_model->save($credit);
+
+	/**
+	 * Saves/updates customer info
+	 * @param unknown_type $data
+	 */
+	private function _saveCustomer($data) {
+		$customer = new Customer_model();
+		$customer->customerId = $data['customerId'];
+		$customer->fullname = $data['name'];
+		$customer->address = $data['address'];
+		$customer->phoneNo = $data['contact'];
+		$this->customer_model->save($customer);
 		return $this->db->insert_id();
 	}
 

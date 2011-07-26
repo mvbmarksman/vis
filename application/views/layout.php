@@ -16,19 +16,21 @@
 
 	<!-- jquery base -->
     <script type="text/javascript" src="/public/js/jquery-1.6.1.min.js"></script>
-    <script type="text/javascript" src="/public/js/jquery-ui-1.8.14.redmond/js/jquery-ui-1.8.14.custom.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="/public/js/jquery-ui-1.8.14.redmond/css/redmond/jquery-ui-1.8.14.custom.css" />
+
+    <!-- jquery ui -->
+    <script type="text/javascript" src="/public/js/jquery-ui-1.8.14.custom.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/public/css/lightness/jquery-ui-1.8.14.custom.css" />
 
 	<!-- flexigrid -->
     <script type="text/javascript" src="/public/js/flexigrid/js/flexigrid.js"></script>
 	<link rel="stylesheet" type="text/css" href="/public/js/flexigrid/css/flexigrid.css" />
 
 	<!-- jquery autocomplete -->
-	<link rel="stylesheet" type="text/css" href="/public/css/jquery.autocomplete.css" />
-	<script type="text/javascript" src="/public/js/jquery.ajaxQueue.js"></script>
-	<script type="text/javascript" src="/public/js/jquery.autocomplete.min.js"></script>
-	<script type="text/javascript" src="/public/js/jquery.bgiframe.min.js"></script>
-	<script type="text/javascript" src="/public/js/thickbox-compressed.js"></script>
+<!--	<link rel="stylesheet" type="text/css" href="/public/css/jquery.autocomplete.css" />-->
+<!--	<script type="text/javascript" src="/public/js/jquery.ajaxQueue.js"></script>-->
+<!--	<script type="text/javascript" src="/public/js/jquery.autocomplete.min.js"></script>-->
+<!--	<script type="text/javascript" src="/public/js/jquery.bgiframe.min.js"></script>-->
+<!--	<script type="text/javascript" src="/public/js/thickbox-compressed.js"></script>-->
 
 	<script type="text/javascript" src="/public/js/utils.js"></script>
 

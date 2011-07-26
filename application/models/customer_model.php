@@ -4,8 +4,7 @@ class Customer_model extends CI_Model
 	const TBL_NAME = 'Customer';
 
 	public $customerId;
-	public $firstname;
-	public $lastname;
+	public $fullname;
 	public $address;
 	public $phoneNo;
 
@@ -16,7 +15,6 @@ class Customer_model extends CI_Model
 		if (!$customerModel) {
 			throw new DAOException("Must specify customerModel.");
 		}
-
 		if ($customerModel->customerId) {
 			$customerId = $customerModel->customerId;
 			unset($customerModel->customerId);

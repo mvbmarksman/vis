@@ -2,12 +2,20 @@
 var rowCtr = 0;
 var autoCompleteData = null;
 
+var ERROR_DELAY = 10000;
+var ERROR_FADE = 1000;
+
 $(document).ready(function(){
 	$("#row_-rowCtr-").hide();
 	$(".subtotalvat").hide();
 	$("#errors").hide();
 	initAutoCompleteData();
 	initCustomerAutoComplete();
+	$("#addressRow").hide();
+	$("#contactRow").hide();
+	$("#newCustomerYes").click(newCustomerMode);
+	$("#newCustomerNo").click(returningCustomerMode);
+	$("#newCustomerNo").click();
 });
 
 /**
@@ -47,12 +55,23 @@ function initAutoCompleteData() {
  * @param rowCtr
  */
 function initAutoComplete(rowCtr) {
-	$("#item_" + rowCtr).autocomplete(autoCompleteData, {
-		formatItem: function(item) {
-			return item.description;
-		}
-	}).result(function(event, item) {
-		doAutoCompleteAction(rowCtr, item);
+	$("#item_" + rowCtr).autocomplete({
+		minLength: 0,
+		source: autoCompleteData,
+		select: function(event, ui) {
+			$("#item_" + rowCtr).val(ui.item.description);
+			doAutoCompleteAction(rowCtr, ui.item);
+			return false;
+		},
+		change: function(event, ui) { 
+			if (ui.item == null) {
+				showError($("#item_" + rowCtr), "Invalid item. Please select an item from the list");
+				$("#item_" + rowCtr).val(null);
+				$("#item_id_" + rowCtr).val(null);
+				$("#price_" + rowCtr).val(null);
+				$("#buyingPrice_" + rowCtr).html(null);
+			}
+		}		
 	});
 }
 
@@ -65,25 +84,35 @@ function doAutoCompleteAction(rowCtr, item) {
 	$("#item_id_" + rowCtr).val(item.itemDetailId);
 	$("#buyingPrice_" + rowCtr).html(parseFloat(item.buyingPrice).toFixed(2));
 	$("#price_" + rowCtr).val(parseFloat(item.buyingPrice).toFixed(2));
+	$("#quantity_" + rowCtr).focus();
 }
 
 
 function initCustomerAutoComplete() {
 	$.post('/customer/getcustomerautocompletedata', {}, function(data){
 		var customerData = eval(data);
-		$("#name").autocomplete(customerData, {
-			formatItem: function(item) {
-				return item.fullname;
+		$("#name").autocomplete({
+			minLength: 0,
+			source: customerData,
+			select: function(event, ui) {
+				$("#name").val(ui.item.fullname);
+				doCustomerAutoCompleteAction(ui.item);
+				return false;
+			},
+			change: function(event, ui) { 
+				if (ui.item == null) {
+					
+				}
 			}
-		}).result(function(event, item) {
-			doCustomerAutoCompleteAction(item);
-		});		
+		});	
 	});
 }
 
 function doCustomerAutoCompleteAction(item) {
 	$("#customerId").val(item.customerId);
+	$("#addressRow").show();
 	$("#address").val(item.address);
+	$("#contactRow").show();
 	$("#contact").val(item.phoneNo);
 }
 
@@ -201,22 +230,10 @@ function bindValidators(rowCtr) {
 			resetSubTotal(rowCtr);
 			discount.val(0);
 			showError(discount, "Discount given cannot be greater than the selling price.");
+			discount.removeClass("formError");
 		} else {
 			discount.removeClass("formError");
 			computeSubTotal(rowCtr);
-		}
-	});
-	
-	// customer information bindings go here
-	var name = $("#name");
-	name.blur(function(){
-		if (empty(name.val())) {
-			showError(name, "Customer name is required.");
-			$("#address").val(null);
-			$("#contact").val(null);
-			$("#customerId").val(null);
-		} else {
-			name.removeClass("formError");
 		}
 	});
 	
@@ -225,6 +242,18 @@ function bindValidators(rowCtr) {
 		if (isNaN(amountPaid.val())) {
 			amountPaid.val(0);
 			showError(amountPaid, "Amount paid should be a valid number.");
+		}
+	});
+	
+	var name = $("#name");
+	name.blur(function(){
+		if (empty(name.val())) {
+			$("#address").val(null);
+			$("#contact").val(null);
+			$("#customerId").val(null);
+			showError(name, "Customer name is required.");
+		} else {
+			name.removeClass("formError");
 		}
 	});
 }
@@ -256,8 +285,9 @@ function checkForm() {
 		}
 	});	
 	
-	if (empty($("#name").val())) {
-		$("#name").addClass("formError");
+	var name = $("#name");
+	if (empty(name.val())) {
+		name.addClass("formError");
 		errors.push("Customer name is required.");
 	}
 	
@@ -268,11 +298,18 @@ function checkForm() {
 			 $("#errors").append("<li>" + errors[i] + "</li>");
 		}
 		$("#errors").show();
-		$("#errors").delay(5000).fadeOut(1000);
+		$("#errors").delay(ERROR_DELAY).fadeOut(ERROR_FADE);
 		return false;
 	} else {
 		return true;
 	}
+}
+
+function showError(obj, msg) {
+	$(obj).addClass("formError");
+	 $("#errors").html("<li>" + msg + "</li>");
+	 $("#errors").show();
+	 $("#errors").delay(ERROR_DELAY).fadeOut(ERROR_FADE);
 }
 
 function submitForm(){
@@ -281,22 +318,22 @@ function submitForm(){
 	}
 }
 
-//............................................................... Credit Detail
-/**
- * Initialize the modal dialog for getting credit detail information
- */
-function initCreditDialog() {
-	$("#creditFormContainer").hide();
-	$("#creditFormContainer").dialog({
-		autoOpen: false,
-		modal: true,
-		title: "Credit Information",
-		width: 400,
-		height: 280,
-		resizable: false
-	});
-	$("#creditContainer").hide();
+function newCustomerMode() {
+	$("#addressRow").show();
+	$("#contactRow").show();
+	$("#customerId").val(null);
+	$("#address").val(null);
+	$("#contact").val(null);
+	$("#name").autocomplete({ disabled: true });
 }
+
+function returningCustomerMode() {
+	$("#name").autocomplete({ disabled: false});
+	$("#name").val(null);
+	$("#addressRow").hide();
+	$("#contactRow").hide();
+}
+
 
 //........................................................... Utility Functions
 function getRowCtr(obj) {

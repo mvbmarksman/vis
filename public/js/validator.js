@@ -23,9 +23,3 @@ function discountValidator(discountObj, sellingPriceObj, qtyObj, msg) {
 	}
 }
 
-function showError(obj, msg) {
-	$(obj).addClass("formError");
-	 $("#errors").html("<li>" + msg + "</li>");
-	 $("#errors").show();
-	 $("#errors").delay(5000).fadeOut(1000);
-}
