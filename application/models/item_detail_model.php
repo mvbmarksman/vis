@@ -10,7 +10,6 @@ class Item_detail_model extends MY_Model implements IAbstractDAO
 	public $unit;
 	public $buyingPrice;
 	public $isUsed;
-	public $sellingPrice;
 	public $supplierId;
 
 	public function save($itemDetailModel) {

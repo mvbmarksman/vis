@@ -2,6 +2,7 @@
 /*
  * http://codeigniter.com/forums/viewthread/84781/
  */
+require_once APPPATH . 'exceptions/IllegalArgumentsException.php';
 class MY_Controller extends CI_Controller {
 
 	private $_controllerName;

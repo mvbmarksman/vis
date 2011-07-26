@@ -74,7 +74,7 @@
 			</tr>
 			<tr>
 				<td class="rightAligned salesSummaryLabel">Total Price:</td>
-				<td><div class="salesSummaryValue" id="totalprice"></div></td>
+				<td><div class="salesSummaryValue" id="totalprice"></div><input type="hidden" id="total" value="0"/></td>
 			</tr>
 		</table>
 	</div>
@@ -94,11 +94,11 @@
 				<input type="hidden" id="customerId" name="customerId"/>
 			</td>
 		</tr>
-		<tr id="addressRow">
+		<tr>
 			<td class="rightAligned">Address:</td>
 			<td><textarea id="address" name="address" rows="2" cols="22" ></textarea></td>
 		</tr>
-		<tr id="contactRow">
+		<tr>
 			<td class="rightAligned">Contact Number:</td>
 			<td><input type="text" id="contact" name="contact" class="longTxt"/></td>
 		</tr>
@@ -106,6 +106,22 @@
 			<td class="rightAligned">Amount Paid:</td>
 			<td>
 				<input type="text" id="amountPaid" name="amountPaid" class="longTxt rightAligned"/>
+			</td>
+			<td>
+				<div id="creditNotification" class="action">
+					<img src="/public/images/icons/information.png"/><span style="margin-left: 5px"><em>credit payment</em></span>
+				</div>
+			</td>
+		</tr>
+		<tr id="termRow">
+			<td class="rightAligned">Term:</td>
+			<td>
+				<select id="term" name="term" class="longSelect">
+					<option value="30">30</option>
+					<option value="60">60</option>
+					<option value="90">90</option>
+					<option value="120">120</option>
+				</select>
 			</td>
 		</tr>
 	</table>

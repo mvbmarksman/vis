@@ -37,21 +37,20 @@ class Sales extends MY_Controller
 
 
 	public function processsalesform() {
-		Debug::dump($this->input->post());
+//		Debug::dump($this->input->post());
+//		die();
 		$customerId = $this->_saveCustomer($this->input->post());
-die();
-		// save Sales data
+		// save sales transaction data
 		$sales_transaction= new Sales_transaction_model();
 		$sales_transaction->userId = 1; //TODO stub data
-		$sales_transaction->isFullyPaid = $creditDetailId ? 0 : 1;
-		$sales_transaction->creditDetailId = $creditDetailId;
-
+		$sales_transaction->customerId = $customerId;
 		$this->sales_transaction_model->save($sales_transaction);
 		$salesTransactionId = $this->db->insert_id();
 
 		$itemDetailIds = $this->input->post('item');
 		$qty = $this->input->post('qty');
 		$discount = $this->input->post('discount');
+		$price = $this->input->post('price');
 		$storeId = 1;  //TODO stub data
 		$vats = $this->input->post('vat');
 
@@ -61,24 +60,21 @@ die();
 			}
 		}
 
-		// save sale transactions
-		$row = 1;
 		$totalPrice = 0;
-		unset($itemDetailIds[0]);	// remove the data coming from the template
 		$salesObjs = array();
-		foreach ($itemDetailIds as $itemDetailId) {
+		// we start from 1 to remove data coming from template
+		for ($i = 1; $i < count($itemDetailIds); $i++) {
 			$sales = new Sales_model();
 			$sales->salesTransactionId = $salesTransactionId;
-			$sales->itemDetailId = $itemDetailId;
-			$itemDetailRow = $this->item_detail_model->fetch($itemDetailId);
-			$sales->unitPrice = $itemDetailRow['sellingPrice'];
-			$sales->discount = $discount[$row];
+			$sales->itemDetailId = $itemDetailIds[$i];
+			$itemDetailRow = $this->item_detail_model->fetch($itemDetailIds[$i]);
+			$sales->sellingPrice = $price[$i];
+			$sales->discount = $discount[$i];
 			$sales->storeId = $storeId;
-			$sales->isVAT = (empty($isVAT[$row])) ? 0 : 1;
-			$sales->qty = $qty[$row];
-			$totalPrice += $qty[$row] * $itemDetailRow['sellingPrice'] - $discount[$row];
+			$sales->isVAT = (empty($isVAT[$i])) ? 0 : 1;
+			$sales->qty = $qty[$i];
+			$totalPrice += $qty[$i] * $price[$i] - $discount[$i];
 			$salesObjs[] = $sales;
-			$row++;
 		}
 
 		$salesObjs = $this->_mergeSimilarItems($salesObjs);
@@ -87,16 +83,26 @@ die();
 		}
 		$sales_transaction->salesTransactionId = $salesTransactionId;
 		$sales_transaction->totalPrice = $totalPrice;
+		if ($totalPrice == $this->input->post('amountPaid')) {
+			$sales_transaction->isFullyPaid = 1;
+			$sales_transaction->isCredit = 0;
+		} else {
+			$sales_transaction->isFullyPaid = 0;
+			$sales_transaction->isCredit = 1;
+			$sales_transaction->creditTerm = $this->input->post('term');
+			$this->_saveCreditPayment($customerId, $salesTransactionId, $this->input->post('amountPaid'));
+		}
 		$this->sales_transaction_model->save($sales_transaction);
-		$this->_saveCreditPayment($creditDetailId, $salesTransactionId, $this->input->post('creditAmount'));
 		$this->load->helper('url');
 		redirect('/sales/summary/?transactionId=' . $salesTransactionId, 'refresh');
 	}
 
 
 	/**
-	 * Saves/updates customer info
-	 * @param unknown_type $data
+	 * If customerId is present, the customer information simply gets updated
+	 * Otherwise, we create a new customer based on the details provided in the form
+	 *
+	 * @param $data - post data
 	 */
 	private function _saveCustomer($data) {
 		$customer = new Customer_model();
@@ -105,17 +111,17 @@ die();
 		$customer->address = $data['address'];
 		$customer->phoneNo = $data['contact'];
 		$this->customer_model->save($customer);
-		return $this->db->insert_id();
+		return empty($data['customerId']) ? $this->db->insert_id() : $data['customerId'];
 	}
 
-	private function _saveCreditPayment($creditDetailId, $saleTransactionId, $amount) {
-		if (empty($creditDetailId) || empty($saleTransactionId) || empty($amount)) {
-			return;
+	private function _saveCreditPayment($customerId, $saleTransactionId, $amount) {
+		if (empty($customerId) || empty($saleTransactionId) || empty($amount)) {
+			throw new IllegalArgumentsException("Supplied invalid arguments. customerId: $customerId saleTransactionId: $saleTransactionId amount: $amount");
 		}
 		$creditPayment = new Credit_payment_model();
-		$creditPayment->amount = $amount;
-		$creditPayment->creditDetailId = $creditDetailId;
+		$creditPayment->customerId = $customerId;
 		$creditPayment->salesTransactionId = $saleTransactionId;
+		$creditPayment->amount = $amount;
 		$this->credit_payment_model->save($creditPayment);
 	}
 
@@ -128,7 +134,7 @@ die();
 		foreach ($items as $item) {
 			$merged[$item->itemDetailId][$item->isVAT]['salesTransactionId'] = $item->salesTransactionId;
 			$merged[$item->itemDetailId][$item->isVAT]['itemDetailId'] = $item->itemDetailId;
-			$merged[$item->itemDetailId][$item->isVAT]['unitPrice'] = $item->unitPrice;
+			$merged[$item->itemDetailId][$item->isVAT]['sellingPrice'] = $item->unitPrice;
 			$merged[$item->itemDetailId][$item->isVAT]['storeId'] = $item->storeId;
 			$merged[$item->itemDetailId][$item->isVAT]['isVAT'] = $item->isVAT;
 			@$merged[$item->itemDetailId][$item->isVAT]['qty'] += $item->qty;
@@ -141,7 +147,7 @@ die();
 				$sales = new Sales_model();
 				$sales->salesTransactionId = $i['salesTransactionId'];
 				$sales->itemDetailId = $i['itemDetailId'];
-				$sales->unitPrice = $i['unitPrice'];
+				$sales->sellingPrice = $i['sellingPrice'];
 				$sales->storeId = $i['storeId'];
 				$sales->isVAT = $i['isVAT'];
 				$sales->qty = $i['qty'];

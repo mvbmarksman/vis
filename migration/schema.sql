@@ -38,7 +38,7 @@ CREATE TABLE `CreditPayment` (
 
 LOCK TABLES `CreditPayment` WRITE;
 /*!40000 ALTER TABLE `CreditPayment` DISABLE KEYS */;
-INSERT INTO `CreditPayment` VALUES (1,1,1,'2011-07-10 19:10:10','100');
+INSERT INTO `CreditPayment` VALUES (1,6,6,'2011-07-27 00:23:57','50');
 /*!40000 ALTER TABLE `CreditPayment` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -67,12 +67,11 @@ DROP TABLE IF EXISTS `Customer`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Customer` (
   `customerId` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `firstname` varchar(100) COLLATE utf8_bin NOT NULL,
-  `lastname` varchar(100) COLLATE utf8_bin NOT NULL,
+  `fullname` varchar(100) COLLATE utf8_bin NOT NULL,
   `address` varchar(200) COLLATE utf8_bin DEFAULT NULL,
   `phoneNo` varchar(20) COLLATE utf8_bin DEFAULT NULL,
   PRIMARY KEY (`customerId`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -81,7 +80,7 @@ CREATE TABLE `Customer` (
 
 LOCK TABLES `Customer` WRITE;
 /*!40000 ALTER TABLE `Customer` DISABLE KEYS */;
-INSERT INTO `Customer` VALUES (1,'marky','','test','12345');
+INSERT INTO `Customer` VALUES (1,'lolol','a','1'),(2,'marko','tests','12345'),(3,'marks','test','1234'),(4,'ma','',''),(5,'aaa','aaa','1234'),(6,'mark basmayor','cubao','09272310583');
 /*!40000 ALTER TABLE `Customer` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -218,7 +217,7 @@ CREATE TABLE `ItemDetail` (
   CONSTRAINT `ItemDetail_ibfk_1` FOREIGN KEY (`itemTypeId`) REFERENCES `ItemType` (`itemTypeId`),
   CONSTRAINT `ItemDetail_ibfk_2` FOREIGN KEY (`itemTypeId`) REFERENCES `ItemType` (`itemTypeId`),
   CONSTRAINT `ItemDetail_ibfk_3` FOREIGN KEY (`supplierId`) REFERENCES `Supplier` (`supplierId`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -227,7 +226,7 @@ CREATE TABLE `ItemDetail` (
 
 LOCK TABLES `ItemDetail` WRITE;
 /*!40000 ALTER TABLE `ItemDetail` DISABLE KEYS */;
-INSERT INTO `ItemDetail` VALUES (1,'ADP01',1,'Bosskit Adaptor Toyota T2','pcs','280.0000',0,NULL),(2,'ADP02',1,'Bosskit Adaptor Toyota T16','pcs','280.0000',0,NULL),(3,NULL,2,'Tree Frog Jasmine Cherry','pcs','46.0000',0,NULL),(5,'sampleCode',1,'Keyboard','dozen','100.0000',1,NULL);
+INSERT INTO `ItemDetail` VALUES (1,'ADP01',1,'Bosskit Adaptor Toyota T2','pcs','100.0000',0,NULL),(2,'ADP02',1,'Bosskit Adaptor Toyota T16','pcs','280.0000',0,NULL),(3,NULL,2,'Tree Frog Jasmine Cherry','pcs','46.0000',0,NULL),(5,'sampleCode',1,'Keyboard','dozen','100.0000',1,NULL),(6,'ADP01',1,'Something1','pcs','500.0000',0,NULL),(7,'',1,'Something3','pcs','100.0000',0,NULL),(9,'LOL',1,'Something2','pcs','500.0000',0,NULL);
 /*!40000 ALTER TABLE `ItemDetail` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -303,9 +302,9 @@ CREATE TABLE `SalesTransaction` (
   `userId` int(10) unsigned NOT NULL,
   `customerId` int(10) unsigned DEFAULT NULL,
   `totalPrice` decimal(18,4) DEFAULT NULL,
-  `isFullyPaid` tinyint(1) NOT NULL,
-  `isCredit` tinyint(1) NOT NULL,
-  `creditTerm` int(11) NOT NULL,
+  `isFullyPaid` tinyint(1) DEFAULT NULL,
+  `isCredit` tinyint(1) DEFAULT NULL,
+  `creditTerm` int(11) DEFAULT NULL,
   PRIMARY KEY (`salesTransactionID`),
   KEY `userId` (`userId`),
   CONSTRAINT `SalesTransaction_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `User` (`userId`)
@@ -423,4 +422,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-07-17  2:35:30
+-- Dump completed on 2011-07-27  0:24:53

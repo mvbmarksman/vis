@@ -6,9 +6,11 @@ class Sales_transaction_model extends MY_Model
 
 	public $salesTransactionId;
 	public $userId;
-	public $creditDetailId;
+	public $customerId;
 	public $totalPrice;
 	public $isFullyPaid;
+	public $isCredit;
+	public $creditTerm;
 
 	public function save($salesTransactionModel) {
 		if (!$salesTransactionModel instanceof Sales_transaction_model) {

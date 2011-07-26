@@ -4,7 +4,7 @@ class Credit_payment_model extends CI_Model
 	const TBL_NAME = 'CreditPayment';
 
 	public $creditPaymentId;
-	public $creditDetailId;	// required
+	public $customerId;	// required
 	public $salesTransactionId; // required
 	public $datePaid;
 	public $amount;

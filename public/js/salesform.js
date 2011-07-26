@@ -11,6 +11,27 @@ $(document).ready(function(){
 	$("#errors").hide();
 	initAutoCompleteData();
 	initCustomerAutoComplete();
+	$("#termRow").hide();
+	$("#amountPaid").blur(function(){
+		var total = getFloat($("#total").val());
+		var amountPaid = getFloat($("#amountPaid").val());
+		console.log(total);
+		console.log(amountPaid);
+		if (isNaN(amountPaid) && total != 0) {
+			$("#termRow").show();
+			$("#creditNotification").show();
+		} else if (isNaN(amountPaid) && total == 0) {
+			$("#termRow").hide();
+			$("#creditNotification").hide();
+		} else if (total != 0 && amountPaid < total) {
+			$("#termRow").show();
+			$("#creditNotification").show();
+		} else {
+			$("#termRow").hide();
+			$("#creditNotification").hide();
+		}
+	});
+	$("#creditNotification").hide();
 });
 
 /**
@@ -24,10 +45,13 @@ function addRow() {
 	$("#salesFormBody").append(template);
 	initAutoComplete(rowCtr);
 	$("#vat_" + rowCtr).change(function(){
+		var rowCtr = getRowCtr(this);
 		computeSubTotal(rowCtr);
 	});	
 	$("#remove_" + rowCtr).click(function(){
+		var rowCtr = getRowCtr(this);
 		$("#row_" + rowCtr).remove();
+		computeTotal();
 	});
 	bindValidators(rowCtr);
 	$("#item_" + rowCtr).focus();
@@ -158,6 +182,7 @@ function computeTotal() {
 	$("#vatable").html(formatMoney(vatable));
 	$("#totalvat").html(formatMoney(totalVat));
 	$("#totalprice").html(formatMoney(total));
+	$("#total").val(total);
 	$("#amountPaid").val(total.toFixed(2));
 }
 
@@ -241,6 +266,7 @@ function bindValidators(rowCtr) {
 		if (isNaN(amountPaid.val())) {
 			amountPaid.val(0);
 			showError(amountPaid, "Amount paid should be a valid number.");
+			amountPaid.removeClass("formError");
 		}
 	});
 	
