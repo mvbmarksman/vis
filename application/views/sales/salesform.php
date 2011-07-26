@@ -88,13 +88,6 @@
 
 	<table id="creditForm">
 		<tr>
-			<td>New Customer:</td>
-			<td>
-				<input type="radio" id="newCustomerYes" name="newCustomer" value="1"/><span style="margin-right: 10px; margin-left: 3px;">Yes</span>
-				<input type="radio" id="newCustomerNo" name="newCustomer" value="0"/><span style="margin-right: 10px; margin-left: 3px;">No</span>
-			</td>
-		</tr>
-		<tr>
 			<td class="rightAligned">Name:</td>
 			<td>
 				<input type="text" id="name" name="name" class="longTxt">

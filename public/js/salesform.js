@@ -11,11 +11,6 @@ $(document).ready(function(){
 	$("#errors").hide();
 	initAutoCompleteData();
 	initCustomerAutoComplete();
-	$("#addressRow").hide();
-	$("#contactRow").hide();
-	$("#newCustomerYes").click(newCustomerMode);
-	$("#newCustomerNo").click(returningCustomerMode);
-	$("#newCustomerNo").click();
 });
 
 /**
@@ -101,7 +96,11 @@ function initCustomerAutoComplete() {
 			},
 			change: function(event, ui) { 
 				if (ui.item == null) {
-					
+					$("#addressRow").show();
+					$("#contactRow").show();
+					$("#customerId").val(null);
+					$("#address").val(null);
+					$("#contact").val(null);					
 				}
 			}
 		});	
@@ -317,23 +316,6 @@ function submitForm(){
 		$("#salesForms").submit();
 	}
 }
-
-function newCustomerMode() {
-	$("#addressRow").show();
-	$("#contactRow").show();
-	$("#customerId").val(null);
-	$("#address").val(null);
-	$("#contact").val(null);
-	$("#name").autocomplete({ disabled: true });
-}
-
-function returningCustomerMode() {
-	$("#name").autocomplete({ disabled: false});
-	$("#name").val(null);
-	$("#addressRow").hide();
-	$("#contactRow").hide();
-}
-
 
 //........................................................... Utility Functions
 function getRowCtr(obj) {
