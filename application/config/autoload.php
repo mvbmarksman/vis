@@ -62,7 +62,7 @@ $autoload['libraries'] = array('Debug');
 |	$autoload['helper'] = array('url', 'file');
 */
 
-$autoload['helper'] = array();
+$autoload['helper'] = array('my_number');
 
 
 /*

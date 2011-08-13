@@ -1,0 +1,63 @@
+@CHARSET "UTF-8";
+#summaryTable {
+	font-size: 12px;
+	margin-top: 20px;
+	width: 750px;
+}
+#summaryTable thead tr {
+	background-color: #6997BF;
+	color: #eee;
+	text-align: center;
+	font-weight: bold;
+}
+#summaryTable thead tr th {padding: 5px;}
+#summaryTable tr {
+	color: #333;
+	border: 1px solid silver;
+}
+#summaryTable td {
+	padding: 3px;
+	border: 1px solid silver;
+}
+
+
+#creditContainer {
+	margin-top: 20px;
+}
+
+.grayed {
+	color: #999;
+	font-style: italic;
+}
+
+#creditTable {
+	font-size: 12px;
+	margin-top: 5px;
+	width: 750px;
+}
+
+#creditTable tr {
+	color: #333;
+}
+#creditTable td {
+	padding: 3px;
+	border: 1px solid silver;
+}
+
+.labelCol {
+	width: 80px;
+	font-weight: bold;
+	padding: 3px 10px !important;
+}
+
+#salesSummary {
+	margin-top: 5px;
+	margin-left: 618px;
+}
+
+.salesSummaryLabel {
+	font-weight:bold;
+	width: 70px;
+	padding-right: 10px;
+	padding-top: 3px;
+}

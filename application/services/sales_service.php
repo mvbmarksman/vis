@@ -28,8 +28,12 @@ class SalesService extends MY_Service
 			$sales->sellingPrice = $data['price'][$i];
 			$sales->discount = $data['discount'][$i];
 			$sales->storeId = 1; // TODO stub data;
-			$sales->isVAT = (empty($isVAT[$i])) ? 0 : 1;
 			$sales->qty = $data['qty'][$i];
+			$sales->subTotal = $sales->sellingPrice * $sales->qty - $sales->discount;
+			if (!empty($isVAT[$i])) {
+				$sales->vatable = $sales->subTotal / 1.12;
+				$sales->vat = $sales->vatable * 0.12;
+			}
 			$salesObjs[] = $sales;
 		}
 		return $salesObjs;
@@ -70,11 +74,19 @@ class SalesService extends MY_Service
 	{
 		Debug::log('SalesService::saveAndCompute');
 		$totalPrice = 0;
+		$totalVatable = 0;
+		$totalVat = 0;
 		foreach ($salesObjs as $sales) {
 			Debug::log($sales->__toString());
 			$sales->insert();
 			$totalPrice += $sales->sellingPrice;
+			$totalVatable += $sales->vatable;
+			$totalVat += $sales->vat;
 		}
-		return $totalPrice;
+		return array(
+			'totalPrice' 	=> $totalPrice,
+			'totalVatable'	=> $totalVatable,
+			'totalVat'		=> $totalVat,
+		);
 	}
 }

@@ -28,6 +28,8 @@ class SalesTransactionService extends MY_Service
 		$salesTransaction = new Sales_transaction_model();
 		$salesTransaction = $salesTransaction->fetch($data['salesTransactionId']);
 		$salesTransaction->totalPrice = $data['totalPrice'];
+		$salesTransaction->totalVatable = $data['totalVatable'];
+		$salesTransaction->totalVat = $data['totalVat'];
 		$salesTransaction->totalAmountPaid = $data['amountPaid'];
 		if ($data['totalPrice'] == $data['amountPaid']) {
 			$salesTransaction->isFullyPaid = 1;
@@ -36,7 +38,7 @@ class SalesTransactionService extends MY_Service
 			$salesTransaction->isFullyPaid = 0;
 			$salesTransaction->isCredit = 1;
 			$salesTransaction->creditTerm = $data['term'];
-			$this->_saveCreditPayment($data);
+			$this->_insertCreditPayment($data);
 		}
 		$salesTransaction->update();
 	}

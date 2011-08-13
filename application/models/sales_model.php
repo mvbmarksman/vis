@@ -10,7 +10,9 @@ class Sales_model extends CI_Model
   	public $qty;
   	public $discount;
   	public $storeId;
-  	public $isVAT;
+  	public $subTotal;
+  	public $vatable;
+  	public $vat;
 
 
 	public function insert()
@@ -44,6 +46,8 @@ class Sales_model extends CI_Model
 			. "qty[$this->qty], "
 			. "discount[$this->discount], "
 			. "storeId[$this->storeId], "
-			. "isVAT[$this->isVAT], ";
+			. "subTotal[$this->subTotal], "
+			. "vatable[$this->vatable], "
+			. "vatable[$this->vat] ";
 	}
 }

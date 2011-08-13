@@ -75,7 +75,10 @@ class Sales extends MY_Controller
 		$salesService = new SalesService();
 		$salesObjs = $salesService->marshallSales($data);
 		$salesObjs = $salesService->mergeSimilarItems($salesObjs);
-		$data['totalPrice'] = $salesService->saveAndComputeTotal($salesObjs);
+		$totals = $salesService->saveAndComputeTotal($salesObjs);
+		$data['totalPrice'] = $totals['totalPrice'];
+		$data['totalVatable'] = $totals['totalVatable'];
+		$data['totalVat'] = $totals['totalVat'];
 		$salesTransactionService->update($data);
 		$this->load->helper('url');
 		redirect('/sales/summary?transactionId=' . $salesTransactionId, 'refresh');
@@ -87,9 +90,11 @@ class Sales extends MY_Controller
 	 */
 	public function summary()
 	{
+		$this->view->addCss('sales/summary.css');
 		$salesTransactionId = $this->input->get('transactionId');
 		$salesTransactionService = new SalesTransactionService();
 		$transactionDetails = $salesTransactionService->fetchDetailed($salesTransactionId);
+		Debug::log($transactionDetails);
 		$this->renderView('summary', array('items' => $transactionDetails));
 	}
 

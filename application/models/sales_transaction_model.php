@@ -7,6 +7,8 @@ class Sales_transaction_model extends MY_Model
 	public $userId;
 	public $customerId;
 	public $totalPrice;
+	public $totalVatable;
+	public $totalVat;
 	public $totalAmountPaid;
 	public $isFullyPaid;
 	public $isCredit;
@@ -88,6 +90,8 @@ class Sales_transaction_model extends MY_Model
 			. "userId[$this->userId], "
 			. "customerId[$this->customerId], "
 			. "totalPrice[$this->totalPrice], "
+			. "totalVatable[$this->totalVatable], "
+			. "totalVat[$this->totalVat], "
 			. "totalAmountPaid[$this->totalAmountPaid], "
 			. "isFullyPaid[$this->isFullyPaid], "
 			. "isCredit[$this->isCredit], "
