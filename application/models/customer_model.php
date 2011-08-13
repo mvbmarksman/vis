@@ -1,5 +1,5 @@
 <?php
-class Customer_model extends CI_Model
+class Customer_model extends MY_Model
 {
 	const TBL_NAME = 'Customer';
 
@@ -8,50 +8,43 @@ class Customer_model extends CI_Model
 	public $address;
 	public $phoneNo;
 
-	public function save($customerModel) {
-		if (!$customerModel instanceof Customer_model) {
-			throw new DAOException("Parameter should be an instance of Customer_model class");
+
+	public function insert() {
+		if (empty($this->fullname)) {
+			throw new InvalidArgumentException('Full name is empty.');
 		}
-		if (!$customerModel) {
-			throw new DAOException("Must specify customerModel.");
-		}
-		if ($customerModel->customerId) {
-			$customerId = $customerModel->customerId;
-			unset($customerModel->customerId);
-			$this->db->update(self::TBL_NAME, $customerModel, array('customerId' => $customerId));
-			return $this->db->insert_id();
-		}
-		$this->db->insert(self::TBL_NAME, $customerModel);
+		$this->db->insert(self::TBL_NAME, $this);
 		return $this->db->insert_id();
 	}
 
 
-	/**
-	 * Fetches customer details from the database.
-	 * If customerId is not specified, all records are fetched
-	 *
-	 * @return array
-	 */
-	public function fetch($customerId = null) {
-
-		$this->db->select();
-		$this->db->from(self::TBL_NAME);
-		if ($customerId) {
-			$this->db->where('customerId', $customerId);
+	public function update()
+	{
+		if (empty($this->customerId)) {
+			throw new InvalidArgumentException('CustomerId cannot be empty.');
 		}
-		$query = $this->db->get();
-		$result = $query->result_array();
-		if ($customerId) {
-			return array_pop($result);
-		}
-		return $result;
+		$customerId = $this->customerId;
+		unset($this->customerId);
+		$this->db->update(self::TBL_NAME, $this, array('customerId' => $customerId));
+		return $customerId;
 	}
 
 
-	public function delete($customerId) {
-		if (!$customerId) {
-			throw new DAOException("Must specify id to delete.");
-		}
-		$this->db->delete(self:: TBL_NAME, array('customerId' => $customerId));
+	public function fetchAll()
+	{
+		$this->db->select();
+		$this->db->from(self::TBL_NAME);
+		$query = $this->db->get();
+		$results = $query->result_array();
+		return $results;
+	}
+
+
+	public function __toString()
+	{
+		return "CustomerModel: customerId[$this->customerId], "
+			. "fullname[$this->fullname], "
+			. "address[$this->address], "
+			. "phoneNo[$this->phoneNo], ";
 	}
 }

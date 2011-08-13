@@ -63,7 +63,7 @@ function addRow() {
  * @returns JSON
  */
 function initAutoCompleteData() {
-	$.post('/sales/getautocompletedata', {}, function(data){
+	$.post('/sales/getitemsforautocomplete', {}, function(data){
 		autoCompleteData = eval(data);
 		addRow();
 	});
@@ -108,7 +108,7 @@ function doAutoCompleteAction(rowCtr, item) {
 
 
 function initCustomerAutoComplete() {
-	$.post('/customer/getcustomerautocompletedata', {}, function(data){
+	$.post('/sales/getcustomersforautocomplete', {}, function(data){
 		var customerData = eval(data);
 		$("#name").autocomplete({
 			minLength: 0,

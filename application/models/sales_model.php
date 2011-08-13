@@ -12,47 +12,38 @@ class Sales_model extends CI_Model
   	public $storeId;
   	public $isVAT;
 
-	public function save($salesModel) {
-		if (!$salesModel instanceof Sales_model) {
-			throw new DAOException("Parameter should be an instance of Sales_model class");
-		}
-		if (!$salesModel) {
-			throw new DAOException("Must specify salesModel.");
-		}
 
-		if ($salesModel->salesId) {
-			$salesId = $salesModel->salesId;
-			unset($salesModel->salesId);
-			$this->db->update(self::TBL_NAME, $salesModel, array('salesId' => $salesId));
-			return $this->db->insert_id();
+	public function insert()
+	{
+		if (empty($this->salesTransactionId)) {
+			throw new IllegalArgumentsException('SalesTransactionId is empty.');
 		}
-		$this->db->insert(self::TBL_NAME, $salesModel);
+		if (empty($this->itemDetailId)) {
+			throw new IllegalArgumentsException('ItemDetailId is empty.');
+		}
+		if (empty($this->sellingPrice)) {
+			throw new IllegalArgumentsException('SellingPrice is empty.');
+		}
+		if (empty($this->qty)) {
+			throw new IllegalArgumentsException('Qty is empty.');
+		}
+		if (empty($this->storeId)) {
+			throw new IllegalArgumentsException('StoreId is empty.');
+		}
+		$this->db->insert(self::TBL_NAME, $this);
 		return $this->db->insert_id();
 	}
 
 
-	/**
-	 * Fetches sales details from the database.
-	 * If salesId is not specified, all records are fetched
-	 *
-	 * @return array
-	 */
-	public function fetch($salesId = null) {
-
-		$this->db->select();
-		$this->db->from(self::TBL_NAME);
-		if ($salesId) {
-			$this->db->where('salesId', $salesId);
-		}
-		$query = $this->db->get();
-		return $query->result_array();
-	}
-
-
-	public function delete($salesId) {
-		if (!$salesId) {
-			throw new DAOException("Must specify id to delete.");
-		}
-		$this->db->delete(self:: TBL_NAME, array('salesId' => $salesId));
+	public function __toString()
+	{
+		return "SalesModel: salesId[$this->salesId], "
+			. "salesTransactionId[$this->salesTransactionId], "
+			. "itemDetailId[$this->itemDetailId], "
+			. "sellingPrice[$this->sellingPrice], "
+			. "qty[$this->qty], "
+			. "discount[$this->discount], "
+			. "storeId[$this->storeId], "
+			. "isVAT[$this->isVAT], ";
 	}
 }

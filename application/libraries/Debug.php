@@ -14,4 +14,8 @@ class Debug {
 	    echo "</pre>";
 	    echo "</div>";
 	}
+
+	public static function log($data) {
+		log_message('debug', print_r($data, true));
+	}
 }

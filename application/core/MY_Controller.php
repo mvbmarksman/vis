@@ -1,32 +1,28 @@
 <?php
-/*
- * http://codeigniter.com/forums/viewthread/84781/
- */
-require_once APPPATH . 'exceptions/IllegalArgumentsException.php';
+require_once BASEPATH . 'core/Model.php';
+require_once APPPATH . 'core/MY_Model.php';
+require_once APPPATH . 'core/MY_Service.php';
+
 class MY_Controller extends CI_Controller {
 
-	private $_controllerName;
-	private $_model;
-
-	public $models;
 	public $libs;
+	public $services;
+
+	private $_controllerName;
+
 
 	public function __construct() {
 		parent::__construct();
 		$this->_controllerName = strtolower(get_class($this));
-		foreach ($this->models as $model) {
-			$this->load->model($model);
-		}
+
 		foreach ($this->libs as $lib) {
 			$this->load->library($lib);
 		}
+
+		foreach ($this->services as $service) {
+			require_once APPPATH . 'services/' . $service . '_service.php';
+		}
 	}
-
-
-	public function setModel($model) {
-		$this->_model = $model;
-	}
-
 
 	/**
 	 * Encapsulates rendering of view
