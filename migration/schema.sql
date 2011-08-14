@@ -29,7 +29,7 @@ CREATE TABLE `CreditPayment` (
   `datePaid` datetime DEFAULT NULL,
   `amount` decimal(10,0) NOT NULL,
   PRIMARY KEY (`creditPaymentId`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38,7 +38,7 @@ CREATE TABLE `CreditPayment` (
 
 LOCK TABLES `CreditPayment` WRITE;
 /*!40000 ALTER TABLE `CreditPayment` DISABLE KEYS */;
-INSERT INTO `CreditPayment` VALUES (1,6,6,'2011-07-27 00:23:57','50');
+INSERT INTO `CreditPayment` VALUES (1,6,6,'2011-07-27 00:23:57','50'),(2,8,2,'2011-08-13 14:30:29','50'),(3,20,13,'2011-08-14 00:45:31','0'),(4,19,2,'2011-08-14 01:52:20','300'),(5,10,3,'2011-08-14 02:09:29','192'),(6,6,1,'2011-08-14 02:13:19','600'),(7,6,1,'2011-08-14 02:14:34','600'),(8,6,2,'2011-08-14 02:25:52','5000'),(9,6,4,'2011-08-14 03:14:07','830'),(10,10,8,'2011-08-14 12:42:51','9000'),(11,10,9,'2011-08-14 12:43:19','50'),(12,2,1,'2011-08-14 12:46:12','650'),(13,6,7,'2011-08-14 13:24:16','10550'),(14,6,9,'2011-08-14 13:28:09','300'),(15,6,11,'2011-08-14 13:31:14','150'),(16,6,12,'2011-08-14 13:31:32','300'),(17,6,13,'2011-08-14 13:36:16','400'),(18,6,14,'2011-08-14 13:37:27','400'),(19,1,16,'2011-08-14 13:50:39','300'),(20,6,17,'2011-08-14 13:51:01','300'),(21,6,18,'2011-08-14 13:53:02','800'),(22,6,19,'2011-08-14 13:56:04','6250'),(23,6,21,'2011-08-14 14:15:10','0');
 /*!40000 ALTER TABLE `CreditPayment` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -71,7 +71,7 @@ CREATE TABLE `Customer` (
   `address` varchar(200) COLLATE utf8_bin DEFAULT NULL,
   `phoneNo` varchar(20) COLLATE utf8_bin DEFAULT NULL,
   PRIMARY KEY (`customerId`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -80,7 +80,7 @@ CREATE TABLE `Customer` (
 
 LOCK TABLES `Customer` WRITE;
 /*!40000 ALTER TABLE `Customer` DISABLE KEYS */;
-INSERT INTO `Customer` VALUES (1,'lolol','a','1'),(2,'marko','tests','12345'),(3,'marks','test','1234'),(4,'ma','',''),(5,'aaa','aaa','1234'),(6,'mark basmayor','cubao','09272310583');
+INSERT INTO `Customer` VALUES (1,'lolol','a','1'),(2,'marko','tests','12345'),(3,'marks','test','1234'),(4,'ma','',''),(5,'aaa','aaa','1234'),(6,'mark basmayor','cubao','1'),(7,'mark','cubao','1234'),(8,'mark','cubao','09272310583'),(9,'pedro','asdfsdf','09272310583'),(10,'test','testtest','12346'),(11,'marko','tests','12345'),(12,'marko','tests','12345'),(13,'marko','tests','12345'),(14,'marko','tests','12345'),(15,'marko','tests','12345'),(16,'marko','tests','12345'),(17,'marko','tests','12345'),(18,'marko','test','1234'),(19,'geezel torres','antipolo','12345'),(20,'geezel torres','antipolo','12345');
 /*!40000 ALTER TABLE `Customer` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -217,7 +217,7 @@ CREATE TABLE `ItemDetail` (
   CONSTRAINT `ItemDetail_ibfk_1` FOREIGN KEY (`itemTypeId`) REFERENCES `ItemType` (`itemTypeId`),
   CONSTRAINT `ItemDetail_ibfk_2` FOREIGN KEY (`itemTypeId`) REFERENCES `ItemType` (`itemTypeId`),
   CONSTRAINT `ItemDetail_ibfk_3` FOREIGN KEY (`supplierId`) REFERENCES `Supplier` (`supplierId`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -269,7 +269,9 @@ CREATE TABLE `Sales` (
   `qty` int(10) unsigned NOT NULL,
   `discount` int(10) unsigned DEFAULT NULL,
   `storeId` int(10) unsigned NOT NULL,
-  `isVAT` tinyint(1) NOT NULL,
+  `subTotal` decimal(18,4) DEFAULT NULL,
+  `vatable` decimal(18,4) DEFAULT NULL,
+  `vat` decimal(18,4) DEFAULT NULL,
   PRIMARY KEY (`salesId`),
   KEY `salesTransactionId` (`salesTransactionId`),
   KEY `itemDetailId` (`itemDetailId`),
@@ -277,7 +279,7 @@ CREATE TABLE `Sales` (
   CONSTRAINT `Sales_ibfk_1` FOREIGN KEY (`salesTransactionId`) REFERENCES `SalesTransaction` (`salesTransactionID`),
   CONSTRAINT `Sales_ibfk_2` FOREIGN KEY (`itemDetailId`) REFERENCES `ItemDetail` (`itemDetailId`),
   CONSTRAINT `Sales_ibfk_3` FOREIGN KEY (`storeId`) REFERENCES `Store` (`storeId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -286,6 +288,7 @@ CREATE TABLE `Sales` (
 
 LOCK TABLES `Sales` WRITE;
 /*!40000 ALTER TABLE `Sales` DISABLE KEYS */;
+INSERT INTO `Sales` VALUES (1,1,1,'100.0000',5,0,1,'500.0000','446.4286','53.5714'),(2,1,5,'200.0000',1,50,1,'150.0000',NULL,NULL),(3,2,1,'100.0000',1,0,1,'100.0000',NULL,NULL),(4,3,1,'100.0000',1,0,1,'100.0000',NULL,NULL),(5,4,1,'100.0000',1,0,1,'100.0000',NULL,NULL),(6,7,1,'100.0000',101,50,1,'10050.0000','8973.2143','1076.7857'),(7,7,1,'100.0000',5,0,1,'500.0000',NULL,NULL),(8,9,1,'100.0000',3,0,1,'300.0000','267.8571','32.1429'),(9,10,1,'100.0000',1,0,1,'100.0000',NULL,NULL),(10,10,5,'100.0000',1,0,1,'100.0000',NULL,NULL),(11,11,1,'100.0000',2,50,1,'150.0000','133.9286','16.0714'),(12,12,1,'100.0000',2,0,1,'200.0000',NULL,NULL),(13,12,1,'100.0000',1,0,1,'100.0000',NULL,NULL),(14,13,1,'100.0000',3,0,1,'300.0000',NULL,NULL),(15,13,5,'100.0000',1,0,1,'100.0000',NULL,NULL),(16,14,1,'100.0000',2,0,1,'200.0000',NULL,NULL),(17,14,5,'100.0000',1,0,1,'100.0000',NULL,NULL),(18,14,1,'100.0000',1,0,1,'100.0000',NULL,NULL),(19,16,1,'100.0000',2,0,1,'200.0000',NULL,NULL),(20,16,5,'100.0000',1,0,1,'100.0000',NULL,NULL),(21,17,1,'100.0000',3,0,1,'300.0000',NULL,NULL),(22,18,1,'100.0000',4,50,1,'350.0000','312.5000','37.5000'),(23,18,5,'100.0000',1,0,1,'100.0000',NULL,NULL),(24,18,1,'100.0000',2,50,1,'150.0000',NULL,NULL),(25,18,1,'200.0000',1,0,1,'200.0000',NULL,NULL),(26,19,1,'100.0000',4,100,1,'300.0000','267.8571','32.1429'),(27,19,1,'100.0000',1,50,1,'50.0000',NULL,NULL),(28,19,5,'100.0000',55,0,1,'5500.0000','4910.7143','589.2857'),(29,19,1,'200.0000',2,0,1,'400.0000','357.1429','42.8571'),(30,20,1,'10000.0000',1,0,1,'10000.0000',NULL,NULL),(31,20,5,'100.0000',2,0,1,'200.0000',NULL,NULL),(32,21,1,'100.0000',10,0,1,'1000.0000',NULL,NULL),(33,21,3,'46.0000',12,0,1,'552.0000',NULL,NULL),(34,22,1,'100.0000',12,0,1,'1755.0000',NULL,NULL),(35,22,1,'100.0000',24,555,1,'1845.0000','1647.3214','197.6786'),(36,22,1,'200.0000',12,0,1,'2400.0000',NULL,NULL),(37,23,1,'100.0000',2,0,1,'200.0000','178.5714','21.4286'),(38,24,1,'100.0000',12,0,1,'1200.0000',NULL,NULL),(39,24,1,'100.0000',2,0,1,'200.0000','178.5714','21.4286'),(40,24,1,'200.0000',12,500,1,'1900.0000',NULL,NULL),(41,24,1,'300.0000',12,2000,1,'1600.0000','1428.5714','171.4286'),(42,24,1,'200.0000',12,0,1,'2400.0000','2142.8571','257.1429');
 /*!40000 ALTER TABLE `Sales` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -297,18 +300,21 @@ DROP TABLE IF EXISTS `SalesTransaction`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `SalesTransaction` (
-  `salesTransactionID` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `salesTransactionId` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `date` datetime DEFAULT NULL,
   `userId` int(10) unsigned NOT NULL,
   `customerId` int(10) unsigned DEFAULT NULL,
   `totalPrice` decimal(18,4) DEFAULT NULL,
+  `totalVatable` decimal(18,4) DEFAULT NULL,
+  `totalVat` decimal(18,4) DEFAULT NULL,
+  `totalAmountPaid` decimal(18,4) DEFAULT NULL,
   `isFullyPaid` tinyint(1) DEFAULT NULL,
   `isCredit` tinyint(1) DEFAULT NULL,
   `creditTerm` int(11) DEFAULT NULL,
-  PRIMARY KEY (`salesTransactionID`),
+  PRIMARY KEY (`salesTransactionId`) USING BTREE,
   KEY `userId` (`userId`),
   CONSTRAINT `SalesTransaction_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `User` (`userId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -317,6 +323,7 @@ CREATE TABLE `SalesTransaction` (
 
 LOCK TABLES `SalesTransaction` WRITE;
 /*!40000 ALTER TABLE `SalesTransaction` DISABLE KEYS */;
+INSERT INTO `SalesTransaction` VALUES (1,'2011-08-14 12:46:12',1,2,'300.0000','446.4286','53.5714','650.0000',0,1,30),(2,'2011-08-14 13:01:34',1,2,'100.0000','0.0000','0.0000','100.0000',1,0,NULL),(3,'2011-08-14 13:02:57',1,6,'100.0000','0.0000','0.0000','100.0000',1,0,NULL),(4,'2011-08-14 13:04:40',1,10,'100.0000','0.0000','0.0000','100.0000',1,0,NULL),(5,'2011-08-14 13:23:17',1,6,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(6,'2011-08-14 13:23:31',1,6,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(7,'2011-08-14 13:24:16',1,6,'200.0000','8973.2143','1076.7857','10550.0000',0,1,30),(8,'2011-08-14 13:26:14',1,6,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(9,'2011-08-14 13:28:09',1,6,'100.0000','267.8571','32.1429','300.0000',0,1,30),(10,'2011-08-14 13:30:37',1,6,'200.0000','0.0000','0.0000','200.0000',1,0,NULL),(11,'2011-08-14 13:31:14',1,6,'100.0000','133.9286','16.0714','150.0000',0,1,30),(12,'2011-08-14 13:31:32',1,6,'200.0000','0.0000','0.0000','300.0000',0,1,30),(13,'2011-08-14 13:36:16',1,6,'200.0000','0.0000','0.0000','400.0000',0,1,30),(14,'2011-08-14 13:37:26',1,6,'300.0000','0.0000','0.0000','400.0000',0,1,30),(15,'2011-08-14 13:48:58',1,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(16,'2011-08-14 13:50:39',1,1,'200.0000','0.0000','0.0000','300.0000',0,1,30),(17,'2011-08-14 13:51:01',1,6,'100.0000','0.0000','0.0000','300.0000',0,1,30),(18,'2011-08-14 13:53:02',1,6,'500.0000','312.5000','37.5000','800.0000',0,1,30),(19,'2011-08-14 13:56:04',1,6,'500.0000','5535.7143','664.2857','6250.0000',0,1,30),(20,'2011-08-14 14:14:09',1,6,'10200.0000','0.0000','0.0000','10200.0000',1,0,NULL),(21,'2011-08-14 14:15:10',1,6,'1552.0000','0.0000','0.0000','0.0000',0,1,30),(22,'2011-08-14 14:17:17',1,6,'6000.0000','1647.3214','197.6786','6000.0000',1,0,NULL),(23,'2011-08-14 14:45:15',1,6,'200.0000','178.5714','21.4286','200.0000',1,0,NULL),(24,'2011-08-14 14:58:50',1,6,'7300.0000','3750.0000','450.0000','7300.0000',1,0,NULL);
 /*!40000 ALTER TABLE `SalesTransaction` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -422,4 +429,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-07-27  0:24:53
+-- Dump completed on 2011-08-14 16:35:38
