@@ -66,6 +66,14 @@
 	<li>
 		<a href="#">Reports</a>
 	</li>
+	<li>
+		<a href="#">Admin</a>
+		<ul>
+			<li><a href="/admin_customer/add">Customers</a></li>
+			<li><a href="#">Items</a></li>
+			<li><a href="#">Users</a></li>
+		</ul>
+	</li>
 </ul>
 
 <script>
