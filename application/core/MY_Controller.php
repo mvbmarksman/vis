@@ -30,13 +30,18 @@ class MY_Controller extends CI_Controller {
 	 * @param mixed $data - what you want to set in the view
 	 */
 	public function renderView($template, $data) {
-		$this->load->library('view');
 		$this->view->layout = 'layout';
 		$this->view->load('menu', 'common/menu', array());
 		$this->view->load('search', 'common/search', array());
 		$this->view->load('content', $this->_controllerName . '/' . $template, $data);
 		$this->view->render();
 
+	}
+
+
+	public function renderAjaxView($template, $data) {
+		$content = $this->view->load('content', $this->_controllerName . '/' . $template, $data);
+		$this->view->render();
 	}
 
 	public function listall() {

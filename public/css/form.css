@@ -33,6 +33,11 @@ textarea {
 	width: 200px;
 }
 
+label {
+	font-weight: bold;
+	padding-right: 5px;
+}
+
 .smallTxt { width: 40px; }
 .mediumTxt { width: 100px; }
 .longTxt { width: 200px; }

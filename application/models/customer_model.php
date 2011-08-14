@@ -43,6 +43,18 @@ class Customer_model extends MY_Model
 		return $results;
 	}
 
+	public function fetchCustomersWithCredit()
+	{
+		$this->db->select('c.customerId, c.fullname');
+		$this->db->from(self::TBL_NAME . ' as c');
+		$this->db->join('SalesTransaction st', 'c.customerId = st.customerId');
+		$this->db->where('st.isCredit = 1 and st.isFullyPaid =0');
+		$this->db->group_by('st.customerId');
+		$query = $this->db->get();
+		$results = $query->result_array();
+		return $results;
+	}
+
 
 	public function __toString()
 	{

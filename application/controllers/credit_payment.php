@@ -1,29 +1,36 @@
 <?php
-class Credit_payment extends MY_Controller {
+class Credit_payment extends MY_Controller
+{
+	public $libs = array('view');
 
-	public function showform() {
-		$this->load->model('credit_detail_model');
-		$creditDetails = $this->credit_detail_model->fetch();
-		$this->renderView('showform', array('creditDetails' => $creditDetails));
+	public $services = array(
+		'customer',
+//		'credit_payment',
+	);
+
+	public function details()
+	{
+		$customerId = $this->input->get('customerId');
+		$this->renderView('details', array($customerId));
 	}
 
 
-	public function getcreditdetail() {
-		$creditDetailId = $this->input->post('creditDetailId');
-		$this->load->model('credit_detail_model');
-		$this->load->model('sales_transaction_model');
-		$this->load->model('credit_payment_model');
-		$this->load->library('view');
+	public function getcustomersforautocomplete()
+	{
+		$customerService = new CustomerService();
+		$items = $customerService->fetchCustomersWithCredit();
+		foreach ($items as $key => $item) {
+			$items[$key]['label'] = $item['fullname'];
+			$items[$key]['value'] = $item['fullname'];
+		}
+		echo json_encode($items);
+	}
 
-		// TODO query details
-		$creditDetail = $this->credit_detail_model->fetch($creditDetailId);
-		$transactionDetails = $this->sales_transaction_model->gettransactiondetail($creditDetailId);
-		$paymentDetails = $this->credit_payment_model -> getpaymentdetails($creditDetailId);
-		$content = $this->view->load('creditdetails', 'credit_payment/creditdetails', array(
-			'creditDetail' 			=> $creditDetail,
-			'transactionDetails' 	=> $transactionDetails,
-			'paymentDetails'		=> $paymentDetails
-		));
-		$this->view->render();
+
+	public function detailsforcustomer() {
+		$customerId = $this->input->post('customerId');
+		$customerService = new CustomerService();
+		$details = $customerService->fetchCustomersWithCredit();
+		$this->renderAjaxView('detailsforcustomer', array('details' => $details));
 	}
 }

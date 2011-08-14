@@ -3,10 +3,10 @@
 		<td>Contact Info</td>
 	</tr>
 	<tr>
-		<td id="address">Address:  <?php echo $creditDetail['address'] ?></td>
+		<td id="address">Address:  <?php echo $details[0]['address'] ?></td>
 	</tr>
 	<tr>
-		<td id="phoneno">Phone No: <?php echo $creditDetail['phoneNo'] ?></td>
+		<td id="phoneno">Phone No: <?php echo $details[0]['phoneNo'] ?></td>
 	</tr>
 </table>
 

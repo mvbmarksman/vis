@@ -12,7 +12,6 @@ class CustomerService extends MY_Service
 		return $results;
 	}
 
-
 	public function saveOrUpdate($data)
 	{
 		if (empty($data)) {
@@ -29,5 +28,12 @@ class CustomerService extends MY_Service
 		}
 		$customerId = $customer->insert();
 		return $customerId;
+	}
+
+	public function fetchCustomersWithCredit()
+	{
+		$customer = new Customer_model();
+		$customers = $customer->fetchCustomersWithCredit();
+		return $customers;
 	}
 }
