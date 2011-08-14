@@ -15,8 +15,6 @@ $(document).ready(function(){
 	$("#amountPaid").blur(function(){
 		var total = getFloat($("#total").val());
 		var amountPaid = getFloat($("#amountPaid").val());
-		console.log(total);
-		console.log(amountPaid);
 		if (isNaN(amountPaid) && total != 0) {
 			$("#termRow").show();
 			$("#creditNotification").show();
@@ -152,11 +150,17 @@ function computeSubTotal(rowCtr) {
 	$("#subtotal_" + rowCtr).html(subTotal);
 	
 	if ($("#vat_" + rowCtr).prop("checked")) {
-		var subTotalVat = subTotal - subTotal / 1.12;
+		var subTotalVatable = subTotal / 1.12;
+		subTotalVatable = subTotalVatable.toFixed(2);
+		$("#subtotalVatable_" + rowCtr).val(subTotalVatable);
+		
+		var subTotalVat = subTotalVatable * 0.12;
 		subTotalVat = subTotalVat.toFixed(2);
 		$("#subtotalVat_" + rowCtr).val(subTotalVat);
+		
 	} else {
 		$("#subtotalVat_" + rowCtr).val(0);
+		$("#subtotalVatable_" + rowCtr).val(0);
 	}
 	computeTotal();
 }
@@ -165,6 +169,7 @@ function computeSubTotal(rowCtr) {
 function resetSubTotal(rowCtr) {
 	$("#subtotal_" + rowCtr).val(0);
 	$("#subtotalVat_" + rowCtr).val(0);
+	$("#subtotalVatable_" + rowCtr).val(0);
 	computeTotal();
 }
 
@@ -178,8 +183,11 @@ function computeTotal() {
 	$('input[id*="subtotalVat_"]').each(function(){
 		totalVat += getFloat($(this).val());
 	});
-	vatable = total - totalVat;
-	$("#vatable").html(formatMoney(vatable));
+	var totalVatable = 0;
+	$('input[id*="subtotalVatable_"]').each(function(){
+		totalVatable += getFloat($(this).val());
+	});	
+	$("#vatable").html(formatMoney(totalVatable));
 	$("#totalvat").html(formatMoney(totalVat));
 	$("#totalprice").html(formatMoney(total));
 	$("#total").val(total);
@@ -255,6 +263,11 @@ function bindValidators(rowCtr) {
 			discount.val(0);
 			showError(discount, "Discount given cannot be greater than the selling price.");
 			discount.removeClass("formError");
+		} else if (getFloat(discount.val()) < 0 ) {
+			resetSubTotal(rowCtr);
+			discount.val(0);
+			showError(discount, "Discount cannot be less than 0.");
+			discount.removeClass("formError");
 		} else {
 			discount.removeClass("formError");
 			computeSubTotal(rowCtr);
@@ -262,10 +275,14 @@ function bindValidators(rowCtr) {
 	});
 	
 	var amountPaid = $("#amountPaid");
-	amountPaid.blur(function(){
+	amountPaid.blur(function() {
 		if (isNaN(amountPaid.val())) {
 			amountPaid.val(0);
 			showError(amountPaid, "Amount paid should be a valid number.");
+			amountPaid.removeClass("formError");
+		} else if (amountPaid.val() > getFloat($("#total").val())) {
+			showError(amountPaid, "Amount paid cannot be greater than the total price.");
+		} else {
 			amountPaid.removeClass("formError");
 		}
 	});
@@ -314,6 +331,11 @@ function checkForm() {
 	if (empty(name.val())) {
 		name.addClass("formError");
 		errors.push("Customer name is required.");
+	}
+	
+	var amountPaid = $("#amountPaid");
+	if (amountPaid.val() > getFloat($("#total").val())) {
+		errors.push("Amount paid cannot be greater than the total price.");
 	}
 	
 	if (errors.length > 0) {

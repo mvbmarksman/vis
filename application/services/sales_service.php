@@ -52,21 +52,42 @@ class SalesService extends MY_Service
 			return array();
 		}
 
+		Debug::log('Merging similar items');
+		Debug::log('Sales Objects before merge:');
+		foreach ($salesObjs as $s) {
+			Debug::log($s->__toString());
+		}
+
 		for ($i = 0; $i < count($salesObjs); $i++) {
 			for ($j = 1; $j < count($salesObjs); $j++) {
-				if ($i == $j) {
+				if ($i == $j || $salesObjs[$i] == null || $salesObjs[$j] == null) {
 					continue;
 				}
 				if ($salesObjs[$i]->itemDetailId == $salesObjs[$j]->itemDetailId
-					&& $salesObjs[$i]->isVAT == $salesObjs[$j]->isVAT
-					&& $salesObjs[$i]->discount == $salesObjs[$j]->discount
+					&& empty($salesObjs[$i]->vatable) == empty($salesObjs[$j]->vatable)
 					&& $salesObjs[$i]->sellingPrice == $salesObjs[$j]->sellingPrice) {
 					$salesObjs[$i]->qty += $salesObjs[$j]->qty;
-					unset($salesObjs[$j]);
+					$salesObjs[$i]->discount += $salesObjs[$j]->discount;
+					$salesObjs[$i]->subTotal = $salesObjs[$i]->sellingPrice * $salesObjs[$i]->qty - $salesObjs[$i]->discount;
+					if (!empty($salesObjs[$i]->vatable)) {
+						$salesObjs[$i]->vatable = $salesObjs[$i]->subTotal / 1.12;
+						$salesObjs[$i]->vat = $salesObjs[$i]->vatable * 0.12;
+					}
+					$salesObjs[$j] = null;
 				}
 			}
 		}
-		return $salesObjs;
+
+		Debug::log('Sales Objects after merge:');
+		$newObjsList = array();
+		foreach ($salesObjs as $s) {
+			if ($s == null) {
+				continue;
+			}
+			$newObjsList[] = $s;
+			Debug::log($s->__toString());
+		}
+		return $newObjsList;
 	}
 
 
@@ -79,10 +100,14 @@ class SalesService extends MY_Service
 		foreach ($salesObjs as $sales) {
 			Debug::log($sales->__toString());
 			$sales->insert();
-			$totalPrice += $sales->sellingPrice;
+			$totalPrice += $sales->subTotal;
 			$totalVatable += $sales->vatable;
 			$totalVat += $sales->vat;
 		}
+		Debug::log("totalPrice: $totalPrice");
+		Debug::log("totalVatable: $totalVatable");
+		Debug::log("totalVat: $totalVat");
+
 		return array(
 			'totalPrice' 	=> $totalPrice,
 			'totalVatable'	=> $totalVatable,

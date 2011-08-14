@@ -13,6 +13,8 @@ class Customer_model extends MY_Model
 		if (empty($this->fullname)) {
 			throw new InvalidArgumentException('Full name is empty.');
 		}
+		Debug::log('Customer_model::insert');
+		Debug::log($this->__toString());
 		$this->db->insert(self::TBL_NAME, $this);
 		return $this->db->insert_id();
 	}
@@ -23,6 +25,8 @@ class Customer_model extends MY_Model
 		if (empty($this->customerId)) {
 			throw new InvalidArgumentException('CustomerId cannot be empty.');
 		}
+		Debug::log('Customer_model::update');
+		Debug::log($this->__toString());
 		$customerId = $this->customerId;
 		unset($this->customerId);
 		$this->db->update(self::TBL_NAME, $this, array('customerId' => $customerId));
@@ -45,6 +49,6 @@ class Customer_model extends MY_Model
 		return "CustomerModel: customerId[$this->customerId], "
 			. "fullname[$this->fullname], "
 			. "address[$this->address], "
-			. "phoneNo[$this->phoneNo], ";
+			. "phoneNo[$this->phoneNo] ";
 	}
 }

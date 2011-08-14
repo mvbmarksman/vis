@@ -46,6 +46,7 @@
 					<span class = "subtotal" id="subtotaldisplay_-rowCtr-"></span>
 					<input type="hidden" id="subtotalVat_-rowCtr-"/>
 					<input type="hidden" id="subtotal_-rowCtr-"/>
+					<input type="hidden" id="subtotalVatable_-rowCtr-"/>
 				</td>
 				<td>
 					<div class="removeBtn" id="remove_-rowCtr-"></div>
