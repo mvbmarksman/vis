@@ -69,7 +69,7 @@
 	<li>
 		<a href="#">Admin</a>
 		<ul>
-			<li><a href="/admin_customer/add">Customers</a></li>
+			<li><a href="/admin_customer">Customers</a></li>
 			<li><a href="#">Items</a></li>
 			<li><a href="#">Users</a></li>
 		</ul>

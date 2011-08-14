@@ -43,20 +43,4 @@ class MY_Controller extends CI_Controller {
 		$content = $this->view->load('content', $this->_controllerName . '/' . $template, $data);
 		$this->view->render();
 	}
-
-	public function listall() {
-		$this->renderView('listall', array());
-	}
-
-	public function getgriddata() {
-		$model = $this->_model;
-		$this->load->model($model);
-		$items = $this->$model->fetch();
-		if (!$items) {
-			return;
-		}
-		$this->load->library('flexigrid');
-		Flexigrid::create($items);
-	}
-
 }

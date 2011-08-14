@@ -36,4 +36,33 @@ class CustomerService extends MY_Service
 		$customers = $customer->fetchCustomersWithCredit();
 		return $customers;
 	}
+
+	public function fetchCriteriaBased($criteria)
+	{
+		$customer = new Customer_model();
+		$customers = $customer->fetchCriteriaBased($criteria);
+		return $customers;
+	}
+
+	public function fetchCountCriteriaBased($criteria)
+	{
+		$customer = new Customer_model();
+		$count = $customer->fetchCountCriteriaBased($criteria);
+		return $count;
+	}
+
+	public function fetchById($customerId)
+	{
+		$customer = new Customer_model();
+		$customerData = $customer->fetchById($customerId);
+		return $customerData;
+	}
+
+
+	public function delete($customerIds)
+	{
+		$customer = new Customer_model();
+		$customer->delete($customerIds);
+	}
+
 }

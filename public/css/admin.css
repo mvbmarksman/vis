@@ -1,0 +1,19 @@
+@CHARSET "UTF-8";
+.flex_add {
+	background-image: url("/public/images/icons/add.png");
+	background-repeat: no-repeat;
+}
+
+.flex_edit {
+	background-image: url("/public/images/icons/edit.png");
+	background-repeat: no-repeat;
+}
+
+.flex_delete {
+	background-image: url("/public/images/icons/delete.png");
+	background-repeat: no-repeat;
+}
+
+.flexigrid {
+	margin-top: 10px;	
+}

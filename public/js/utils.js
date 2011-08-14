@@ -37,18 +37,23 @@ function capitaliseFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-Array.prototype.unique =
-	  function() {
-	    var a = [];
-	    var l = this.length;
-	    for(var i=0; i<l; i++) {
-	      for(var j=i+1; j<l; j++) {
-	        // If this[i] is found later in the array
-	        if (this[i] === this[j])
-	          j = ++i;
-	      }
-	      a.push(this[i]);
-	    }
-	    return a;
-	  };
-	  
+
+function getIdForEdit(formObj, name)
+{
+	var objs = $(formObj).find(":input[name='"+name+"']:checked");
+	return $($objs[0]).val();
+}
+
+
+function getIdsForDelete(formObj, name)
+{
+	var ids = new Array();
+	var objs = $(formObj).find(":input[name='"+name+"']:checked").each(function(){
+		ids.push($(this).val());
+	});
+	if (ids.length == 0) {
+		return null;
+	}
+	return ids.join(",");
+}
+
