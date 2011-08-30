@@ -14,18 +14,35 @@ class MY_Controller extends CI_Controller {
 	public function __construct() {
 		parent::__construct();
 		$this->_controllerName = strtolower(get_class($this));
-
-		foreach ($this->libs as $lib) {
-			$this->load->library($lib);
-		}
-
-		foreach ($this->services as $service) {
-			require_once APPPATH . 'services/' . $service . '_service.php';
-		}
-
+		$this->_loadLibraries();
+		$this->_loadServices();
 		define('EDIT_IMG_URI', '/public/images/icons/edit.png');
 		define('VIEW_IMG_URI', '/public/images/icons/magnifier.png');
 	}
+
+
+	public function _loadLibraries()
+	{
+		if (count($this->libs) > 0) {
+			return;
+		}
+		foreach ($this->libs as $lib) {
+			$this->load->library($lib);
+		}
+	}
+
+
+	public function _loadServices()
+	{
+		if (count($this->services) > 0) {
+			return;
+
+		}
+		foreach ($this->services as $service) {
+			require_once APPPATH . 'services/' . $service . '_service.php';
+		}
+	}
+
 
 	/**
 	 * Encapsulates rendering of view

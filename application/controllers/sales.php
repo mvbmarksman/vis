@@ -1,8 +1,6 @@
 <?php
 class Sales extends MY_Controller
 {
-	public $libs = array('view');
-
 	public $services = array(
 		'sales_transaction',
 		'item_detail',

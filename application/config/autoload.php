@@ -50,7 +50,7 @@ $autoload['packages'] = array(APPPATH.'third_party');
 |	$autoload['libraries'] = array('database', 'session', 'xmlrpc');
 */
 
-$autoload['libraries'] = array('Debug', 'CustomLoader');
+$autoload['libraries'] = array('Debug', 'CustomLoader', 'view');
 
 
 /*
@@ -62,7 +62,7 @@ $autoload['libraries'] = array('Debug', 'CustomLoader');
 |	$autoload['helper'] = array('url', 'file');
 */
 
-$autoload['helper'] = array('my_number');
+$autoload['helper'] = array('my_number', 'url');
 
 
 /*

@@ -1,8 +1,6 @@
 <?php
 class Admin_user extends MY_Controller
 {
-	public $libs = array('view');
-
 	public $services = array(
 		'user',
 	);

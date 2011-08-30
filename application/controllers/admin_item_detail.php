@@ -1,8 +1,6 @@
 <?php
 class Admin_item_detail extends MY_Controller
 {
-	public $libs = array('view');
-
 	public $services = array(
 		'item_detail',
 	);

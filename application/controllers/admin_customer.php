@@ -1,8 +1,6 @@
 <?php
 class Admin_customer extends MY_Controller
 {
-	public $libs = array('view');
-
 	public $services = array(
 		'customer',
 	);
@@ -13,7 +11,6 @@ class Admin_customer extends MY_Controller
 		$data = $this->input->post();
 		$customerService = new CustomerService();
 		$customerId = $customerService->saveOrUpdate($data);
-		$this->load->helper('url');
 		redirect('admin_customer');
 	}
 
@@ -86,6 +83,23 @@ class Admin_customer extends MY_Controller
 		$customerIds = $this->input->post('customerIds');
 		$customerService = new CustomerService();
 		$customerService->delete($customerIds);
+	}
+
+
+	public function view()
+	{
+		$customerId = $this->input->post('id');
+		if (empty($customerId)) {
+			redirect('admin_customer');
+		}
+		$customerService = new CustomerService();
+
+	}
+
+
+	public function edit()
+	{
+
 	}
 
 }
