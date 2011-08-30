@@ -22,6 +22,9 @@ class MY_Controller extends CI_Controller {
 		foreach ($this->services as $service) {
 			require_once APPPATH . 'services/' . $service . '_service.php';
 		}
+
+		define('EDIT_IMG_URI', '/public/images/icons/edit.png');
+		define('VIEW_IMG_URI', '/public/images/icons/magnifier.png');
 	}
 
 	/**

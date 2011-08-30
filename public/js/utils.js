@@ -38,13 +38,6 @@ function capitaliseFirstLetter(string) {
 }
 
 
-function getIdForEdit(formObj, name)
-{
-	var objs = $(formObj).find(":input[name='"+name+"']:checked");
-	return $($objs[0]).val();
-}
-
-
 function getIdsForDelete(formObj, name)
 {
 	var ids = new Array();
