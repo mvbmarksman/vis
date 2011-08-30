@@ -23,7 +23,7 @@ class MY_Controller extends CI_Controller {
 
 	public function _loadLibraries()
 	{
-		if (count($this->libs) > 0) {
+		if (count($this->libs) <= 0) {
 			return;
 		}
 		foreach ($this->libs as $lib) {
@@ -34,7 +34,7 @@ class MY_Controller extends CI_Controller {
 
 	public function _loadServices()
 	{
-		if (count($this->services) > 0) {
+		if (count($this->services) <= 0) {
 			return;
 
 		}
