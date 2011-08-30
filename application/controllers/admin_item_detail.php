@@ -55,6 +55,10 @@ class Admin_item_detail extends MY_Controller
 	{
 		foreach ($items as $key => $item) {
 			$items[$key]['check'] = "<input type='checkbox' name='itemDetailCheckbox' value='{$item['itemDetailId']}' />";
+			$viewLink = "/admin_item_detail/view/id/{$item['itemDetailId']}";
+			$editLink = "/admin_item_detail/edit/id/{$item['itemDetailId']}";
+			$items[$key]['actions'] = "<a href='{$viewLink}'><img src='".VIEW_IMG_URI."' /></a>"
+				. "&nbsp; <a href='{$editLink}'><img src='".EDIT_IMG_URI."' /></a>";
 		}
 		return $items;
 	}

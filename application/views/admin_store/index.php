@@ -17,19 +17,27 @@
 			</tr>
 			<tr>
 		</table>
-		<input type="button" onclick="validateAndSubmit()" />
+		<input type="button" onclick="validateAndSubmit()" value="submit"/>
 	</form>
 </div>
 
 <script type="text/javascript">
 
 	$(document).ready(function(){
+		initAddDialog();
+		initFlexigrid();
+	});
 
+	function initAddDialog()
+	{
 		$("#storeDialog").dialog({
 			autoOpen: false,
 			title: "Store Information"
 		});
+	}
 
+	function initFlexigrid()
+	{
 		$("#storeFlex").flexigrid({
 			url: '/admin_store/getgriddata',
 			dataType: 'json',
@@ -40,11 +48,10 @@
 				{display: 'Store Id', name : 'storeId', width : 50, sortable : true, align: 'center'},
 				{display: 'Store Name', name : 'name', width : 250, sortable : true, align: 'left'},
 				{display: 'Location', name : 'location', width : 270, sortable : true, align: 'left'},
+				{display: 'Actions', name : 'actions', width : 50, sortable : false, align: 'left'}
 				],
 			buttons : [
 				{name: 'Add', bclass: 'flex_add', onpress : add},
-				{separator: true},
-				{name: 'Edit', bclass: 'flex_edit', onpress : edit},
 				{separator: true},
 				{name: 'Delete', bclass: 'flex_delete', onpress : remove},
 				{separator: true}
@@ -60,7 +67,7 @@
 			width: 740,
 			height: "auto"
 		});
-	});
+	}
 
 	function add()
 	{
@@ -75,27 +82,11 @@
 			return;
 		}
 		$.post('/admin_store/delete/', {storeIds:storeIds}, function(data) {
-			// TODO notify user of success
+			//notify user of success
 			$("#storeFlex").flexReload();
 		});
 	}
 
-	function edit()
-	{
-		var storeId = getIdForEdit($("#storeFlex"), 'storeCheckbox');
-		if (storeId == null) {
-			alert("Please select a store to edit.");
-			return;
-		}
-		$.post('/admin_store/getstoredata/', {storeId:storeId}, function(data) {
-			var storeData = eval("(" + data + ")");
-			$("#storeId").val(storeData.storeId);
-			$("#name").val(storeData.fullname);
-			$("#address").val(storeData.address);
-			$("#contact").val(storeData.phoneNo);
-			$("#storeDialog").dialog('open');
-		});
-	}
 
 	function validateAndSubmit()
 	{

@@ -42,19 +42,27 @@
 				</td>
 			</tr>
 		</table>
-		<input type="button" onclick="validateAndSubmit()" />
+		<input type="button" onclick="validateAndSubmit()" value="submit"/>
 	</form>
 </div>
 
 <script type="text/javascript">
 
 	$(document).ready(function(){
+		initAddDialog();
+		initFlexigrid();
+	});
 
+	function initAddDialog()
+	{
 		$("#userDialog").dialog({
 			autoOpen: false,
 			title: "User Information"
 		});
+	}
 
+	function initFlexigrid()
+	{
 		$("#userFlex").flexigrid({
 			url: '/admin_user/getgriddata',
 			dataType: 'json',
@@ -67,12 +75,11 @@
 				{display: 'Password', name : 'password', width : 270, sortable : true, align: 'left'},
 				{display: 'First Name', name : 'firstName', width : 75, sortable : true, align: 'left'},
 				{display: 'Last Name', name : 'lastName', width : 75, sortable : true, align: 'left'},
-				{display: 'Admin', name : 'isAdmin', width : 75, sortable : true, align: 'left'}
+				{display: 'Admin', name : 'isAdmin', width : 75, sortable : true, align: 'left'},
+				{display: 'Actions', name : 'actions', width : 50, sortable : false, align: 'left'}
 				],
 			buttons : [
 				{name: 'Add', bclass: 'flex_add', onpress : add},
-				{separator: true},
-				{name: 'Edit', bclass: 'flex_edit', onpress : edit},
 				{separator: true},
 				{name: 'Delete', bclass: 'flex_delete', onpress : remove},
 				{separator: true}
@@ -88,7 +95,7 @@
 			width: 740,
 			height: "auto"
 		});
-	});
+	}
 
 	function add()
 	{
@@ -103,29 +110,11 @@
 			return;
 		}
 		$.post('/admin_user/delete/', {userIds:userIds}, function(data) {
-			// TODO notify user of success
+			//notify user of success
 			$("#userFlex").flexReload();
 		});
 	}
 
-	function edit()
-	{
-		var userId = getIdForEdit($("#userFlex"), 'userCheckbox');
-		if (userId == null) {
-			alert("Please select a user to edit.");
-			return;
-		}
-		$.post('/admin_user/getuserdata/', {userId:userId}, function(data) {
-			var userData = eval("(" + data + ")");
-			$("#userId").val(userData.userId);
-			$("#username").val(userData.username);
-			$("#password").val(userData.password);
-			$("#firstName").val(userData.firstName);
-			$("#lastName").val(userData.lastName);
-			$("#isAdmin").val(userData.isAdmin);
-			$("#userDialog").dialog('open');
-		});
-	}
 
 	function validateAndSubmit()
 	{

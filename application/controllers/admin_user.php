@@ -59,6 +59,10 @@ class Admin_user extends MY_Controller
 	{
 		foreach ($items as $key => $item) {
 			$items[$key]['check'] = "<input type='checkbox' name='userCheckbox' value='{$item['userId']}' />";
+			$viewLink = "/admin_user/view/id/{$item['userId']}";
+			$editLink = "/admin_user/edit/id/{$item['userId']}";
+			$items[$key]['actions'] = "<a href='{$viewLink}'><img src='".VIEW_IMG_URI."' /></a>"
+				. "&nbsp; <a href='{$editLink}'><img src='".EDIT_IMG_URI."' /></a>";
 		}
 		return $items;
 	}
