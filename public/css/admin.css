@@ -17,3 +17,21 @@
 .flexigrid {
 	margin-top: 10px;	
 }
+
+.adminDetails { 
+	margin: 10px; 
+	color: #666699; 
+	width: 100%;
+	border-collapse: collapse;
+}
+.adminDetails .label { 
+	text-align:left; 
+	width: 100px;
+	color: white;
+	background-color: #6997BF;
+}
+.adminDetails td { 
+	padding: 5px 5px;
+	border-bottom: 1px solid #CFE0E8;
+	border-top: 1px solid #CFE0E8;
+}

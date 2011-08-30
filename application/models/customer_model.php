@@ -84,11 +84,13 @@ class Customer_model extends MY_Model
 
 	public function fetchById($customerId)
 	{
+		Debug::log('Customer Model::fetchById');
 		if (empty($customerId)) {
 			throw new InvalidArgumentException('CustomerId cannot be null.');
 		}
 		$sql = 'SELECT * FROM '.self::TBL_NAME.' WHERE customerId = ?';
 		$query = $this->db->query($sql, array($customerId));
+		Debug::log($this->db->last_query());
 		$results = $query->result_array();
 		return $results[0];
 	}

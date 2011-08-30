@@ -55,8 +55,8 @@ class Admin_customer extends MY_Controller
 	{
 		foreach ($items as $key => $item) {
 			$items[$key]['check'] = "<input type='checkbox' name='customerCheckbox' value='{$item['customerId']}' />";
-			$viewLink = "/admin_customer/view/id/{$item['customerId']}";
-			$editLink = "/admin_customer/edit/id/{$item['customerId']}";
+			$viewLink = 'javascript:view("' . $item['customerId'] . '")';
+			$editLink = 'javascript:edit("' . $item['customerId'] . '")';
 			$items[$key]['actions'] = "<a href='{$viewLink}'><img src='".VIEW_IMG_URI."' /></a>"
 				. "&nbsp; <a href='{$editLink}'><img src='".EDIT_IMG_URI."' /></a>";
 		}
@@ -88,14 +88,18 @@ class Admin_customer extends MY_Controller
 
 	public function view()
 	{
-		$customerId = $this->input->post('id');
+		$customerId = $this->input->post('customerId');
 		if (empty($customerId)) {
-			redirect('admin_customer');
+			return;
 		}
 		$customerService = new CustomerService();
-
+		$customerData = $customerService->fetchById($customerId);
+		if (empty($customerData)) {
+			return;
+		}
+		Debug::log($customerData);
+		$this->renderAjaxView('view', array('consumer' => $customerData));
 	}
-
 
 	public function edit()
 	{

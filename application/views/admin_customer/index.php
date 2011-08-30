@@ -1,6 +1,8 @@
 <h1>Customer List</h1>
 <div id="customerFlex"></div>
 
+<div id="viewCustomerDialog"></div>
+
 <div id="customerDialog" style="display:none">
 	<form id="customerForm" action="/admin_customer/performsaveorupdate" method="POST" >
 		<table>
@@ -35,7 +37,8 @@
 	{
 		$("#customerDialog").dialog({
 			autoOpen: false,
-			title: "Customer Information"
+			title: "Customer Information",
+			modal: true
 		});
 	}
 
@@ -98,6 +101,20 @@
 		if (isValid) {
 			$("#customerForm").submit();;
 		}
+	}
+
+	function view(customerId)
+	{
+		$.post('/admin_customer/view/', {customerId:customerId}, function(data) {
+			$("#viewCustomerDialog").html(data);
+			$("#viewCustomerDialog").dialog({
+				autoOpen: true,
+				title: "Customer Information",
+				modal: true,
+				height: "auto",
+				width: 400
+			});
+		});
 	}
 
 </script>
