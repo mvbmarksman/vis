@@ -44,15 +44,26 @@ class Admin_user extends MY_Controller
 		$items = $userService->fetchCriteriaBased($criteria);
 		$itemsCount = $userService->fetchCountCriteriaBased($criteria);
 
-		foreach ($items as $key => $item) {
-			$items[$key]['check'] = "<input type='checkbox' name='userCheckbox' value='{$item['userId']}' />";
-		}
+//		foreach ($items as $key => $item) {
+//			$items[$key]['check'] = "<input type='checkbox' name='userCheckbox' value='{$item['userId']}' />";
+//		}
+
+		$items = $this->transformItems($items);
 
 		$this->load->library('flexigrid');
 		Flexigrid::create($items, $criteria->pageNo, $itemsCount);
 	}
 
-
+	/**
+	 * Perform necessary transformations to the data.
+	 */
+	public function transformItems($items)
+	{
+		foreach ($items as $key => $item) {
+			$items[$key]['check'] = "<input type='checkbox' name='userCheckbox' value='{$item['userId']}' />";
+		}
+		return $items;
+	}
 	/**
 	 * Gets the data for a specific user
 	 * Ajax call

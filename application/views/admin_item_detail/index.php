@@ -5,28 +5,46 @@
 	<form id="itemDetailForm" action="/admin_item_detail/performsaveorupdate" method="POST" >
 		<table>
 			<tr>
-				<td class="rightAligned">Username:</td>
+				<td class="rightAligned">Product Code:</td>
 				<td>
-					<input type="text" id="itemDetailname" name="itemDetailname" class="longTxt">
+					<input type="text" id="productCode" name="productCode" class="longTxt">
 					<input type="hidden" id="itemDetailId" name="itemDetailId"/>
 				</td>
 			</tr>
 			<tr>
-				<td class="rightAligned">First Name:</td>
+				<td class="rightAligned">Item Type:</td>
 				<td>
-					<input type="text" id="firstName" name="firstName" class="longTxt">
+					<input type="text" id="itemType" name="itemType" class="longTxt">
 				</td>
 			</tr>
 			<tr>
-				<td class="rightAligned">Last Name:</td>
+				<td class="rightAligned">Description:</td>
 				<td>
-					<input type="text" id="lastName" name="lastName" class="longTxt">
+					<input type="text" id="description" name="description" class="longTxt">
 				</td>
 			</tr>
 			<tr>
-				<td class="rightAligned">Admin </td>
+				<td class="rightAligned">Unit </td>
 				<td>
-					<input type="checkbox" id="isAdmin" name="isAdmin" class="longTxt">
+					<input type="text" id="unit" name="unit" class="longTxt">
+				</td>
+			</tr>
+			<tr>
+				<td class="rightAligned">Unit </td>
+				<td>
+					<input type="text" id="buyingPrice" name="buyingPrice" class="longTxt">
+				</td>
+			</tr>
+			<tr>
+				<td class="rightAligned">Unit </td>
+				<td>
+					<input type="checkbox" id="isUsed" name="isUsed" class="longTxt">
+				</td>
+			</tr>
+			<tr>
+				<td class="rightAligned">Supplier </td>
+				<td>
+					<input type="text" id="supplierId" name="supplierId" class="longTxt">
 				</td>
 			</tr>
 		</table>
@@ -53,11 +71,11 @@
 				{display: 'Id', name : 'itemDetailId', width : 50, sortable : true, align: 'center'},
 				{display: 'Product Code', name : 'productCode', width : 75, sortable : true, align: 'left'},
 				{display: 'Item Type', name : 'itemTypeId', width : 75, sortable : true, align: 'left'},
-				{display: 'Description', name : 'firstName', width : 75, sortable : true, align: 'left'},
+				{display: 'Description', name : 'description', width : 75, sortable : true, align: 'left'},
 				{display: 'Unit', name : 'unit', width : 75, sortable : true, align: 'left'},
 				{display: 'Buying Price', name : 'buyingPrice', width : 75, sortable : true, align: 'left'},
 				{display: 'Used', name : 'isUsed', width : 75, sortable : true, align: 'left'},
-				{display: 'Supplier', name : 'suppierId', width : 75, sortable : true, align: 'left'}
+				{display: 'Supplier', name : 'supplierId', width : 75, sortable : true, align: 'left'}
 				],
 			buttons : [
 				{name: 'Add', bclass: 'flex_add', onpress : add},
@@ -89,7 +107,7 @@
 	{
 		var itemDetailIds= getIdsForDelete($("#itemDetailFlex"), 'itemDetailCheckbox');
 		if (itemDetailIds == null) {
-			alert("Please select a itemDetail to delete.");
+			alert("Please select an item to delete.");
 			return;
 		}
 		$.post('/admin_item_detail/delete/', {itemDetailIds:itemDetailIds}, function(data) {

@@ -90,7 +90,7 @@ class Item_detail_model extends MY_Model
 		if (empty($itemDetailIds)) {
 			throw new InvalidArgumentException('Must specify itemDetailIds to delete.');
 		}
-		$sql = 'DELETE FROM '.self::TBL_NAME.' WHERE userId IN (?)';
+		$sql = 'DELETE FROM '.self::TBL_NAME.' WHERE itemDetailId IN (?)';
 		$query = $this->db->query($sql, array($itemDetailIds));
 	}
 

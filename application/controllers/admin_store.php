@@ -1,20 +1,20 @@
 <?php
-class Admin_item_detail extends MY_Controller
+class Admin_store extends MY_Controller
 {
 	public $libs = array('view');
 
 	public $services = array(
-		'item_detail',
+		'store',
 	);
 
 
 	public function performsaveorupdate()
 	{
 		$data = $this->input->post();
-		$itemDetailService = new ItemDetailService();
-		$itemDetailId = $itemDetailService->saveOrUpdate($data);
+		$storeService = new StoreService();
+		$storeId = $storeService->saveOrUpdate($data);
 		$this->load->helper('url');
-		redirect('itemDetail');
+		redirect('admin_store');
 	}
 
 
@@ -26,14 +26,14 @@ class Admin_item_detail extends MY_Controller
 
 
 	/**
-	 * Gets the data needed by the flexigrid for itemDetail
+	 * Gets the data needed by the flexigrid for store
 	 * Ajax call
 	 * @return JSON
 	 */
 	public function getgriddata()
 	{
 		$data = $this->input->post();
-		$itemDetailService = new ItemDetailService();
+		$storeService = new StoreService();
 		$criteria = new CriteriaVO();
 		$criteria->pageNo = $data['page'];
 		$criteria->recordsPerPage = $data['rp'];
@@ -41,8 +41,8 @@ class Admin_item_detail extends MY_Controller
 		$criteria->sortOrder = $data['sortorder'];
 		$criteria->searchField = $data['qtype'];
 		$criteria->searchKey = empty($data['query']) ? null : $data['query'];
-		$items = $itemDetailService->fetchCriteriaBased($criteria);
-		$itemsCount = $itemDetailService->fetchCountCriteriaBased($criteria);
+		$items = $storeService->fetchCriteriaBased($criteria);
+		$itemsCount = $storeService->fetchCountCriteriaBased($criteria);
 
 		$items = $this->transformItems($items);
 
@@ -50,37 +50,38 @@ class Admin_item_detail extends MY_Controller
 		Flexigrid::create($items, $criteria->pageNo, $itemsCount);
 	}
 
+
 	/**
 	 * Perform necessary transformations to the data.
 	 */
 	public function transformItems($items)
 	{
 		foreach ($items as $key => $item) {
-			$items[$key]['check'] = "<input type='checkbox' name='itemDetailCheckbox' value='{$item['itemDetailId']}' />";
+			$items[$key]['check'] = "<input type='checkbox' name='storeCheckbox' value='{$item['storeId']}' />";
 		}
 		return $items;
 	}
 
+
 	/**
-	 * Gets the data for a specific itemDetail
+	 * Gets the data for a specific store
 	 * Ajax call
 	 * @return JSON
 	 */
-	public function getitemDetaildata()
+	public function getstoredata()
 	{
-		$itemDetailId = $this->input->post('itemDetailId');
-		$itemDetailService = new ItemDetailService();
-		$itemDetailData = $itemDetailService->fetchById($itemDetailId);
-		echo json_encode($itemDetailData);
+		$storeId = $this->input->post('storeId');
+		$storeService = new StoreService();
+		$storeData = $storeService->fetchById($storeId);
+		echo json_encode($storeData);
 	}
-
 
 
 	public function delete()
 	{
-		$itemDetailIds = $this->input->post('itemDetailIds');
-		$itemDetailService = new ItemDetailService();
-		$itemDetailService->delete($itemDetailIds);
+		$storeIds = $this->input->post('storeIds');
+		$storeService = new StoreService();
+		$storeService->delete($storeIds);
 	}
 
 }
