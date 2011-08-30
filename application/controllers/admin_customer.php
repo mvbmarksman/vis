@@ -10,7 +10,12 @@ class Admin_customer extends MY_Controller
 	{
 		$data = $this->input->post();
 		$customerService = new CustomerService();
-		$customerId = $customerService->saveOrUpdate($data);
+		try {
+			$customerId = $customerService->saveOrUpdate($data);
+		} catch (Exception $e) {
+			 header($_SERVER['SERVER_PROTOCOL'] . ' 500 Internal Server Error', true, 500);
+			 return;
+		}
 		redirect('admin_customer');
 	}
 
@@ -18,6 +23,7 @@ class Admin_customer extends MY_Controller
 	public function index()
 	{
 		$this->view->addCss('admin.css');
+		$this->view->addJs('admin.js');
 		$this->renderView('index', array());
 	}
 
@@ -97,13 +103,28 @@ class Admin_customer extends MY_Controller
 		if (empty($customerData)) {
 			return;
 		}
-		Debug::log($customerData);
-		$this->renderAjaxView('view', array('consumer' => $customerData));
+		$this->renderAjaxView('view', array('customer' => $customerData));
 	}
+
+
+	public function add()
+	{
+		$this->renderAjaxView('add', array());
+	}
+
 
 	public function edit()
 	{
-
+		$customerId = $this->input->post('customerId');
+		if (empty($customerId)) {
+			return;
+		}
+		$customerService = new CustomerService();
+		$customerData = $customerService->fetchById($customerId);
+		if (empty($customerData)) {
+			return;
+		}
+		$this->renderAjaxView('edit', array('customer' => $customerData));
 	}
 
 }

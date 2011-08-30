@@ -35,3 +35,23 @@
 	border-bottom: 1px solid #CFE0E8;
 	border-top: 1px solid #CFE0E8;
 }
+
+#flashMsg {
+    background: none repeat scroll 0 0 #E3FFEC;
+    border: 1px solid #00631F;
+    border-radius: 5px 5px 5px 5px;
+    color: #00631F;
+    margin-bottom: 5px;
+    padding: 3px;
+    text-align: center;
+}
+
+#errorMsg {
+    background: none repeat scroll 0 0 #F7E9EC;
+    border: 1px solid #BF0030;
+    border-radius: 5px 5px 5px 5px;
+    color: #BF0030;
+    margin-bottom: 5px;
+    padding: 3px;
+    text-align: center;
+}

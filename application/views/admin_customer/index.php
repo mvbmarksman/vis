@@ -1,46 +1,20 @@
+<div id="flashMsg" style="display:none"></div>
+<div id="errorMsg" style="display:none"></div>
+
 <h1>Customer List</h1>
 <div id="customerFlex"></div>
 
 <div id="viewCustomerDialog"></div>
+<div id="addCustomerDialog"></div>
+<div id="editCustomerDialog"></div>
 
-<div id="customerDialog" style="display:none">
-	<form id="customerForm" action="/admin_customer/performsaveorupdate" method="POST" >
-		<table>
-			<tr>
-				<td class="rightAligned">Name:</td>
-				<td>
-					<input type="text" id="name" name="name" class="longTxt">
-					<input type="hidden" id="customerId" name="customerId"/>
-				</td>
-			</tr>
-			<tr>
-				<td class="rightAligned">Address:</td>
-				<td><textarea id="address" name="address" rows="2" cols="22" ></textarea></td>
-			</tr>
-			<tr>
-				<td class="rightAligned">Contact Number:</td>
-				<td><input type="text" id="contact" name="contact" class="longTxt"/></td>
-			</tr>
-		</table>
-		<input type="button" onclick="validateAndSubmit()" value="submit"/>
-	</form>
-</div>
 
 <script type="text/javascript">
 
 	$(document).ready(function(){
-		initAddDialog();
 		initFlexigrid();
 	});
 
-	function initAddDialog()
-	{
-		$("#customerDialog").dialog({
-			autoOpen: false,
-			title: "Customer Information",
-			modal: true
-		});
-	}
 
 	function initFlexigrid()
 	{
@@ -77,11 +51,6 @@
 	}
 
 
-	function add()
-	{
-		$("#customerDialog").dialog('open');
-	}
-
 	function remove()
 	{
 		var customerIds= getIdsForDelete($("#customerFlex"), 'customerCheckbox');
@@ -90,16 +59,31 @@
 			return;
 		}
 		$.post('/admin_customer/delete/', {customerIds:customerIds}, function(data) {
-			//notify user of success
+			flashMsg("Successfully deleted customer(s).");
 			$("#customerFlex").flexReload();
 		});
 	}
 
-	function validateAndSubmit()
+	function validateAndSubmit(type)
 	{
 		var isValid = true;
 		if (isValid) {
-			$("#customerForm").submit();;
+
+			var form = "#"+type+"CustomerForm";
+			var modalDialog = "#"+type+"CustomerDialog";
+			var msg = "Successfully "+type+"ed customer.";
+
+			var action = $(form).prop("action");
+			var postData = $(form).serialize();
+			$.post(action, postData, function(data) {
+				$(modalDialog).dialog("close");
+				$("#customerFlex").flexReload();
+				flashMsg(msg);
+			}).error(function(data){
+				$(modalDialog).dialog("close");
+				$("#customerFlex").flexReload();
+				flashError("A server error occurred.  Unable to save changes.");
+			});
 		}
 	}
 
@@ -108,6 +92,36 @@
 		$.post('/admin_customer/view/', {customerId:customerId}, function(data) {
 			$("#viewCustomerDialog").html(data);
 			$("#viewCustomerDialog").dialog({
+				autoOpen: true,
+				title: "Customer Information",
+				modal: true,
+				height: "auto",
+				width: 400
+			});
+		});
+	}
+
+
+	function add()
+	{
+		$.post('/admin_customer/add/', {}, function(data) {
+			$("#addCustomerDialog").html(data);
+			$("#addCustomerDialog").dialog({
+				autoOpen: true,
+				title: "Customer Information",
+				modal: true,
+				height: "auto",
+				width: 400
+			});
+		});
+	}
+
+
+	function edit(customerId)
+	{
+		$.post('/admin_customer/edit/', {customerId:customerId}, function(data) {
+			$("#editCustomerDialog").html(data);
+			$("#editCustomerDialog").dialog({
 				autoOpen: true,
 				title: "Customer Information",
 				modal: true,
