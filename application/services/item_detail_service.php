@@ -2,7 +2,7 @@
 class ItemDetailService extends MY_Service
 {
 	public $models = array(
-		'itemDetail',
+		'item_detail',
 	);
 
 

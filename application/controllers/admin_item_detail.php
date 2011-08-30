@@ -42,14 +42,22 @@ class Admin_item_detail extends MY_Controller
 		$items = $itemDetailService->fetchCriteriaBased($criteria);
 		$itemsCount = $itemDetailService->fetchCountCriteriaBased($criteria);
 
-		foreach ($items as $key => $item) {
-			$items[$key]['check'] = "<input type='checkbox' name='itemDetailCheckbox' value='{$item['itemDetailId']}' />";
-		}
+		$items = $this->transformItems($items);
 
 		$this->load->library('flexigrid');
 		Flexigrid::create($items, $criteria->pageNo, $itemsCount);
 	}
 
+	/**
+	 * Perform necessary transformations to the data.
+	 */
+	public function transformItems($items)
+	{
+		foreach ($items as $key => $item) {
+			$items[$key]['check'] = "<input type='checkbox' name='itemDetailCheckbox' value='{$item['itemDetailId']}' />";
+		}
+		return $items;
+	}
 
 	/**
 	 * Gets the data for a specific itemDetail

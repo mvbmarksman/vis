@@ -1,18 +1,20 @@
 <?php
-class Admin_user extends MY_Controller
+class Admin_store extends MY_Controller
 {
+	public $libs = array('view');
+
 	public $services = array(
-		'user',
+		'store',
 	);
 
 
 	public function performsaveorupdate()
 	{
 		$data = $this->input->post();
-		$userService = new UserService();
-		$userId = $userService->saveOrUpdate($data);
+		$storeService = new StoreService();
+		$storeId = $storeService->saveOrUpdate($data);
 		$this->load->helper('url');
-		redirect('admin_user');
+		redirect('admin_store');
 	}
 
 
@@ -24,14 +26,14 @@ class Admin_user extends MY_Controller
 
 
 	/**
-	 * Gets the data needed by the flexigrid for user
+	 * Gets the data needed by the flexigrid for store
 	 * Ajax call
 	 * @return JSON
 	 */
 	public function getgriddata()
 	{
 		$data = $this->input->post();
-		$userService = new UserService();
+		$storeService = new StoreService();
 		$criteria = new CriteriaVO();
 		$criteria->pageNo = $data['page'];
 		$criteria->recordsPerPage = $data['rp'];
@@ -39,12 +41,8 @@ class Admin_user extends MY_Controller
 		$criteria->sortOrder = $data['sortorder'];
 		$criteria->searchField = $data['qtype'];
 		$criteria->searchKey = empty($data['query']) ? null : $data['query'];
-		$items = $userService->fetchCriteriaBased($criteria);
-		$itemsCount = $userService->fetchCountCriteriaBased($criteria);
-
-//		foreach ($items as $key => $item) {
-//			$items[$key]['check'] = "<input type='checkbox' name='userCheckbox' value='{$item['userId']}' />";
-//		}
+		$items = $storeService->fetchCriteriaBased($criteria);
+		$itemsCount = $storeService->fetchCountCriteriaBased($criteria);
 
 		$items = $this->transformItems($items);
 
@@ -52,35 +50,38 @@ class Admin_user extends MY_Controller
 		Flexigrid::create($items, $criteria->pageNo, $itemsCount);
 	}
 
+
 	/**
 	 * Perform necessary transformations to the data.
 	 */
 	public function transformItems($items)
 	{
 		foreach ($items as $key => $item) {
-			$items[$key]['check'] = "<input type='checkbox' name='userCheckbox' value='{$item['userId']}' />";
+			$items[$key]['check'] = "<input type='checkbox' name='storeCheckbox' value='{$item['storeId']}' />";
 		}
 		return $items;
 	}
+
+
 	/**
-	 * Gets the data for a specific user
+	 * Gets the data for a specific store
 	 * Ajax call
 	 * @return JSON
 	 */
-	public function getuserdata()
+	public function getstoredata()
 	{
-		$userId = $this->input->post('userId');
-		$userService = new UserService();
-		$userData = $userService->fetchById($userId);
-		echo json_encode($userData);
+		$storeId = $this->input->post('storeId');
+		$storeService = new StoreService();
+		$storeData = $storeService->fetchById($storeId);
+		echo json_encode($storeData);
 	}
 
 
 	public function delete()
 	{
-		$userIds = $this->input->post('userIds');
-		$userService = new UserService();
-		$userService->delete($userIds);
+		$storeIds = $this->input->post('storeIds');
+		$storeService = new StoreService();
+		$storeService->delete($storeIds);
 	}
 
 }

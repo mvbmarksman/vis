@@ -72,6 +72,7 @@
 			<li><a href="/admin_customer">Customers</a></li>
 			<li><a href="/admin_item_detail">Items</a></li>
 			<li><a href="/admin_user">Users</a></li>
+			<li><a href="/admin_store">Store</a></li>
 		</ul>
 	</li>
 </ul>
