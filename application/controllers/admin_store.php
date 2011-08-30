@@ -58,6 +58,10 @@ class Admin_store extends MY_Controller
 	{
 		foreach ($items as $key => $item) {
 			$items[$key]['check'] = "<input type='checkbox' name='storeCheckbox' value='{$item['storeId']}' />";
+			$viewLink = "/admin_store/view/id/{$item['storeId']}";
+			$editLink = "/admin_store/edit/id/{$item['storeId']}";
+			$items[$key]['actions'] = "<a href='{$viewLink}'><img src='".VIEW_IMG_URI."' /></a>"
+				. "&nbsp; <a href='{$editLink}'><img src='".EDIT_IMG_URI."' /></a>";
 		}
 		return $items;
 	}

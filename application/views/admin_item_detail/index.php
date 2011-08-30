@@ -48,19 +48,27 @@
 				</td>
 			</tr>
 		</table>
-		<input type="button" onclick="validateAndSubmit()" />
+		<input type="button" onclick="validateAndSubmit()" value="submit"/>
 	</form>
 </div>
 
 <script type="text/javascript">
 
 	$(document).ready(function(){
+		initAddDialog();
+		initFlexigrid();
+	});
 
+	function initAddDialog()
+	{
 		$("#itemDetailDialog").dialog({
 			autoOpen: false,
 			title: "User Information"
 		});
+	}
 
+	function initFlexigrid()
+	{
 		$("#itemDetailFlex").flexigrid({
 			url: '/admin_item_detail/getgriddata',
 			dataType: 'json',
@@ -75,12 +83,11 @@
 				{display: 'Unit', name : 'unit', width : 75, sortable : true, align: 'left'},
 				{display: 'Buying Price', name : 'buyingPrice', width : 75, sortable : true, align: 'left'},
 				{display: 'Used', name : 'isUsed', width : 75, sortable : true, align: 'left'},
-				{display: 'Supplier', name : 'supplierId', width : 75, sortable : true, align: 'left'}
+				{display: 'Supplier', name : 'supplierId', width : 75, sortable : true, align: 'left'},
+				{display: 'Actions', name : 'actions', width : 50, sortable : false, align: 'left'}
 				],
 			buttons : [
 				{name: 'Add', bclass: 'flex_add', onpress : add},
-				{separator: true},
-				{name: 'Edit', bclass: 'flex_edit', onpress : edit},
 				{separator: true},
 				{name: 'Delete', bclass: 'flex_delete', onpress : remove},
 				{separator: true}
@@ -96,7 +103,7 @@
 			width: 740,
 			height: "auto"
 		});
-	});
+	}
 
 	function add()
 	{
@@ -111,27 +118,11 @@
 			return;
 		}
 		$.post('/admin_item_detail/delete/', {itemDetailIds:itemDetailIds}, function(data) {
-			// TODO notify itemDetail of success
+			//notify user of success
 			$("#itemDetailFlex").flexReload();
 		});
 	}
 
-	function edit()
-	{
-		var itemDetailId = getIdForEdit($("#itemDetailFlex"), 'itemDetailCheckbox');
-		if (itemDetailId == null) {
-			alert("Please select a itemDetail to edit.");
-			return;
-		}
-		$.post('/admin_item_detail/getitemDetaildata/', {itemDetailId:itemDetailId}, function(data) {
-			var itemDetailData = eval("(" + data + ")");
-			$("#itemDetailId").val(itemDetailData.itemDetailId);
-			$("#name").val(itemDetailData.fullname);
-			$("#address").val(itemDetailData.address);
-			$("#contact").val(itemDetailData.phoneNo);
-			$("#itemDetailDialog").dialog('open');
-		});
-	}
 
 	function validateAndSubmit()
 	{
