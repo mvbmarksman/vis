@@ -44,12 +44,22 @@ class Admin_customer extends MY_Controller
 		$items = $customerService->fetchCriteriaBased($criteria);
 		$itemsCount = $customerService->fetchCountCriteriaBased($criteria);
 
-		foreach ($items as $key => $item) {
-			$items[$key]['check'] = "<input type='checkbox' name='customerCheckbox' value='{$item['customerId']}' />";
-		}
+		$items = $this->transformItems($items);
 
 		$this->load->library('flexigrid');
 		Flexigrid::create($items, $criteria->pageNo, $itemsCount);
+	}
+
+
+	/**
+	 * Perform necessary transformations to the data.
+	 */
+	public function transformItems($items)
+	{
+		foreach ($items as $key => $item) {
+			$items[$key]['check'] = "<input type='checkbox' name='customerCheckbox' value='{$item['customerId']}' />";
+		}
+		return $items;
 	}
 
 
