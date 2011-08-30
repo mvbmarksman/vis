@@ -1,18 +1,18 @@
 <?php
-class Admin_store extends MY_Controller
+class Admin_item_type extends MY_Controller
 {
 	public $services = array(
-		'store',
+		'item_type',
 	);
 
 
 	public function performsaveorupdate()
 	{
 		$data = $this->input->post();
-		$storeService = new StoreService();
-		$storeId = $storeService->saveOrUpdate($data);
+		$itemTypeService = new ItemTypeService();
+		$itemTypeId = $itemTypeService->saveOrUpdate($data);
 		$this->load->helper('url');
-		redirect('admin_store');
+		redirect('admin_item_type');
 	}
 
 
@@ -31,7 +31,7 @@ class Admin_store extends MY_Controller
 	public function getgriddata()
 	{
 		$data = $this->input->post();
-		$storeService = new StoreService();
+		$itemTypeService = new ItemTypeService();
 		$criteria = new CriteriaVO();
 		$criteria->pageNo = $data['page'];
 		$criteria->recordsPerPage = $data['rp'];
@@ -39,8 +39,8 @@ class Admin_store extends MY_Controller
 		$criteria->sortOrder = $data['sortorder'];
 		$criteria->searchField = $data['qtype'];
 		$criteria->searchKey = empty($data['query']) ? null : $data['query'];
-		$items = $storeService->fetchCriteriaBased($criteria);
-		$itemsCount = $storeService->fetchCountCriteriaBased($criteria);
+		$items = $itemTypeService->fetchCriteriaBased($criteria);
+		$itemsCount = $itemTypeService->fetchCountCriteriaBased($criteria);
 
 		$items = $this->transformItems($items);
 
@@ -55,9 +55,9 @@ class Admin_store extends MY_Controller
 	public function transformItems($items)
 	{
 		foreach ($items as $key => $item) {
-			$items[$key]['check'] = "<input type='checkbox' name='storeCheckbox' value='{$item['storeId']}' />";
-			$viewLink = "/admin_store/view/id/{$item['storeId']}";
-			$editLink = "/admin_store/edit/id/{$item['storeId']}";
+			$items[$key]['check'] = "<input type='checkbox' name='itemTypeCheckbox' value='{$item['itemTypeId']}' />";
+			$viewLink = "/admin_item_type/view/id/{$item['itemTypeId']}";
+			$editLink = "/admin_item_type/edit/id/{$item['itemTypeId']}";
 			$items[$key]['actions'] = "<a href='{$viewLink}'><img src='".VIEW_IMG_URI."' /></a>"
 				. "&nbsp; <a href='{$editLink}'><img src='".EDIT_IMG_URI."' /></a>";
 		}
@@ -72,18 +72,18 @@ class Admin_store extends MY_Controller
 	 */
 	public function getstoredata()
 	{
-		$storeId = $this->input->post('storeId');
-		$storeService = new StoreService();
-		$storeData = $storeService->fetchById($storeId);
-		echo json_encode($storeData);
+		$itemTypeId = $this->input->post('itemTypeId');
+		$itemTypeService = new ItemTypeService();
+		$itemTypeData = $itemTypeService->fetchById($itemTypeId);
+		echo json_encode($itemTypeData);
 	}
 
 
 	public function delete()
 	{
-		$storeIds = $this->input->post('storeIds');
-		$storeService = new StoreService();
-		$storeService->delete($storeIds);
+		$itemTypeIds = $this->input->post('itemTypeIds');
+		$itemTypeService = new ItemTypeService();
+		$itemTypeService->delete($itemTypeIds);
 	}
 
 }

@@ -1,56 +1,91 @@
 <?php
-class Item_type_model extends MY_Model implements IAbstractDAO
+class Item_type_model extends MY_Model
 {
 	const TBL_NAME = 'ItemType';
 
 	public $itemTypeId;
 	public $name;
 
-	public function save($itemTypeModel) {
-		if (!$itemTypeModel instanceof Item_type_model) {
-			throw new DAOException("Parameter should be an instance of Item_type_model class");
+	public function insert() {
+		if (empty($this->name)) {
+			throw new InvalidArgumentException('Item Type Name is empty.');
 		}
-		if (!$itemTypeModel) {
-			throw new DAOException("Must specify itemTypeModel.");
-		}
-
-		if ($itemTypeModel->itemTypeId) {
-			$itemTypeId = $itemTypeModel->itemTypeId;
-			unset($itemTypeModel->itemTypeId);
-			$this->db->update(self::TBL_NAME, $itemTypeModel, array('itemTypeId' => $itemTypeId));
-			return $this->db->insert_id();
-		}
-		$this->db->insert(self::TBL_NAME, $itemTypeModel);
+		$this->db->insert(self::TBL_NAME, $this);
 		return $this->db->insert_id();
 	}
 
 
-	/**
-	 * Fetches item types from the database.
-	 * If itemTypeId is not specified, all records are fetched
-	 *
-	 * @return array
-	 */
-	public function fetch($itemTypeId = null) {
+	public function update()
+	{
+		if (empty($this->itemTypeId)) {
+			throw new InvalidArgumentException('ItemTypeId cannot be empty.');
+		}
+		$itemTypeId = $this->itemTypeId;
+		unset($this->itemTypeId);
+		$this->db->update(self::TBL_NAME, $this, array('itemTypeId' => $itemTypeId));
+		return $itemTypeId;
+	}
 
+
+	public function fetchAll()
+	{
 		$this->db->select();
 		$this->db->from(self::TBL_NAME);
-		if ($itemTypeId) {
-			$this->db->where('itemTypeId', $itemTypeId);
-		}
 		$query = $this->db->get();
-		return $query->result_array();
+		$results = $query->result_array();
+		return $results;
 	}
 
-
-	public function delete($itemTypeId) {
-		if (!$itemTypeId) {
-			throw new DAOException("Must specify id to delete.");
+	public function fetchCriteriaBased($criteria)
+	{
+		$this->db->select();
+		$this->db->from(self::TBL_NAME . ' as c');
+		if ($criteria->searchKey) {
+			$this->db->where("$criteria->searchField = '$criteria->searchKey'");
 		}
-		$this->db->delete(self:: TBL_NAME, array('itemTypeId' => $itemTypeId));
+		$this->db->limit($criteria->recordsPerPage, $criteria->getOffset());
+		$this->db->order_by($criteria->sortName, $criteria->sortOrder);
+		$query = $this->db->get();
+		$results = $query->result_array();
+		return $results;
+	}
+
+	public function fetchCountCriteriaBased($criteria)
+	{
+		$this->db->select();
+		$this->db->from(self::TBL_NAME . ' as c');
+		if ($criteria->searchKey) {
+			$this->db->where("$criteria->searchField = '$criteria->searchKey'");
+		}
+		return $this->db->count_all_results();
 	}
 
 
+	public function fetchById($itemTypeId)
+	{
+		if (empty($itemTypeId)) {
+			throw new InvalidArgumentException('ItemTypeId cannot be null.');
+		}
+		$sql = 'SELECT * FROM '.self::TBL_NAME.' WHERE itemTypeId = ?';
+		$query = $this->db->query($sql, array($itemTypeId));
+		$results = $query->result_array();
+		return $results[0];
+	}
 
 
+	public function delete($itemTypeIds)
+	{
+		if (empty($itemTypeIds)) {
+			throw new InvalidArgumentException('Must specify itemTypeIds to delete.');
+		}
+		$sql = 'DELETE FROM '.self::TBL_NAME.' WHERE itemTypeId IN (?)';
+		$query = $this->db->query($sql, array($itemTypeIds));
+	}
+
+
+	public function __toString()
+	{
+		return "ItemTypeModel: itemTypeId[$this->itemTypeId], "
+			. "name[$this->name] ";
+	}
 }

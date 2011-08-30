@@ -73,6 +73,7 @@
 			<li><a href="/admin_item_detail">Items</a></li>
 			<li><a href="/admin_user">Users</a></li>
 			<li><a href="/admin_store">Store</a></li>
+			<li><a href="/admin_item_type">Item Types</a></li>
 		</ul>
 	</li>
 </ul>
