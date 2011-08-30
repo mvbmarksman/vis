@@ -20,7 +20,7 @@
 				<td><input type="text" id="contact" name="contact" class="longTxt"/></td>
 			</tr>
 		</table>
-		<input type="button" onclick="validateAndSubmit()" />
+		<input type="button" onclick="validateAndSubmit()" value="submit"/>
 	</form>
 </div>
 
@@ -41,14 +41,13 @@
 			colModel : [
 				{display: '', name : 'check', width : 30, sortable : true, align: 'center'},
 				{display: 'ID', name : 'customerId', width : 50, sortable : true, align: 'center'},
-				{display: 'Name', name : 'fullname', width : 250, sortable : true, align: 'left'},
+				{display: 'Name', name : 'fullname', width : 200, sortable : true, align: 'left'},
 				{display: 'Address', name : 'address', width : 270, sortable : true, align: 'left'},
-				{display: 'Phone No', name : 'phoneNo', width : 75, sortable : true, align: 'left'}
+				{display: 'Phone No', name : 'phoneNo', width : 75, sortable : true, align: 'left'},
+				{display: 'Actions', name : 'actions', width : 50, sortable : false, align: 'left'}
 				],
 			buttons : [
 				{name: 'Add', bclass: 'flex_add', onpress : add},
-				{separator: true},
-				{name: 'Edit', bclass: 'flex_edit', onpress : edit},
 				{separator: true},
 				{name: 'Delete', bclass: 'flex_delete', onpress : remove},
 				{separator: true}
@@ -81,23 +80,6 @@
 		$.post('/admin_customer/delete/', {customerIds:customerIds}, function(data) {
 			// TODO notify user of success
 			$("#customerFlex").flexReload();
-		});
-	}
-
-	function edit()
-	{
-		var customerId = getIdForEdit($("#customerFlex"), 'customerCheckbox');
-		if (customerId == null) {
-			alert("Please select a customer to edit.");
-			return;
-		}
-		$.post('/admin_customer/getcustomerdata/', {customerId:customerId}, function(data) {
-			var customerData = eval("(" + data + ")");
-			$("#customerId").val(customerData.customerId);
-			$("#name").val(customerData.fullname);
-			$("#address").val(customerData.address);
-			$("#contact").val(customerData.phoneNo);
-			$("#customerDialog").dialog('open');
 		});
 	}
 

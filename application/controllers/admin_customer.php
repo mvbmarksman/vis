@@ -58,6 +58,10 @@ class Admin_customer extends MY_Controller
 	{
 		foreach ($items as $key => $item) {
 			$items[$key]['check'] = "<input type='checkbox' name='customerCheckbox' value='{$item['customerId']}' />";
+			$viewLink = "/admin_customer/view/id/{$item['customerId']}";
+			$editLink = "/admin_customer/edit/id/{$item['customerId']}";
+			$items[$key]['actions'] = "<a href='{$viewLink}'><img src='".VIEW_IMG_URI."' /></a>"
+				. "&nbsp; <a href='{$editLink}'><img src='".EDIT_IMG_URI."' /></a>";
 		}
 		return $items;
 	}
