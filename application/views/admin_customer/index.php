@@ -27,12 +27,20 @@
 <script type="text/javascript">
 
 	$(document).ready(function(){
+		initAddDialog();
+		initFlexigrid();
+	});
 
+	function initAddDialog()
+	{
 		$("#customerDialog").dialog({
 			autoOpen: false,
 			title: "Customer Information"
 		});
+	}
 
+	function initFlexigrid()
+	{
 		$("#customerFlex").flexigrid({
 			url: '/admin_customer/getgriddata',
 			dataType: 'json',
@@ -63,7 +71,8 @@
 			width: 740,
 			height: "auto"
 		});
-	});
+	}
+
 
 	function add()
 	{
@@ -78,7 +87,7 @@
 			return;
 		}
 		$.post('/admin_customer/delete/', {customerIds:customerIds}, function(data) {
-			// TODO notify user of success
+			//notify user of success
 			$("#customerFlex").flexReload();
 		});
 	}
