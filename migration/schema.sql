@@ -241,9 +241,8 @@ CREATE TABLE `ItemDetail` (
   KEY `itemTypeId` (`itemTypeId`),
   KEY `supplierId` (`supplierId`),
   CONSTRAINT `ItemDetail_ibfk_1` FOREIGN KEY (`itemTypeId`) REFERENCES `ItemType` (`itemTypeId`) ON DELETE SET NULL ON UPDATE SET NULL,
-  CONSTRAINT `ItemDetail_ibfk_2` FOREIGN KEY (`itemTypeId`) REFERENCES `ItemType` (`itemTypeId`) ON DELETE SET NULL ON UPDATE SET NULL,
-  CONSTRAINT `ItemDetail_ibfk_3` FOREIGN KEY (`supplierId`) REFERENCES `Supplier` (`supplierId`) ON DELETE SET NULL ON UPDATE SET NULL
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+  CONSTRAINT `ItemDetail_ibfk_2` FOREIGN KEY (`itemTypeId`) REFERENCES `ItemType` (`itemTypeId`) ON DELETE SET NULL ON UPDATE SET NULL
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -252,7 +251,7 @@ CREATE TABLE `ItemDetail` (
 
 LOCK TABLES `ItemDetail` WRITE;
 /*!40000 ALTER TABLE `ItemDetail` DISABLE KEYS */;
-INSERT INTO `ItemDetail` VALUES (1,'ADP01',1,'Bosskit Adaptor Toyota T2','pcs','100.0000',0,NULL),(2,'ADP02',1,'Bosskit Adaptor Toyota T16','pcs','280.0000',0,NULL),(3,NULL,2,'Tree Frog Jasmine Cherry','pcs','46.0000',0,NULL),(5,'sampleCode',1,'Keyboard','dozen','100.0000',1,NULL),(8,'qwew',1,'sdfsd','asd','123.0000',0,NULL);
+INSERT INTO `ItemDetail` VALUES (1,'ADP01',1,'Bosskit Adaptor Toyota T2','pcs','100.0000',0,NULL),(2,'ADP02',1,'Bosskit Adaptor Toyota T16','pcs','280.0000',1,0),(3,NULL,2,'Tree Frog Jasmine Cherry','pcs','46.0000',0,NULL),(5,'sampleCode',1,'Keyboard','dozen','100.0000',1,NULL),(8,'qwew',1,'sdfsd','asd','123.0000',0,NULL);
 /*!40000 ALTER TABLE `ItemDetail` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -455,4 +454,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-09-17 21:40:18
+-- Dump completed on 2011-09-17 22:44:25

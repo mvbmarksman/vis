@@ -39,6 +39,9 @@ class Item_detail_model extends MY_Model
 
 	public function update()
 	{
+		Debug::log('Item_detail_model::update');
+		Debug::log($this->__toString());
+
 		if (empty($this->itemDetailId)) {
 			throw new InvalidArgumentException('itemDetailId cannot be empty.');
 		}
