@@ -10,15 +10,19 @@ class Admin_item_detail extends MY_Controller
 	{
 		$data = $this->input->post();
 		$itemDetailService = new ItemDetailService();
-		$itemDetailId = $itemDetailService->saveOrUpdate($data);
-		$this->load->helper('url');
-		redirect('itemDetail');
+		try {
+			$itemDetailId = $itemDetailService->saveOrUpdate($data);
+		} catch (Exception $e) {
+			 header($_SERVER['SERVER_PROTOCOL'] . ' 500 Internal Server Error', true, 500);
+			 return;
+		}
+		redirect('admin_item_detail');
 	}
-
 
 	public function index()
 	{
 		$this->view->addCss('admin.css');
+		$this->view->addJs('admin.js');
 		$this->renderView('index', array());
 	}
 
@@ -84,6 +88,41 @@ class Admin_item_detail extends MY_Controller
 		$itemDetailIds = $this->input->post('itemDetailIds');
 		$itemDetailService = new ItemDetailService();
 		$itemDetailService->delete($itemDetailIds);
+	}
+
+	public function view()
+	{
+		$itemDetailId = $this->input->post('itemDetailId');
+		if (empty($itemDetailId)) {
+			return;
+		}
+		$itemDetailService = new ItemDetailService();
+			$itemDetailData = $itemDetailService->fetchById($itemDetailId);
+		if (empty($itemDetailData)) {
+			return;
+		}
+		$this->renderAjaxView('view', array('itemDetail' => $itemDetailData));
+	}
+
+
+	public function add()
+	{
+		$this->renderAjaxView('add', array());
+	}
+
+
+	public function edit()
+	{
+		$itemDetailId = $this->input->post('itemDetailId');
+		if (empty($itemDetailId)) {
+			return;
+		}
+		$itemDetailService = new ItemDetailService();
+			$itemDetailData = $itemDetailService->fetchById($itemDetailId);
+		if (empty($itemDetailData)) {
+			return;
+		}
+		$this->renderAjaxView('edit', array('itemDetail' => $itemDetailData));
 	}
 
 }

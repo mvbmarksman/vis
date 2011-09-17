@@ -1,71 +1,19 @@
-<h1>Item List</h1>
+<div id="flashMsg" style="display:none"></div>
+<div id="errorMsg" style="display:none"></div>
+
+<h1>Item Detail List</h1>
 <div id="itemDetailFlex"></div>
 
-<div id="itemDetailDialog" style="display:none">
-	<form id="itemDetailForm" action="/admin_item_detail/performsaveorupdate" method="POST" >
-		<table>
-			<tr>
-				<td class="rightAligned">Product Code:</td>
-				<td>
-					<input type="text" id="productCode" name="productCode" class="longTxt">
-					<input type="hidden" id="itemDetailId" name="itemDetailId"/>
-				</td>
-			</tr>
-			<tr>
-				<td class="rightAligned">Item Type:</td>
-				<td>
-					<input type="text" id="itemType" name="itemType" class="longTxt">
-				</td>
-			</tr>
-			<tr>
-				<td class="rightAligned">Description:</td>
-				<td>
-					<input type="text" id="description" name="description" class="longTxt">
-				</td>
-			</tr>
-			<tr>
-				<td class="rightAligned">Unit </td>
-				<td>
-					<input type="text" id="unit" name="unit" class="longTxt">
-				</td>
-			</tr>
-			<tr>
-				<td class="rightAligned">Unit </td>
-				<td>
-					<input type="text" id="buyingPrice" name="buyingPrice" class="longTxt">
-				</td>
-			</tr>
-			<tr>
-				<td class="rightAligned">Unit </td>
-				<td>
-					<input type="checkbox" id="isUsed" name="isUsed" class="longTxt">
-				</td>
-			</tr>
-			<tr>
-				<td class="rightAligned">Supplier </td>
-				<td>
-					<input type="text" id="supplierId" name="supplierId" class="longTxt">
-				</td>
-			</tr>
-		</table>
-		<input type="button" onclick="validateAndSubmit()" value="submit"/>
-	</form>
-</div>
+<div id="viewItemDetailDialog"></div>
+<div id="addItemDetailDialog"></div>
+<div id="editItemDetailDialog"></div>
 
 <script type="text/javascript">
 
 	$(document).ready(function(){
-		initAddDialog();
 		initFlexigrid();
 	});
 
-	function initAddDialog()
-	{
-		$("#itemDetailDialog").dialog({
-			autoOpen: false,
-			title: "User Information"
-		});
-	}
 
 	function initFlexigrid()
 	{
@@ -87,10 +35,10 @@
 				{display: 'Actions', name : 'actions', width : 50, sortable : false, align: 'left'}
 				],
 			buttons : [
-				{name: 'Add', bclass: 'flex_add', onpress : add},
-				{separator: true},
-				{name: 'Delete', bclass: 'flex_delete', onpress : remove},
-				{separator: true}
+						{name: 'Add', bclass: 'flex_add', onpress : add},
+						{separator: true},
+						{name: 'Delete', bclass: 'flex_delete', onpress : remove},
+						{separator: true}
 			],
 			searchitems : [
 				{display: 'Description', name : 'description', isdefault:true}
@@ -105,11 +53,6 @@
 		});
 	}
 
-	function add()
-	{
-		$("#itemDetailDialog").dialog('open');
-	}
-
 	function remove()
 	{
 		var itemDetailIds= getIdsForDelete($("#itemDetailFlex"), 'itemDetailCheckbox');
@@ -118,18 +61,77 @@
 			return;
 		}
 		$.post('/admin_item_detail/delete/', {itemDetailIds:itemDetailIds}, function(data) {
-			//notify user of success
+			flashMsg("Successfully deleted item(s).");
 			$("#itemDetailFlex").flexReload();
 		});
 	}
 
 
-	function validateAndSubmit()
+	function validateAndSubmit(type)
 	{
 		var isValid = true;
 		if (isValid) {
-			$("#itemDetailForm").submit();;
+
+			var form = "#"+type+"ItemDetailForm";
+			var modalDialog = "#"+type+"ItemDetailDialog";
+			var msg = "Successfully "+type+"ed item detail.";
+
+			var action = $(form).prop("action");
+			var postData = $(form).serialize();
+			$.post(action, postData, function(data) {
+				$(modalDialog).dialog("close");
+				$("#itemDetailFlex").flexReload();
+				flashMsg(msg);
+			}).error(function(data){
+				$(modalDialog).dialog("close");
+				$("#itemDetailFlex").flexReload();
+				flashError("A server error occurred.  Unable to save changes.");
+			});
 		}
+	}
+
+	function view(itemDetailId)
+	{
+		$.post('/admin_item_detail/view/', {itemDetailId:itemDetailId}, function(data) {
+			$("#viewItemDetailDialog").html(data);
+			$("#viewItemDetailDialog").dialog({
+				autoOpen: true,
+				title: "Item Detail Information",
+				modal: true,
+				height: "auto",
+				width: 400
+			});
+		});
+	}
+
+
+	function add()
+	{
+		$.post('/admin_item_detail/add/', {}, function(data) {
+			$("#addItemDetailDialog").html(data);
+			$("#addItemDetailDialog").dialog({
+				autoOpen: true,
+				title: "Item Detail Information",
+				modal: true,
+				height: "auto",
+				width: 400
+			});
+		});
+	}
+
+
+	function edit(itemDetailId)
+	{
+		$.post('/admin_item_detail/edit/', {itemDetailId:itemDetailId}, function(data) {
+			$("#editItemDetailDialog").html(data);
+			$("#editItemDetailDialog").dialog({
+				autoOpen: true,
+				title: "Item Detail Information",
+				modal: true,
+				height: "auto",
+				width: 400
+			});
+		});
 	}
 
 </script>
