@@ -11,6 +11,7 @@ class Item_detail_model extends MY_Model
 	public $buyingPrice;
 	public $isUsed;
 	public $supplierId;
+	public $active;
 
 
 	/**
@@ -107,7 +108,8 @@ class Item_detail_model extends MY_Model
 			. "unit[$this->unit], "
 			. "buyingPrice[$this->buyingPrice], "
 			. "isUsed[$this->isUsed], "
-			. "supplierId[$this->supplierId] ";
+			. "supplierId[$this->supplierId] "
+			. "active[$this->active] ";
 	}
 
 }
