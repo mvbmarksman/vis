@@ -1,0 +1,44 @@
+@CHARSET "UTF-8";
+
+#dashboard-section { margin-top: 20px }
+.dashboard-subsection { margin-bottom: 20px }
+.dashboard-subsection .dashboard-left { clear: both; }
+#dashboard-section h2 {
+	font-size: 11px;
+	font-family: "lucida grande",tahoma,verdana,arial,sans-serif";
+	font-weight: normal;
+	color: #333333;
+	background-color: #F2F2F2;
+	border-top: 1px solid #E2E2E2;
+	padding-left: 5px;
+}
+
+.dashboard-subsection-header {
+	width: 140px;
+	font-size: 11px;
+	font-family: "lucida grande",tahoma,verdana,arial,sans-serif";
+	font-weight: normal;
+	color: #999;
+	font-weight: bold;
+	width: 130px;
+	line-height: 15px;
+}
+
+.dashboard-subsection-content {
+	font-size: 11px;
+	font-family: "lucida grande",tahoma,verdana,arial,sans-serif";
+	font-weight: normal;
+	color: #545454;
+	line-height: 15px;
+}	
+
+.dashboard-subsection table {
+	width: 100%;
+}
+.dashboard-subsection table tbody tr {
+	border-bottom: 1px solid #D9D9D9;
+}
+
+.dashboard-subsection table tbody td {
+	padding: 5px;
+}
