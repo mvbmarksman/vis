@@ -17,23 +17,24 @@
 #search input {
 	font-size: 11px;
 	float: left;
+	width: 159px;
+	height: 16px;
+	border: 1px solid #8EA7D1;
+	margin-top: 1px;
 }
 
 #searchbox {
 	padding: 5px 5px 23px 5px;
 }
+
 #searchIcon {
 	background-image: url("/public/images/icons/magnifier.png");
 	height:16px;
 	width: 16px;
-	float:left;
+	float: right;
 	border: 1px solid #8EA7D1;
-	margin-left: -1px;
+	margin-top: 1px;
 	cursor: pointer;
-}
-
-#searchContainer {
-	margin-left: 2px;
 }
 </style>
 

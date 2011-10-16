@@ -25,12 +25,15 @@
 }
 
 .dashboard-subsection-content {
-	font-size: 11px;
+	font-size: 12px;
 	font-family: "lucida grande",tahoma,verdana,arial,sans-serif";
 	font-weight: normal;
-	color: #545454;
+	color: #3B5998;
 	line-height: 15px;
-}	
+}
+.dashboard-subsection-content ul li { padding: 2px 0; }
+.dashboard-subsection-content .high { color: #D60027 }
+.dashboard-subsection-content .medium { color: #C45002 }
 
 .dashboard-subsection table {
 	width: 100%;
@@ -41,4 +44,5 @@
 
 .dashboard-subsection table tbody td {
 	padding: 5px;
+	padding-bottom: 25px;
 }

@@ -84,6 +84,26 @@ class Sales_transaction_model extends MY_Model
 //	}
 
 
+	public function fetchRecentlySold($recentThreshold, $limit = null)
+	{
+		Debug::log('Item_model::fetchRecentlySold');
+		$query = 'SELECT * '
+			   . 'FROM SalesTransaction st '
+			   . 'JOIN Sales s ON (s.salesTransactionId = st.salesTransactionId) '
+			   . 'JOIN ItemDetail id ON (id.itemDetailId = s.itemDetailId) '
+			   . 'WHERE DATE_SUB(CURDATE(), INTERVAL ? DAY) <= date '
+			   . 'ORDER BY st.date DESC, st.salesTransactionId ';
+
+		if (!empty($limit)) {
+			$query .= 'LIMIT ' . $limit;
+		}
+
+		$resultSet = $this->db->query($query, array($recentThreshold));
+		Debug::log($this->db->last_query());
+		return $resultSet->result_array();
+	}
+
+
 	public function __toString()
 	{
 		return "SalesTransactionModel: salesTransactionId[$this->salesTransactionId], "
