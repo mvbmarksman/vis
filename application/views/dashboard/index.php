@@ -67,13 +67,13 @@
 			<table>
 				<?php if (count($overdueCredits) > 0): ?>
 				<tr>
-					<td class="dashboard-subsection-header">Attention Needed</td>
+					<td class="dashboard-subsection-header">Overdue</td>
 					<td class="dashboard-subsection-content">
 						<ul>
 							<?php foreach ($overdueCredits as $item): ?>
 							<li>
 								Transaction #<?php echo $item['salesTransactionId'] ?>,
-								<span class="medium">due last <?php echo $item['dueDate'] ?></span>
+								<span class="medium">due last <?php echo date('m-d-Y',  strtotime($item['dueDate'])) ?></span>
 							</li>
 							<?php endforeach ?>
 						</ul>

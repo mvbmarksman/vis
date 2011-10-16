@@ -15,7 +15,8 @@ class Debug {
 	    echo "</div>";
 	}
 
-	public static function log($data) {
-		log_message('debug', print_r($data, true));
+	public static function log($data, $level = null) {
+		$level = empty($level) ? 'debug' : $level;
+		log_message($level, print_r($data, true));
 	}
 }

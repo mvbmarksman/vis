@@ -85,6 +85,9 @@ class Item_detail_model extends MY_Model
 		$sql = 'SELECT * FROM '.self::TBL_NAME.' WHERE itemDetailId = ?';
 		$query = $this->db->query($sql, array($itemDetailId));
 		$results = $query->result_array();
+		if (count($results) <= 0) {
+			throw new EmptyResultSetException('ItemDetail record for ' . $itemDetailId . ' not found.');
+		}
 		return $results[0];
 	}
 

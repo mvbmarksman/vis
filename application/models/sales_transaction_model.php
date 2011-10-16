@@ -110,7 +110,8 @@ class Sales_transaction_model extends MY_Model
 			   . 'WHERE isCredit = 1 AND '
 			   . 'isFullyPaid = 0 AND '
 			   . 'totalPrice > totalAmountPaid AND '
-			   . 'DATE_ADD(`date`, INTERVAL `creditTerm` DAY) < CURDATE() ';
+			   . 'DATE_ADD(`date`, INTERVAL `creditTerm` DAY) < CURDATE() '
+			   . 'ORDER BY dueDate';
 
 		$resultSet = $this->db->query($query, array());
 		Debug::log($this->db->last_query());
