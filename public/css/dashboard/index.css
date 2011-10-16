@@ -46,3 +46,9 @@
 	padding: 5px;
 	padding-bottom: 25px;
 }
+
+.dashboard-date {
+	font-size: 11px;
+	color: #999;
+	margin-left: 5px;	
+}

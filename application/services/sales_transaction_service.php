@@ -3,7 +3,6 @@ class SalesTransactionService extends MY_Service
 {
 
 	const RECENT_DAY_THRESHOLD = 1;
-	const RECENT_LIMIT = 10;
 
 	public $models = array(
 		'sales_transaction',
@@ -71,9 +70,9 @@ class SalesTransactionService extends MY_Service
 	}
 
 
-	public function fetchRecentlySold()
+	public function fetchRecent()
 	{
 		$salesTransaction = new Sales_transaction_model();
-		return $salesTransaction->fetchRecentlySold(self::RECENT_DAY_THRESHOLD, self::RECENT_LIMIT);
+		return $salesTransaction->fetchRecent(self::RECENT_DAY_THRESHOLD);
 	}
 }

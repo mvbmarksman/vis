@@ -15,14 +15,14 @@ class ItemService extends MY_Service
 	public function fetchLowInStock()
 	{
 		$item = new Item_model();
-		return $item->fetchLowInStock(self::LOW_STOCK_THRESHOLD, self::LOW_STOCK_LIMIT);
+		return $item->fetchLowInStock(self::LOW_STOCK_THRESHOLD);
 	}
 
 
 	public function fetchRecentlyAdded()
 	{
 		$item = new Item_model();
-		return $item->fetchRecentlyAdded(self::RECENT_DAY_THRESHOLD, self::RECENT_ITEMS_LIMIT);
+		return $item->fetchRecentlyAdded(self::RECENT_DAY_THRESHOLD);
 	}
 
 

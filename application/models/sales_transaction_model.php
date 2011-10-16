@@ -84,15 +84,13 @@ class Sales_transaction_model extends MY_Model
 //	}
 
 
-	public function fetchRecentlySold($recentThreshold, $limit = null)
+	public function fetchRecent($recentThreshold, $limit = null)
 	{
-		Debug::log('Item_model::fetchRecentlySold');
+		Debug::log('Item_model::fetchRecent');
 		$query = 'SELECT * '
 			   . 'FROM SalesTransaction st '
-			   . 'JOIN Sales s ON (s.salesTransactionId = st.salesTransactionId) '
-			   . 'JOIN ItemDetail id ON (id.itemDetailId = s.itemDetailId) '
 			   . 'WHERE DATE_SUB(CURDATE(), INTERVAL ? DAY) <= date '
-			   . 'ORDER BY st.date DESC, st.salesTransactionId ';
+			   . 'ORDER BY st.date DESC ';
 
 		if (!empty($limit)) {
 			$query .= 'LIMIT ' . $limit;

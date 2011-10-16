@@ -11,8 +11,8 @@
 						<ul>
 							<?php foreach ($itemsLowInStock as $item): ?>
 							<li>
-								<?php echo isset($item['description']) ? $item['description'] : '' ?>
-								<?php echo isset($item['productCode']) ? '[<em>' . $item['productCode'] . '</em>]' : '' ?>,
+								<?php echo isset($item['productCode']) ? '[<em>' . $item['productCode'] . '</em>]' : '' ?>
+								<?php echo isset($item['description']) ? $item['description'] : '' ?>,
 								<?php $stockClass = $item['count'] == 0 ? 'high' : 'medium' ?>
 								<span class="<?php echo $stockClass ?>"><?php echo $item['count'] ?> items left in stock.</span>
 							</li>
@@ -28,10 +28,10 @@
 						<ul>
 							<?php foreach ($recentlyAddedItems as $item): ?>
 							<li>
-								<?php echo isset($item['description']) ? $item['description'] : '' ?>
 								<?php echo isset($item['productCode']) ? '[<em>' . $item['productCode'] . '</em>]' : '' ?>
-								(<?php echo $item['count']?>),
-								<?php echo $item['dateAdded'] ?>
+								<?php echo isset($item['description']) ? $item['description'] : '' ?>,
+								<?php echo $item['count']?> items added
+								<span class="dashboard-date"><?php echo $item['dateAdded'] ?></span>
 							</li>
 							<?php endforeach; ?>
 						</ul>
@@ -44,15 +44,21 @@
 		<h2>Sales</h2>
 		<div class="dashboard-subsection">
 			<table>
+				<?php if (count($recentSalesTransactions) > 0): ?>
 				<tr>
-					<td class="dashboard-subsection-header">Recently Sold</td>
+					<td class="dashboard-subsection-header">Recent Transactions</td>
 					<td class="dashboard-subsection-content">
 						<ul>
-							<li>Bosskit Adaptor Toyota T2</li>
-							<li>Bosskit Adaptor Toyota T2</li>
+							<?php foreach ($recentSalesTransactions as $item): ?>
+							<li>
+								Transaction #<?php echo $item['salesTransactionId'] ?>
+								<span class="dashboard-date"><?php echo $item['date'] ?></span>
+							</li>
+							<?php endforeach; ?>
 						</ul>
 					</td>
 				</tr>
+				<?php endif; ?>
 			</table>
 		</div>
 

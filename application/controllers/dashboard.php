@@ -18,18 +18,16 @@ class Dashboard extends MY_Controller
 //		Debug::log($recentlyAddedItems);
 
 		$salesTransactionService = new SalesTransactionService();
-		$recentlySoldItems = $salesTransactionService->fetchRecentlySold();
-//		Debug::log($recentlySoldItems);
+		$recentSalesTransactions = $salesTransactionService->fetchRecent();
+		Debug::log($recentSalesTransactions);
 
 		$this->view->addCss('dashboard/index.css');
 		$this->renderView('index', array(
-			'itemsLowInStock'		=> $itemsLowInStock,
-			'recentlyAddedItems'	=> $recentlyAddedItems,
-			'recentlySoldItems'		=> $recentlySoldItems,
+			'itemsLowInStock'			=> $itemsLowInStock,
+			'recentlyAddedItems'		=> $recentlyAddedItems,
+			'recentSalesTransactions'	=> $recentSalesTransactions,
 		));
 	}
-
-
 
 
 }
