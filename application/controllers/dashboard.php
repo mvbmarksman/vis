@@ -12,7 +12,7 @@ class Dashboard extends MY_Controller
 		// get items that are running low in quantity
 		$itemService = new ItemService();
 		$itemsLowInStock = $itemService->fetchLowInStock();
-		Debug::log($itemsLowInStock);
+//		Debug::log($itemsLowInStock);
 
 		$recentlyAddedItems = $itemService->fetchRecentlyAdded();
 //		Debug::log($recentlyAddedItems);

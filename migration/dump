@@ -1,0 +1,3 @@
+#!/bin/bash
+rm vis.sql
+mysqldump -uroot -padmin vis > vis.sql

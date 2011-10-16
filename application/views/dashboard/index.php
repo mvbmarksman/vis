@@ -13,23 +13,31 @@
 							<li>
 								<?php echo isset($item['description']) ? $item['description'] : '' ?>
 								<?php echo isset($item['productCode']) ? '[<em>' . $item['productCode'] . '</em>]' : '' ?>,
-								<?php $stockClass = $item['stock'] == 0 ? 'high' : 'medium' ?>
-								<span class="<?php echo $stockClass ?>"><?php echo $item['stock'] ?> items left in stock.</span>
+								<?php $stockClass = $item['count'] == 0 ? 'high' : 'medium' ?>
+								<span class="<?php echo $stockClass ?>"><?php echo $item['count'] ?> items left in stock.</span>
 							</li>
 							<?php endforeach; ?>
 						</ul>
 					</td>
 				</tr>
 				<?php endif; ?>
+				<?php if (count($recentlyAddedItems) > 0): ?>
 				<tr>
 					<td class="dashboard-subsection-header">Recently Added</td>
 					<td class="dashboard-subsection-content">
 						<ul>
-							<li>Bosskit Adaptor Toyota T2</li>
-							<li>Bosskit Adaptor Toyota T2</li>
+							<?php foreach ($recentlyAddedItems as $item): ?>
+							<li>
+								<?php echo isset($item['description']) ? $item['description'] : '' ?>
+								<?php echo isset($item['productCode']) ? '[<em>' . $item['productCode'] . '</em>]' : '' ?>
+								(<?php echo $item['count']?>),
+								<?php echo $item['dateAdded'] ?>
+							</li>
+							<?php endforeach; ?>
 						</ul>
 					</td>
 				</tr>
+				<?php endif; ?>
 			</table>
 		</div>
 
