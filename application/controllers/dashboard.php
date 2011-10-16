@@ -4,6 +4,7 @@ class Dashboard extends MY_Controller
 	public $services = array(
 		'item',
 		'sales_transaction',
+		'credit',
 	);
 
 
@@ -19,13 +20,18 @@ class Dashboard extends MY_Controller
 
 		$salesTransactionService = new SalesTransactionService();
 		$recentSalesTransactions = $salesTransactionService->fetchRecent();
-		Debug::log($recentSalesTransactions);
+//		Debug::log($recentSalesTransactions);
+
+		$creditService = new CreditService();
+		$overdueCredits = $creditService->fetchOverdueCredits();
+//		Debug::log($overdueCredits);
 
 		$this->view->addCss('dashboard/index.css');
 		$this->renderView('index', array(
 			'itemsLowInStock'			=> $itemsLowInStock,
 			'recentlyAddedItems'		=> $recentlyAddedItems,
 			'recentSalesTransactions'	=> $recentSalesTransactions,
+			'overdueCredits'			=> $overdueCredits,
 		));
 	}
 

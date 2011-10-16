@@ -16,32 +16,6 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `CreditDetail`
---
-
-DROP TABLE IF EXISTS `CreditDetail`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `CreditDetail` (
-  `creditDetailId` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `fullName` varchar(100) COLLATE utf8_bin NOT NULL DEFAULT '',
-  `address` varchar(200) COLLATE utf8_bin DEFAULT NULL,
-  `phoneNo` varchar(20) COLLATE utf8_bin DEFAULT NULL,
-  PRIMARY KEY (`creditDetailId`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `CreditDetail`
---
-
-LOCK TABLES `CreditDetail` WRITE;
-/*!40000 ALTER TABLE `CreditDetail` DISABLE KEYS */;
-INSERT INTO `CreditDetail` VALUES (1,'mark','test','1234'),(2,'erik','test','123');
-/*!40000 ALTER TABLE `CreditDetail` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `CreditPayment`
 --
 
@@ -489,4 +463,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-10-17  3:06:25
+-- Dump completed on 2011-10-17  4:46:25
