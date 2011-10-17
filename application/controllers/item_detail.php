@@ -10,10 +10,9 @@ class Item_detail extends MY_Controller
 	{
 		$itemDetailService = new ItemDetailService();
 		try {
-			$itemDetails = $itemDetailService->fetchById($itemDetailId);
+			$itemDetails = $itemDetailService->fetchDetailed($itemDetailId);
 		} catch (Exception $e) {
 			Debug::log($e->getMessage(), 'error');
-			echo $e->getMessage();
 			redirect('/dashboard');
 			exit;
 		}

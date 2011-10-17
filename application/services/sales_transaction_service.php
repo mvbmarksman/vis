@@ -2,7 +2,7 @@
 class SalesTransactionService extends MY_Service
 {
 
-	const RECENT_DAY_THRESHOLD = 1;
+	const RECENT_DAY_THRESHOLD = 5;
 
 	public $models = array(
 		'sales_transaction',

@@ -51,7 +51,8 @@ class Item_model extends MY_Model
    			   . '   WHERE DATE_SUB(CURDATE(), INTERVAL ? DAY) <= i.dateAdded '
    			   . '   ORDER BY i.dateAdded DESC '
 			   . ') AS a '
-			   . 'GROUP BY a.itemDetailId ';
+			   . 'GROUP BY a.itemDetailId '
+			   . 'ORDER BY a.dateAdded DESC';
 		if (!empty($limit)) {
 			$query .= 'LIMIT ' . $limit;
 		}

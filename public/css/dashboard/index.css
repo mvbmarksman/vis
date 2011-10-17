@@ -18,7 +18,7 @@
 	font-size: 11px;
 	font-family: "lucida grande",tahoma,verdana,arial,sans-serif";
 	font-weight: normal;
-	color: #999;
+	color: #545454;
 	font-weight: bold;
 	width: 130px;
 	line-height: 15px;
@@ -31,9 +31,12 @@
 	color: #3B5998;
 	line-height: 15px;
 }
-.dashboard-subsection-content ul li { padding: 2px 0; }
-.dashboard-subsection-content .high { color: #D60027 }
-.dashboard-subsection-content .medium { color: #C45002 }
+
+.dashboard-subsection-content a { color: #3B5998; text-decoration: none }
+
+.dashboard-subsection-content ul li { padding: 5px 0; }
+.dashboard-subsection-content .high { /* color: #D60027 */ color: #C45002; font-weight: bold}
+.dashboard-subsection-content .medium { color: #C45002  }
 
 .dashboard-subsection table {
 	width: 100%;

@@ -5,7 +5,7 @@ class ItemService extends MY_Service
 	const LOW_STOCK_THRESHOLD = 5;
 	const LOW_STOCK_LIMIT = 5;
 	const RECENT_ITEMS_LIMIT = 5;
-	const RECENT_DAY_THRESHOLD = 1;
+	const RECENT_DAY_THRESHOLD = 5;
 
 	public $models = array(
 		'item',

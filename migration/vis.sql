@@ -183,7 +183,7 @@ CREATE TABLE `Item` (
   KEY `storeId` (`storeId`),
   CONSTRAINT `Item_ibfk_1` FOREIGN KEY (`itemDetailId`) REFERENCES `ItemDetail` (`itemDetailId`),
   CONSTRAINT `Item_ibfk_2` FOREIGN KEY (`storeId`) REFERENCES `Store` (`storeId`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -192,7 +192,7 @@ CREATE TABLE `Item` (
 
 LOCK TABLES `Item` WRITE;
 /*!40000 ALTER TABLE `Item` DISABLE KEYS */;
-INSERT INTO `Item` VALUES (1,1,1,'2011-10-15 02:13:18'),(2,1,1,'2011-10-17 02:13:18'),(3,1,1,'2011-10-17 02:13:18'),(4,1,1,'2011-10-17 02:13:18'),(5,1,1,'2011-10-15 02:13:18'),(6,2,1,'2011-10-17 02:13:18'),(7,2,1,'2011-10-17 02:13:18'),(8,2,1,'2011-10-17 02:13:18'),(9,1,1,'2011-10-17 02:13:18'),(11,3,1,'2011-10-17 02:13:18'),(12,3,1,'2011-10-17 02:13:18'),(13,3,1,'2011-10-17 02:13:18'),(14,1,1,'2011-10-17 02:13:18'),(15,1,1,'2011-10-17 02:13:18'),(16,1,1,'2011-10-17 02:13:18'),(17,1,1,'2011-10-17 02:13:18'),(18,1,1,'2011-10-17 02:13:18');
+INSERT INTO `Item` VALUES (1,1,1,'2011-10-15 02:13:18'),(2,1,1,'2011-10-17 02:13:18'),(3,1,1,'2011-10-17 02:13:18'),(4,1,1,'2011-10-17 02:13:18'),(5,1,1,'2011-10-15 02:13:18'),(6,2,1,'2011-10-17 02:13:18'),(7,2,1,'2011-10-17 02:13:18'),(8,2,1,'2011-10-17 02:13:18'),(9,1,1,'2011-10-17 02:13:18'),(11,3,1,'2011-10-17 02:13:18'),(12,3,1,'2011-10-17 02:13:18'),(13,3,1,'2011-10-17 02:13:18'),(14,1,1,'2011-10-17 02:13:18'),(15,1,1,'2011-10-17 02:13:18'),(16,1,1,'2011-10-17 02:13:18'),(17,1,1,'2011-10-17 02:13:18'),(18,1,1,'2011-10-17 02:13:18'),(19,9,1,'2011-10-18 03:28:53');
 /*!40000 ALTER TABLE `Item` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -235,7 +235,7 @@ CREATE TABLE `ItemDetail` (
   KEY `supplierId` (`supplierId`),
   CONSTRAINT `ItemDetail_ibfk_1` FOREIGN KEY (`itemTypeId`) REFERENCES `ItemType` (`itemTypeId`) ON DELETE SET NULL ON UPDATE SET NULL,
   CONSTRAINT `ItemDetail_ibfk_2` FOREIGN KEY (`itemTypeId`) REFERENCES `ItemType` (`itemTypeId`) ON DELETE SET NULL ON UPDATE SET NULL
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -244,7 +244,7 @@ CREATE TABLE `ItemDetail` (
 
 LOCK TABLES `ItemDetail` WRITE;
 /*!40000 ALTER TABLE `ItemDetail` DISABLE KEYS */;
-INSERT INTO `ItemDetail` VALUES (1,'ADP01',1,'Bosskit Adaptor Toyota T2','pcs','100.0000',0,NULL,1,'2011-10-14 23:29:56'),(2,'ADP02',1,'Bosskit Adaptor Toyota T16','pcs','280.0000',1,0,1,'2011-10-14 23:29:56'),(3,NULL,2,'Tree Frog Jasmine Cherry','pcs','46.0000',0,NULL,1,'2011-10-14 23:29:56'),(5,'sampleCode',1,'Keyboard','dozen','100.0000',1,NULL,1,'2011-10-16 23:29:56'),(8,'qwew',1,'sdfsd','asd','123.0000',0,NULL,1,'2011-10-16 23:29:56');
+INSERT INTO `ItemDetail` VALUES (1,'ADP01',1,'Bosskit Adaptor Toyota T2','pcs','100.0000',0,2,1,'2011-10-14 23:29:56'),(2,'ADP02',1,'Bosskit Adaptor Toyota T16','pcs','280.0000',1,1,1,'2011-10-14 23:29:56'),(3,NULL,2,'Tree Frog Jasmine Cherry','pcs','46.0000',0,2,1,'2011-10-14 23:29:56'),(5,'sampleCode',1,'Keyboard','dozen','100.0000',1,2,1,'2011-10-16 23:29:56'),(8,'qwew',1,'sdfsd','asd','123.0000',0,1,1,'2011-10-16 23:29:56'),(9,'AF00',1,'Air Freshener','pcs','100.0000',0,NULL,1,'2011-10-18 03:24:22');
 /*!40000 ALTER TABLE `ItemDetail` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -414,7 +414,7 @@ CREATE TABLE `Supplier` (
   `name` varchar(50) COLLATE utf8_bin NOT NULL,
   `discount` varchar(30) COLLATE utf8_bin DEFAULT NULL,
   PRIMARY KEY (`supplierId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -423,6 +423,7 @@ CREATE TABLE `Supplier` (
 
 LOCK TABLES `Supplier` WRITE;
 /*!40000 ALTER TABLE `Supplier` DISABLE KEYS */;
+INSERT INTO `Supplier` VALUES (1,'Toyota','1000 pesos'),(2,'Mitsubishi','10%');
 /*!40000 ALTER TABLE `Supplier` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -463,4 +464,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-10-17  4:46:25
+-- Dump completed on 2011-10-18  3:44:49

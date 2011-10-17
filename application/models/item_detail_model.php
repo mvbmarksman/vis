@@ -76,20 +76,47 @@ class Item_detail_model extends MY_Model
 		return $this->db->count_all_results();
 	}
 
-
 	public function fetchById($itemDetailId)
 	{
+		Debug::log('Item_detail_model::fetchById');
 		if (empty($itemDetailId)) {
 			throw new InvalidArgumentException('itemDetailId cannot be null.');
 		}
 		$sql = 'SELECT * FROM '.self::TBL_NAME.' WHERE itemDetailId = ?';
 		$query = $this->db->query($sql, array($itemDetailId));
 		$results = $query->result_array();
+		Debug::log($this->db->last_query());
 		if (count($results) <= 0) {
 			throw new EmptyResultSetException('ItemDetail record for ' . $itemDetailId . ' not found.');
 		}
 		return $results[0];
 	}
+
+
+	public function fetchDetailed($itemDetailId)
+	{
+		Debug::log('Item_detail_model::fetchDetailed');
+		if (empty($itemDetailId)) {
+			throw new InvalidArgumentException('itemDetailId cannot be null.');
+		}
+
+		$sql = 'SELECT id.*, it.*, it.name as itemTypeName, COUNT(i.itemDetailId) as count, '
+			 . '   s.name as supplierName, s.discount as supplierDiscount '
+			 . 'FROM ItemDetail id '
+			 . 'JOIN ItemType it ON (id.itemTypeId = it.itemTypeId) '
+			 . 'LEFT JOIN Item i ON (i.itemDetailId = id.itemDetailId) '
+			 . 'LEFT JOIN Supplier s ON (s.supplierId = id.supplierId) '
+			 . 'WHERE id.itemDetailId = ?';
+
+		$query = $this->db->query($sql, array($itemDetailId));
+		$results = $query->result_array();
+		Debug::log($this->db->last_query());
+		if (count($results) <= 0) {
+			throw new EmptyResultSetException('ItemDetail record for ' . $itemDetailId . ' not found.');
+		}
+		return $results[0];
+	}
+
 
 
 	public function delete($itemDetailIds)

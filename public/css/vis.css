@@ -149,3 +149,24 @@ padding: 3px 10px 3px 3px;
 
 .action img { float: left; }
 .action span { float: left; margin: 3px 0px 0px 1px; }
+
+.tabular { margin-bottom: 20px }
+.tabular dt {
+	float: left;
+	font-weight: strong;
+	text-align: right;
+	padding: 5px;
+}
+.tabular dd { padding: 5px; }
+#section { margin-top: 20px }
+#content h3 { 
+   font-weight: bold; 
+   color: #004F94;
+   margin: 5px 0px;
+   border-bottom: 1px solid silver;
+}
+.subtle {
+	font-size: 12px;
+	color: #999;
+	font-style: italic;
+}
