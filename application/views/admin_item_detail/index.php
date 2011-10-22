@@ -70,6 +70,7 @@
 	function validateAndSubmit(type)
 	{
 		var isValid = true;
+
 		if (isValid) {
 
 			var form = "#"+type+"ItemDetailForm";

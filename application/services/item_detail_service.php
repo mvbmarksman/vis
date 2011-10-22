@@ -1,6 +1,7 @@
 <?php
 class ItemDetailService extends MY_Service
 {
+
 	public $models = array(
 		'item_detail',
 	);
@@ -26,6 +27,7 @@ class ItemDetailService extends MY_Service
 		$itemDetail->buyingPrice = $data['buyingPrice'];
 		$itemDetail->isUsed = $data['isUsed'];
 		$itemDetail->supplierId = $data['supplierId'];
+		$itemDetail->active = 1;
 
 		if (!empty($data['itemDetailId'])) {
 			$itemDetail->itemDetailId = $data['itemDetailId'];
@@ -54,6 +56,14 @@ class ItemDetailService extends MY_Service
 	{
 		$itemDetail = new Item_detail_model();
 		$itemDetailData = $itemDetail->fetchById($itemDetailId);
+		return $itemDetailData;
+	}
+
+
+	public function fetchDetailed($itemDetailId)
+	{
+		$itemDetail = new Item_detail_model();
+		$itemDetailData = $itemDetail->fetchDetailed($itemDetailId);
 		return $itemDetailData;
 	}
 

@@ -4,7 +4,7 @@
 			<td class="rightAligned">Description:</td>
 			<td>
 				<input type="text" id="description" name="description" class="longTxt" value="<?php echo $itemDetail['description'] ?>">
-				<input type="hidden" id="itemDetailId" name="itemDetailId"/>
+				<input type="hidden" id="itemDetailId" name="itemDetailId" value="<?php echo $itemDetail['itemDetailId'] ?>">
 			</td>
 		</tr>
 		<tr>
@@ -25,11 +25,10 @@
 		</tr>
 		<tr>
 			<td class="rightAligned">Used:</td>
-			<td><input type="text" id="isUsed" name="isUsed" class="longTxt"
-			value="
-			<?php $used = ($itemDetail['isUsed'] == 1) ? 'yes' : 'no' ;?>
+			<td><input type="checkbox" id="isUsed" name="isUsed" class="longTxt"
+			<?php $used = ($itemDetail['isUsed'] == 1) ? 'checked="yes"' : '' ;?>
 			<?php echo $used; ?>
-			" ></td>
+			 ></td>
 		</tr>
 		<tr>
 			<td class="rightAligned">Supplier:</td>

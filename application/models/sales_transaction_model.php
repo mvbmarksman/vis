@@ -84,6 +84,41 @@ class Sales_transaction_model extends MY_Model
 //	}
 
 
+	public function fetchRecent($recentThreshold, $limit = null)
+	{
+		Debug::log('Item_model::fetchRecent');
+		$query = 'SELECT * '
+			   . 'FROM SalesTransaction st '
+			   . 'WHERE DATE_SUB(CURDATE(), INTERVAL ? DAY) <= date '
+			   . 'ORDER BY st.date DESC ';
+
+		if (!empty($limit)) {
+			$query .= 'LIMIT ' . $limit;
+		}
+
+		$resultSet = $this->db->query($query, array($recentThreshold));
+		Debug::log($this->db->last_query());
+		return $resultSet->result_array();
+	}
+
+
+	public function fetchOverdueCredits()
+	{
+		Debug::log('Item_model::fetchRecent');
+		$query = 'SELECT DATE_ADD(`date`, INTERVAL `creditTerm` DAY) dueDate, st.* '
+			   . 'FROM SalesTransaction st '
+			   . 'WHERE isCredit = 1 AND '
+			   . 'isFullyPaid = 0 AND '
+			   . 'totalPrice > totalAmountPaid AND '
+			   . 'DATE_ADD(`date`, INTERVAL `creditTerm` DAY) < CURDATE() '
+			   . 'ORDER BY dueDate';
+
+		$resultSet = $this->db->query($query, array());
+		Debug::log($this->db->last_query());
+		return $resultSet->result_array();
+	}
+
+
 	public function __toString()
 	{
 		return "SalesTransactionModel: salesTransactionId[$this->salesTransactionId], "

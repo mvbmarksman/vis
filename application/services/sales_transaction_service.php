@@ -1,6 +1,9 @@
 <?php
 class SalesTransactionService extends MY_Service
 {
+
+	const RECENT_DAY_THRESHOLD = 5;
+
 	public $models = array(
 		'sales_transaction',
 		'credit_payment',
@@ -64,5 +67,12 @@ class SalesTransactionService extends MY_Service
 		}
 		$salesTransaction = new Sales_transaction_model();
 		return $salesTransaction->fetchDetailed($salesTransactionId);
+	}
+
+
+	public function fetchRecent()
+	{
+		$salesTransaction = new Sales_transaction_model();
+		return $salesTransaction->fetchRecent(self::RECENT_DAY_THRESHOLD);
 	}
 }

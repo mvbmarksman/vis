@@ -9,12 +9,14 @@ class Admin_item_detail extends MY_Controller
 	public function performsaveorupdate()
 	{
 		$data = $this->input->post();
+		$data['isUsed'] = $data['isUsed'] == 'on' ? 1 : 0;
 		$itemDetailService = new ItemDetailService();
 		try {
 			$itemDetailId = $itemDetailService->saveOrUpdate($data);
 		} catch (Exception $e) {
-			 header($_SERVER['SERVER_PROTOCOL'] . ' 500 Internal Server Error', true, 500);
-			 return;
+			Debug::log($e->getMessage());
+			header($_SERVER['SERVER_PROTOCOL'] . ' 500 Internal Server Error', true, 500);
+			return;
 		}
 		redirect('admin_item_detail');
 	}
