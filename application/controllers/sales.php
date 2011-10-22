@@ -16,7 +16,6 @@ class Sales extends MY_Controller
 	{
 		$this->view->addCss('salesform.css');
 		$this->view->addJs('salesform.js');
-//		$creditDetailsForm = $this->view->load('creditdetailsform', 'sales/_creditdetailsform', array());
 		$this->renderView('salesform', array());
 	}
 

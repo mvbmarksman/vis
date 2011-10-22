@@ -138,5 +138,13 @@ padding: 3px 10px 3px 3px;
 	margin: 10px auto;
 }
 
+.removeBtn {
+	width: 16px;
+	height: 16px;
+	background-image: url("/public/images/icons/delete.png");
+	cursor: pointer;
+}
+
+
 .action img { float: left; }
 .action span { float: left; margin: 3px 0px 0px 1px; }

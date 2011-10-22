@@ -1,0 +1,23 @@
+@CHARSET "UTF-8";
+#inventoryForm {
+	margin: 5px 10px 10px 5px;
+	width: 750px;
+}
+
+#inventoryForm th {
+	text-align: left;
+	color: #fff;
+	font-weight:bold;
+	padding: 5px 3px;
+	border: 1px solid silver;
+	background: #004F94;
+}
+
+#inventoryForm tr:hover {
+	background: #E4EDF5;
+}
+
+#inventoryForm tr td {
+	padding: 5px 3px;
+	border: 1px solid silver;
+}
