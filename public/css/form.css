@@ -24,6 +24,10 @@ input[type="button"]:hover {
 	cursor: pointer;
 }
 
+input.error {
+    border: 1px solid #BF0030;
+}
+
 select {
 	font-size: 12px;
 }
@@ -36,6 +40,23 @@ textarea {
 label {
 	font-weight: bold;
 	padding-right: 5px;
+}
+
+label.error { 
+	float: none; 
+	color: #C45002; 
+	padding-left: 1.5em;
+	margin-left: 5px; 
+	vertical-align: middle; 
+	font-weight: normal;
+	background-image: url("/public/images/icons/warning.png");
+	background-repeat: no-repeat;
+	height: 20px;
+}
+
+label em {
+	color: #BF0030;
+	margin: 0 3px;
 }
 
 .smallTxt { width: 40px; }
@@ -109,11 +130,11 @@ a.button:active span {
 	padding: 2px;
 }
 
-.required {
+/*.required {
 	margin-left: 10px;
 	font-style: italic;
 	color: #999;
-}
+}*/
 
 
 .ui-autocomplete {

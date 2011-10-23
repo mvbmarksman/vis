@@ -14,10 +14,17 @@ class Expense extends MY_Controller
 	 * Adds the dependencies needed by the sales form.
 	 * Initializes the creditdetailsform partial.
 	 */
-	public function inventory()
+	public function inventoryexpenseform()
 	{
-		$this->view->addCss('expense/inventory.css');
-		$this->view->addJs('expense/inventory.js');
-		$this->renderView('inventory', array());
+		$this->view->addCss('expense/inventoryexpenseform.css');
+		$this->view->addJs('jquery.validate.min.js');
+		$this->renderView('inventoryexpenseform', array());
+	}
+
+
+	public function processinventoryexpenseform()
+	{
+		$data = $this->input->post();
+		Debug::dump($data);
 	}
 }

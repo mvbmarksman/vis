@@ -7,6 +7,7 @@
     <link href="/public/css/reset.css" rel="stylesheet" type="text/css" media="screen"/>
     <link href="/public/css/vis.css" rel="stylesheet" type="text/css" media="screen"/>
     <link href="/public/css/form.css" rel="stylesheet" type="text/css" media="screen"/>
+    <link href="/public/css/menu.css" rel="stylesheet" type="text/css" media="screen"/>
     <link href="/public/css/thickbox.css" rel="stylesheet" type="text/css" media="screen"/>
 
 	<?php $cssFiles = !isset($cssFiles) ? array() : $cssFiles ?>

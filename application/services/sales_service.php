@@ -4,7 +4,7 @@ class SalesService extends MY_Service
 
 	public $models = array(
 		'sales',
-		'salesTransaction'
+		'sales_transaction'
 	);
 
 
