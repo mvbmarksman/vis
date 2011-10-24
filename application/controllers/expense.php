@@ -1,14 +1,13 @@
 <?php
 class Expense extends MY_Controller
 {
-	/*
 	public $services = array(
-		'sales_transaction',
-		'item_detail',
-		'customer',
-		'sales',
+		#'sales_transaction',
+		#'item_detail',
+		#'customer',
+		#'sales',
+		'supplier',
 	);
-	*/
 
 	/**
 	 * Adds the dependencies needed by the sales form.
@@ -26,5 +25,11 @@ class Expense extends MY_Controller
 	{
 		$data = $this->input->post();
 		Debug::dump($data);
+		$supplierService = new SupplierService();
+		$supplierService->createOrUpdate($data);
+
+		// create supplier record
+		// create InventoryItemExpense record
+		// create record in Item
 	}
 }

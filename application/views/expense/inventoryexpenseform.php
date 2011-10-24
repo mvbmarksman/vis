@@ -44,6 +44,7 @@
 			<dd>
 				<input type="text" id="supplier" name="supplier" class="longTxt" title="The supplier name must be provided if there is a discount."
 					value="<?php echo !empty($item['supplier']) ? $item['credit'] : ''?>" />
+				<input type="hidden" id="supplier_id" name="supplier_id" />
 			</dd>
 			<dt>Discount :</dt>
 			<dd>
@@ -59,12 +60,13 @@
 <div class="controls" style="margin-top:0px;padding-top: 0px;">
 	<div class="btnClear" style="margin-left: 450px;" >
 		<a class="button" href="javascript:submitAndAdd()"><span><img src="/public/images/icons/add.png"/><p>Submit and Add Another</p></span></a>
-		<a class="button" href="$('#inventoryForm').submit()"><span><img src="/public/images/icons/accept.png"/><p>Submit</p></span></a>
+		<a class="button" href="javascript:submit()"><span><img src="/public/images/icons/accept.png"/><p>Submit</p></span></a>
 	</div>
 </div>
 
 <script type="text/javascript">
 	var itemAutoCompleteData = null;
+	var supplierAutoCompleteData = null;
 
 	$(document).ready(function() {
 		$(".termRow").hide();
@@ -97,12 +99,13 @@
 		$("#inventoryForm").submit();
 	}
 
+	function submit()
+	{
+		$('#inventoryForm').submit();
+	}
+
 
 	// ............................................................... autocomplete
-	/**
-	 * Fetches the data used for autocomplete suggestions
-	 * @returns JSON
-	 */
 	function initItemAutoCompleteData() {
 		$.post('/sales/getitemsforautocomplete', {}, function(data){
 			itemAutoCompleteData = eval(data);
@@ -110,10 +113,6 @@
 		});
 	}
 
-	/**
-	 * Initializes the autocomplete textbox for a particular sales form row
-	 * @param rowCtr
-	 */
 	function initItemAutoComplete() {
 		$("#item").autocomplete({
 			minLength: 0,
@@ -122,16 +121,26 @@
 				$("#item").val(ui.item.description);
 				$("#item_id").val(ui.item.itemDetailId)
 				return false;
-			}/*,
-			change: function(event, ui) {
-				if (ui.item == null) {
-					showError($("#item_" + rowCtr), "Invalid item. Please select an item from the list");
-					$("#item_" + rowCtr).val(null);
-					$("#item_id_" + rowCtr).val(null);
-					$("#price_" + rowCtr).val(null);
-					$("#buyingPrice_" + rowCtr).html(null);
-				}
-			}*/
+			},
+		});
+	}
+
+	function initSupplierAutoCompleteData() {
+		$.post('/supplier/getitemsforautocomplete', {}, function(data){
+			supplierAutoCompleteData = eval(data);
+			initSupplierAutoComplete();
+		});
+	}
+	
+	function initSupplierAutoComplete() {
+		$("#supplier").autocomplete({
+			minLength: 0,
+			source: supplierAutoCompleteData,
+			select: function(event, ui) {
+				$("#supplier").val(ui.supplier.description);
+				$("#supplier_id").val(ui.supplier.itemDetailId)
+				return false;
+			}
 		});
 	}
 

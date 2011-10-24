@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.1.58, for debian-linux-gnu (i686)
+-- MySQL dump 10.13  Distrib 5.1.54, for debian-linux-gnu (i686)
 --
 -- Host: localhost    Database: vis
 -- ------------------------------------------------------
--- Server version	5.1.58-1ubuntu1
+-- Server version	5.1.54-1ubuntu4
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -148,7 +148,10 @@ CREATE TABLE `InventoryItemExpense` (
   `itemDetailId` int(10) unsigned DEFAULT NULL,
   `unitPrice` decimal(18,4) NOT NULL,
   `qty` int(11) NOT NULL,
-  `disburser` varchar(30) COLLATE utf8_bin DEFAULT NULL,
+  `isCredit` tinyint(4) NOT NULL DEFAULT '0',
+  `isFullyPaid` tinyint(1) NOT NULL DEFAULT '1',
+  `supplierId` int(10) unsigned DEFAULT NULL,
+  `discount` decimal(10,4) DEFAULT NULL,
   PRIMARY KEY (`inventoryItemExpenseId`),
   KEY `dailyExpenseTransactionId` (`dailyExpenseTransactionId`),
   KEY `itemDetailId` (`itemDetailId`),
@@ -412,7 +415,7 @@ DROP TABLE IF EXISTS `Supplier`;
 CREATE TABLE `Supplier` (
   `supplierId` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(50) COLLATE utf8_bin NOT NULL,
-  `discount` varchar(30) COLLATE utf8_bin DEFAULT NULL,
+  `address` varchar(50) COLLATE utf8_bin DEFAULT NULL,
   PRIMARY KEY (`supplierId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -464,4 +467,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-10-18  3:44:49
+-- Dump completed on 2011-10-24 17:15:47
