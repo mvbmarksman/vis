@@ -15,7 +15,7 @@
 	<h3>Supplier Information</h3>
 	<dl class="tabular">
 		<dt>Supplier:</dt><dd><?php echo !empty($item['supplierName']) ? $item['supplierName'] : "<span class='subtle'>no information</span>" ?></dd>
-		<dt>Discount Given:</dt><dd><?php echo !empty($item['supplierDiscount']) ? $item['supplierDiscount'] : "<span class='subtle'>no information</span>" ?></dd>
+		<dt>Discount:</dt><dd><?php echo !empty($item['supplierDiscount']) ? $item['supplierDiscount'] : "<span class='subtle'>no information</span>" ?></dd>
 	</dl>
 </div>
 

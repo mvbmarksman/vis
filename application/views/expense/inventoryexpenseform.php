@@ -12,9 +12,8 @@
 			<dd>
 				<input type="text" id="item" name="item" class="longTxt"
 					value="<?php echo !empty($item['item']) ? $item['item'] : ''?>" />
-
-				<input type="hidden" id="item_id" name="item_id" />
-
+				<input type="hidden" id="item_id" name="item_id" value="" />
+				&nbsp;<a href="/expense/inventoryexpensenewform">Add an item that's not yet in the inventory</a>
 			</dd>
 			<dt><label>Price<em>*</em>:</label></dt>
 			<dd>
@@ -46,6 +45,10 @@
 					value="<?php echo !empty($item['supplier']) ? $item['credit'] : ''?>" />
 				<input type="hidden" id="supplier_id" name="supplier_id" />
 			</dd>
+			<dt>Address :</dt>
+			<dd>
+				<textarea id="address" name="address"></textarea>
+			</dd>
 			<dt>Discount :</dt>
 			<dd>
 				<input type="text" id="discount" name="discount" class="longTxt"
@@ -74,6 +77,7 @@
 			$(".termRow").toggle();
 		});
 		initItemAutoCompleteData();
+		initSupplierAutoCompleteData();
 
 		var validator = $("#inventoryForm").validate({
 			rules: {
@@ -105,7 +109,7 @@
 	}
 
 
-	// ............................................................... autocomplete
+	// Autocomplete for Items
 	function initItemAutoCompleteData() {
 		$.post('/sales/getitemsforautocomplete', {}, function(data){
 			itemAutoCompleteData = eval(data);
@@ -119,26 +123,29 @@
 			source: itemAutoCompleteData,
 			select: function(event, ui) {
 				$("#item").val(ui.item.description);
-				$("#item_id").val(ui.item.itemDetailId)
+				$("#item_id").val(ui.item.itemDetailId);
 				return false;
-			},
+			}
 		});
 	}
 
+
+	// Autocomplete for Suppliers
 	function initSupplierAutoCompleteData() {
-		$.post('/supplier/getitemsforautocomplete', {}, function(data){
+		$.post('/supplier/getsuppliersforautocomplete', {}, function(data){
 			supplierAutoCompleteData = eval(data);
 			initSupplierAutoComplete();
 		});
 	}
-	
+
 	function initSupplierAutoComplete() {
 		$("#supplier").autocomplete({
 			minLength: 0,
 			source: supplierAutoCompleteData,
 			select: function(event, ui) {
-				$("#supplier").val(ui.supplier.description);
-				$("#supplier_id").val(ui.supplier.itemDetailId)
+				$("#supplier").val(ui.item.name);
+				$("#address").val(ui.item.address);
+				$("#supplier_id").val(ui.item.supplierId);
 				return false;
 			}
 		});

@@ -100,12 +100,12 @@ class Item_detail_model extends MY_Model
 			throw new InvalidArgumentException('itemDetailId cannot be null.');
 		}
 
-		$sql = 'SELECT id.*, it.*, it.name as itemTypeName, COUNT(i.itemDetailId) as count, '
-			 . '   s.name as supplierName, s.discount as supplierDiscount '
+		$sql = 'SELECT id.*, it.*, it.name as itemTypeName, '
+			 . '   s.name as supplierName, s.address as supplierAddress '
 			 . 'FROM ItemDetail id '
 			 . 'JOIN ItemType it ON (id.itemTypeId = it.itemTypeId) '
 			 . 'LEFT JOIN Item i ON (i.itemDetailId = id.itemDetailId) '
-			 . 'LEFT JOIN Supplier s ON (s.supplierId = id.supplierId) '
+			 . 'LEFT JOIN Supplier s ON (s.supplierId = i.supplierId) '
 			 . 'WHERE id.itemDetailId = ?';
 
 		$query = $this->db->query($sql, array($itemDetailId));

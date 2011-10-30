@@ -4,10 +4,10 @@
 		<h2>Inventory</h2>
 		<div class="dashboard-subsection">
 			<table>
-				<?php if (count($itemsLowInStock) > 0): ?>
 				<tr>
 					<td class="dashboard-subsection-header">Attention Needed</td>
 					<td class="dashboard-subsection-content">
+						<?php if (count($itemsLowInStock) > 0): ?>
 						<ul>
 							<?php foreach ($itemsLowInStock as $item): ?>
 							<li>
@@ -19,13 +19,15 @@
 							</li>
 							<?php endforeach; ?>
 						</ul>
+						<?php else: ?>
+						<span class="subtle">Nothing to display</span>
+						<?php endif ?>
 					</td>
 				</tr>
-				<?php endif; ?>
-				<?php if (count($recentlyAddedItems) > 0): ?>
 				<tr>
 					<td class="dashboard-subsection-header">Recently Added</td>
 					<td class="dashboard-subsection-content">
+						<?php if (count($recentlyAddedItems) > 0): ?>
 						<ul>
 							<?php foreach ($recentlyAddedItems as $item): ?>
 							<li>
@@ -37,25 +39,21 @@
 							</li>
 							<?php endforeach; ?>
 						</ul>
+						<?php else: ?>
+						<span class="subtle">Nothing to display</span>
+						<?php endif ?>
 					</td>
 				</tr>
-				<?php endif; ?>
-				<?php if (count($itemsLowInStock) <= 0 && count($recentlyAddedItems) <= 0): ?>
-				 <tr>
-				 	<td class="dashboard-subsection-header"></td>
-				 	<td class="dashboard-subsection-content"><span class="subtle">Nothing to display</span></td>
-				 </tr>
-				<?php endif; ?>
 			</table>
 		</div>
 
 		<h2>Sales</h2>
 		<div class="dashboard-subsection">
 			<table>
-				<?php if (count($recentSalesTransactions) > 0): ?>
 				<tr>
 					<td class="dashboard-subsection-header">Recent Transactions</td>
 					<td class="dashboard-subsection-content">
+						<?php if (count($recentSalesTransactions) > 0): ?>
 						<ul>
 							<?php foreach ($recentSalesTransactions as $item): ?>
 							<li>
@@ -64,25 +62,21 @@
 							</li>
 							<?php endforeach; ?>
 						</ul>
+						<?php else: ?>
+						<span class="subtle">Nothing to display</span>
+						<?php endif ?>
 					</td>
 				</tr>
-				<?php endif; ?>
-				<?php if (count($recentSalesTransactions) <= 0 ): ?>
-				 <tr>
-				 	<td class="dashboard-subsection-header"></td>
-				 	<td class="dashboard-subsection-content"><span class="subtle">Nothing to display</span></td>
-				 </tr>
-				<?php endif; ?>
 			</table>
 		</div>
 
 		<h2>Credits</h2>
 		<div class="dashboard-subsection">
 			<table>
-				<?php if (count($overdueCredits) > 0): ?>
 				<tr>
 					<td class="dashboard-subsection-header">Overdue</td>
 					<td class="dashboard-subsection-content">
+						<?php if (count($overdueCredits) > 0): ?>
 						<ul>
 							<?php foreach ($overdueCredits as $item): ?>
 							<li>
@@ -91,15 +85,11 @@
 							</li>
 							<?php endforeach ?>
 						</ul>
+						<?php else: ?>
+						<span class="subtle">Nothing to display</span>
+						<?php endif ?>
 					</td>
 				</tr>
-				<?php endif; ?>
-				<?php if (count($overdueCredits) <= 0 ): ?>
-				 <tr>
-				 	<td class="dashboard-subsection-header"></td>
-				 	<td class="dashboard-subsection-content"><span class="subtle">Nothing to display</span></td>
-				 </tr>
-				<?php endif; ?>
 			</table>
 		</div>
 	</div>
