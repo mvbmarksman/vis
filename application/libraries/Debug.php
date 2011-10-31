@@ -15,8 +15,13 @@ class Debug {
 	    echo "</div>";
 	}
 
-	public static function log($data, $level = null) {
+	public static function log($data = array(), $level = null) {
 		$level = empty($level) ? 'debug' : $level;
-		log_message($level, print_r($data, true));
+		$trace = debug_backtrace();
+		$class = $trace[1]['class'];
+		$method = $trace[1]['function'];
+		$line = $trace[0]['line'];
+		$msg = count($data) == 0 ? '' : ' -- ' . print_r($data, true);
+		log_message($level, "$class::$method() [line:$line]" . $msg);
 	}
 }

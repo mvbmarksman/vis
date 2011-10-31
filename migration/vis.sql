@@ -23,9 +23,9 @@ DROP TABLE IF EXISTS `CreditPayment`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `CreditPayment` (
-  `creditPaymentId` BIGINT NOT NULL AUTO_INCREMENT,
-  `customerId` BIGINT NOT NULL,
-  `salesTransactionId` BIGINT NOT NULL,
+  `creditPaymentId` bigint(20) NOT NULL AUTO_INCREMENT,
+  `customerId` bigint(20) NOT NULL,
+  `salesTransactionId` bigint(20) NOT NULL,
   `datePaid` datetime DEFAULT NULL,
   `amount` decimal(10,0) NOT NULL,
   PRIMARY KEY (`creditPaymentId`)
@@ -66,7 +66,7 @@ DROP TABLE IF EXISTS `Customer`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Customer` (
-  `customerId` BIGINT unsigned NOT NULL AUTO_INCREMENT,
+  `customerId` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `fullname` varchar(100) COLLATE utf8_bin NOT NULL,
   `address` varchar(200) COLLATE utf8_bin DEFAULT NULL,
   `phoneNo` varchar(20) COLLATE utf8_bin DEFAULT NULL,
@@ -85,88 +85,6 @@ INSERT INTO `Customer` VALUES (1,'lolol','a','1'),(2,'marko','tests','12345'),(3
 UNLOCK TABLES;
 
 --
--- Table structure for table `DailyExpenseTransaction`
---
-
-DROP TABLE IF EXISTS `DailyExpenseTransaction`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `DailyExpenseTransaction` (
-  `dailyExpenseTransacationId` BIGINT unsigned NOT NULL AUTO_INCREMENT,
-  `date` datetime NOT NULL,
-  PRIMARY KEY (`dailyExpenseTransacationId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `DailyExpenseTransaction`
---
-
-LOCK TABLES `DailyExpenseTransaction` WRITE;
-/*!40000 ALTER TABLE `DailyExpenseTransaction` DISABLE KEYS */;
-/*!40000 ALTER TABLE `DailyExpenseTransaction` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `Expense`
---
-
-DROP TABLE IF EXISTS `Expense`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `Expense` (
-  `expenseId` BIGINT unsigned NOT NULL AUTO_INCREMENT,
-  `dailyExpenseTransactionId` BIGINT unsigned DEFAULT NULL,
-  `description` varchar(100) COLLATE utf8_bin DEFAULT NULL,
-  `price` decimal(18,4) DEFAULT NULL,
-  `disburser` varchar(30) COLLATE utf8_bin DEFAULT NULL,
-  PRIMARY KEY (`expenseId`),
-  KEY `dailyExpenseTransactionId` (`dailyExpenseTransactionId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `Expense`
---
-
-LOCK TABLES `Expense` WRITE;
-/*!40000 ALTER TABLE `Expense` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Expense` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `InventoryItemExpense`
---
-
-DROP TABLE IF EXISTS `InventoryItemExpense`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `InventoryItemExpense` (
-  `inventoryItemExpenseId` BIGINT unsigned NOT NULL AUTO_INCREMENT,
-  `dailyExpenseTransactionId` BIGINT unsigned DEFAULT NULL,
-  `itemDetailId` BIGINT unsigned DEFAULT NULL,
-  `unitPrice` decimal(18,4) NOT NULL,
-  `qty` BIGINT NOT NULL,
-  `isCredit` tinyint(4) NOT NULL DEFAULT '0',
-  `isFullyPaid` tinyint(1) NOT NULL DEFAULT '1',
-  `supplierId` BIGINT unsigned DEFAULT NULL,
-  `discount` decimal(10,4) DEFAULT NULL,
-  PRIMARY KEY (`inventoryItemExpenseId`),
-  KEY `dailyExpenseTransactionId` (`dailyExpenseTransactionId`),
-  KEY `itemDetailId` (`itemDetailId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `InventoryItemExpense`
---
-
-LOCK TABLES `InventoryItemExpense` WRITE;
-/*!40000 ALTER TABLE `InventoryItemExpense` DISABLE KEYS */;
-/*!40000 ALTER TABLE `InventoryItemExpense` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `Item`
 --
 
@@ -175,16 +93,15 @@ DROP TABLE IF EXISTS `Item`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Item` (
   `itemId` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `itemDetailId` bigint(20) unsigned NOT NULL,
+  `productCode` varchar(20) COLLATE utf8_bin DEFAULT NULL,
+  `description` varchar(50) COLLATE utf8_bin NOT NULL,
+  `itemTypeId` bigint(20) unsigned NOT NULL,
   `isUsed` tinyint(4) NOT NULL DEFAULT '0',
-  `buyingPrice` decimal(18,4) NOT NULL DEFAULT '0.0000',
-  `supplierId` bigint(20) unsigned NOT NULL,
-  `storeId` BIGINT unsigned NOT NULL,
+  `latestBuyingPrice` decimal(18,4) DEFAULT '0.0000',
   `dateAdded` datetime DEFAULT NULL,
-  PRIMARY KEY (`itemId`),
-  KEY `itemDetailId` (`itemDetailId`),
-  KEY `storeId` (`storeId`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+  `active` tinyint(4) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`itemId`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -193,7 +110,7 @@ CREATE TABLE `Item` (
 
 LOCK TABLES `Item` WRITE;
 /*!40000 ALTER TABLE `Item` DISABLE KEYS */;
-INSERT INTO `Item` VALUES (1,1,0,'0.0000',0,1,'2011-10-30 21:04:59'),(2,1,0,'0.0000',0,1,'2011-10-30 21:04:59'),(3,1,0,'0.0000',0,1,'2011-10-30 21:04:59'),(4,1,0,'0.0000',0,1,'2011-10-30 21:04:59'),(5,1,0,'0.0000',0,1,'2011-10-30 21:04:59'),(6,2,0,'0.0000',0,1,'2011-10-30 21:04:59'),(7,2,0,'0.0000',0,1,'2011-10-30 21:04:59'),(8,2,0,'0.0000',0,1,'2011-10-30 21:04:59'),(9,1,0,'0.0000',0,1,'2011-10-30 21:04:59'),(11,3,0,'0.0000',0,1,'2011-10-30 21:04:59'),(12,3,0,'0.0000',0,1,'2011-10-30 21:04:59'),(13,3,0,'0.0000',0,1,'2011-10-30 21:04:59'),(14,1,0,'0.0000',0,1,'2011-10-30 21:04:59'),(15,1,0,'0.0000',0,1,'2011-10-30 21:04:59'),(16,1,0,'0.0000',0,1,'2011-10-30 21:04:59'),(17,1,0,'0.0000',0,1,'2011-10-30 21:04:59'),(18,1,0,'0.0000',0,1,'2011-10-30 21:04:59'),(19,9,0,'0.0000',0,1,'2011-10-30 21:04:59');
+INSERT INTO `Item` VALUES (1,'b','a',1,0,'1.0000','2011-11-01 01:57:56',1),(2,'s','s',1,0,'1.0000','2011-11-01 01:59:41',1),(3,'c','c',1,0,'1.0000','2011-11-01 02:29:09',1),(4,'q','q',1,0,'1.0000','2011-11-01 02:32:53',1),(5,'f','f',1,0,'1.0000','2011-11-01 02:35:14',1),(6,'z','z',1,0,'1.0000','2011-11-01 02:37:45',1),(7,'test','test',1,1,'1.0000','2011-11-01 03:16:00',1),(8,'S','something',1,1,'100.0000','2011-11-01 04:01:54',1);
 /*!40000 ALTER TABLE `Item` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -214,37 +131,52 @@ DELIMITER ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
--- Table structure for table `ItemDetail`
+-- Table structure for table `ItemExpense`
 --
 
-DROP TABLE IF EXISTS `ItemDetail`;
+DROP TABLE IF EXISTS `ItemExpense`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `ItemDetail` (
-  `itemDetailId` BIGINT unsigned NOT NULL AUTO_INCREMENT,
-  `productCode` varchar(50) COLLATE utf8_bin DEFAULT NULL,
-  `itemTypeId` BIGINT unsigned DEFAULT NULL,
-  `description` varchar(100) COLLATE utf8_bin NOT NULL,
-  `unit` varchar(10) COLLATE utf8_bin NOT NULL,
-  `buyingPrice` decimal(18,4) NOT NULL,
-  `isUsed` tinyint(1) NOT NULL COMMENT 'client needs to determine if item is brand new or used',
-  `supplierId` BIGINT unsigned DEFAULT NULL,
-  `active` tinyint(1) NOT NULL COMMENT 'if 0, no need to alert user that there is no more stock',
-  PRIMARY KEY (`itemDetailId`),
-  KEY `itemTypeId` (`itemTypeId`),
-  KEY `supplierId` (`supplierId`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+CREATE TABLE `ItemExpense` (
+  `itemExpenseId` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `itemId` bigint(20) unsigned NOT NULL,
+  `price` decimal(18,4) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `supplierId` bigint(20) unsigned DEFAULT NULL,
+  `discount` decimal(18,4) DEFAULT NULL,
+  `isCredit` tinyint(4) NOT NULL DEFAULT '0',
+  `isFullyPaid` tinyint(4) NOT NULL DEFAULT '1',
+  `dateAdded` datetime DEFAULT NULL,
+  `userId` bigint(20) unsigned NOT NULL,
+  PRIMARY KEY (`itemExpenseId`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `ItemDetail`
+-- Dumping data for table `ItemExpense`
 --
 
-LOCK TABLES `ItemDetail` WRITE;
-/*!40000 ALTER TABLE `ItemDetail` DISABLE KEYS */;
-INSERT INTO `ItemDetail` VALUES (1,'ADP01',1,'Bosskit Adaptor Toyota T2','pcs','100.0000',0,2,1),(2,'ADP02',1,'Bosskit Adaptor Toyota T16','pcs','280.0000',1,1,1),(3,NULL,2,'Tree Frog Jasmine Cherry','pcs','46.0000',0,2,1),(5,'sampleCode',1,'Keyboard','dozen','100.0000',1,2,1),(8,'qwew',1,'sdfsd','asd','123.0000',0,1,1),(9,'AF00',1,'Air Freshener','pcs','100.0000',0,NULL,1);
-/*!40000 ALTER TABLE `ItemDetail` ENABLE KEYS */;
+LOCK TABLES `ItemExpense` WRITE;
+/*!40000 ALTER TABLE `ItemExpense` DISABLE KEYS */;
+INSERT INTO `ItemExpense` VALUES (1,7,'1.0000',1,1,NULL,0,0,'2011-11-01 03:32:46',1),(2,7,'5.0000',1,3,'100.0000',0,0,'2011-11-01 03:56:07',1),(3,7,'1.0000',1,1,'100.0000',0,0,'2011-11-01 03:56:45',1),(4,7,'1.0000',1,1,'100.0000',0,0,'2011-11-01 03:58:26',1),(5,1,'1.0000',1,1,'100.0000',0,0,'2011-11-01 04:00:09',1),(6,8,'100.0000',55,4,'100.0000',1,0,'2011-11-01 04:01:54',1);
+/*!40000 ALTER TABLE `ItemExpense` ENABLE KEYS */;
 UNLOCK TABLES;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = '' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER trig_itemexpense_insert BEFORE INSERT ON `ItemExpense`
+    FOR EACH ROW SET NEW.dateAdded = IFNULL(NEW.dateAdded, NOW()) */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
 -- Table structure for table `ItemType`
@@ -254,7 +186,7 @@ DROP TABLE IF EXISTS `ItemType`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `ItemType` (
-  `itemTypeId` BIGINT unsigned NOT NULL AUTO_INCREMENT,
+  `itemTypeId` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(50) COLLATE utf8_bin NOT NULL,
   PRIMARY KEY (`itemTypeId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
@@ -271,6 +203,51 @@ INSERT INTO `ItemType` VALUES (1,'Adaptor Wheel'),(2,'Air Freshener'),(4,'asdasd
 UNLOCK TABLES;
 
 --
+-- Table structure for table `OtherExpense`
+--
+
+DROP TABLE IF EXISTS `OtherExpense`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `OtherExpense` (
+  `otherExpenseId` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `description` varchar(50) NOT NULL,
+  `price` decimal(18,4) NOT NULL,
+  `payee` varchar(50) DEFAULT NULL,
+  `isCredit` tinyint(4) NOT NULL DEFAULT '0',
+  `isFullyPaid` tinyint(4) NOT NULL,
+  `dateAdded` datetime DEFAULT NULL,
+  `userId` bigint(20) unsigned NOT NULL,
+  PRIMARY KEY (`otherExpenseId`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `OtherExpense`
+--
+
+LOCK TABLES `OtherExpense` WRITE;
+/*!40000 ALTER TABLE `OtherExpense` DISABLE KEYS */;
+/*!40000 ALTER TABLE `OtherExpense` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = '' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER trig_otherexpense_insert BEFORE INSERT ON `OtherExpense`
+    FOR EACH ROW SET NEW.dateAdded = IFNULL(NEW.dateAdded, NOW()) */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+
+--
 -- Table structure for table `Sales`
 --
 
@@ -278,13 +255,13 @@ DROP TABLE IF EXISTS `Sales`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Sales` (
-  `salesId` BIGINT unsigned NOT NULL AUTO_INCREMENT,
-  `salesTransactionId` BIGINT unsigned NOT NULL,
-  `itemDetailId` BIGINT unsigned NOT NULL,
+  `salesId` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `salesTransactionId` bigint(20) unsigned NOT NULL,
+  `itemDetailId` bigint(20) unsigned NOT NULL,
   `sellingPrice` decimal(18,4) unsigned NOT NULL,
-  `qty` BIGINT unsigned NOT NULL,
-  `discount` BIGINT unsigned DEFAULT NULL,
-  `storeId` BIGINT unsigned NOT NULL,
+  `qty` bigint(20) unsigned NOT NULL,
+  `discount` bigint(20) unsigned DEFAULT NULL,
+  `storeId` bigint(20) unsigned NOT NULL,
   `subTotal` decimal(18,4) DEFAULT NULL,
   `vatable` decimal(18,4) DEFAULT NULL,
   `vat` decimal(18,4) DEFAULT NULL,
@@ -313,17 +290,17 @@ DROP TABLE IF EXISTS `SalesTransaction`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `SalesTransaction` (
-  `salesTransactionId` BIGINT unsigned NOT NULL AUTO_INCREMENT,
+  `salesTransactionId` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `date` datetime DEFAULT NULL,
-  `userId` BIGINT unsigned NOT NULL,
-  `customerId` BIGINT unsigned DEFAULT NULL,
+  `userId` bigint(20) unsigned NOT NULL,
+  `customerId` bigint(20) unsigned DEFAULT NULL,
   `totalPrice` decimal(18,4) DEFAULT NULL,
   `totalVatable` decimal(18,4) DEFAULT NULL,
   `totalVat` decimal(18,4) DEFAULT NULL,
   `totalAmountPaid` decimal(18,4) DEFAULT NULL,
   `isFullyPaid` tinyint(1) DEFAULT NULL,
   `isCredit` tinyint(1) DEFAULT NULL,
-  `creditTerm` BIGINT DEFAULT NULL,
+  `creditTerm` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`salesTransactionId`) USING BTREE,
   KEY `userId` (`userId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
@@ -356,6 +333,30 @@ DELIMITER ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
+-- Table structure for table `Stock`
+--
+
+DROP TABLE IF EXISTS `Stock`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Stock` (
+  `itemId` bigint(20) unsigned NOT NULL,
+  `storeId` bigint(20) unsigned NOT NULL,
+  `quantity` int(10) unsigned NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Stock`
+--
+
+LOCK TABLES `Stock` WRITE;
+/*!40000 ALTER TABLE `Stock` DISABLE KEYS */;
+INSERT INTO `Stock` VALUES (6,1,103),(1,1,2),(7,1,106),(8,1,55);
+/*!40000 ALTER TABLE `Stock` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `Store`
 --
 
@@ -363,7 +364,7 @@ DROP TABLE IF EXISTS `Store`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Store` (
-  `storeId` BIGINT unsigned NOT NULL AUTO_INCREMENT,
+  `storeId` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(50) COLLATE utf8_bin NOT NULL,
   `location` varchar(100) COLLATE utf8_bin NOT NULL,
   PRIMARY KEY (`storeId`)
@@ -388,11 +389,11 @@ DROP TABLE IF EXISTS `Supplier`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Supplier` (
-  `supplierId` BIGINT unsigned NOT NULL AUTO_INCREMENT,
+  `supplierId` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(50) COLLATE utf8_bin NOT NULL,
   `address` varchar(50) COLLATE utf8_bin DEFAULT NULL,
   PRIMARY KEY (`supplierId`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -401,7 +402,7 @@ CREATE TABLE `Supplier` (
 
 LOCK TABLES `Supplier` WRITE;
 /*!40000 ALTER TABLE `Supplier` DISABLE KEYS */;
-INSERT INTO `Supplier` VALUES (1,'Toyota','1000 pesos'),(2,'Mitsubishi','10%');
+INSERT INTO `Supplier` VALUES (1,'Toyota','Pasong Tamo, Makati'),(2,'Mitsubishi','Aurora Blvd, Quezon City'),(3,'marko basmayor','cubao quezon city'),(4,'marko','somethign');
 /*!40000 ALTER TABLE `Supplier` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -413,7 +414,7 @@ DROP TABLE IF EXISTS `User`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `User` (
-  `userId` BIGINT unsigned NOT NULL AUTO_INCREMENT,
+  `userId` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `username` varchar(20) COLLATE utf8_bin NOT NULL,
   `password` varchar(50) COLLATE utf8_bin NOT NULL,
   `firstName` varchar(30) COLLATE utf8_bin NOT NULL,
@@ -442,4 +443,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-10-30 21:18:54
+-- Dump completed on 2011-11-01  4:02:33

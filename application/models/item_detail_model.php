@@ -1,4 +1,5 @@
 <?php
+require_once APPPATH . 'exceptions/DuplicateRecordException.php';
 class Item_detail_model extends MY_Model
 {
 	const TBL_NAME = 'ItemDetail';
@@ -7,10 +8,6 @@ class Item_detail_model extends MY_Model
 	public $productCode;
 	public $itemTypeId;
 	public $description;
-	public $unit;
-	public $buyingPrice;
-	public $isUsed;
-	public $supplierId;
 	public $active;
 
 
@@ -30,18 +27,38 @@ class Item_detail_model extends MY_Model
 	}
 
 	public function insert() {
-		if (empty($this->description)) {
-			throw new InvalidArgumentException('Description is empty.');
+		Debug::log($this);
+		if (empty($this->productCode) ||
+			empty($this->itemTypeId) ||
+			empty($this->description)) {
+			throw new InvalidArgumentException('Some required parameters are missing.');
 		}
+		if (($duplicateId = $this->_itemDuplicateExists()) !== null) {
+			throw new DuplicateRecordException('Unable to insert new record because a duplicate exists. ItemDetailId#' . $duplicateId);
+		}
+
 		$this->db->insert(self::TBL_NAME, $this);
 		return $this->db->insert_id();
 	}
 
 
+	private function _itemDuplicateExists() {
+		$sql = 'SELECT * '
+			 . 'FROM ' . self::TBL_NAME . ' '
+			 . 'WHERE productCode = ? AND description = ? '
+			 . 'LIMIT 1';
+		$query = $this->db->query($sql, array($this->productCode, $this->description));
+		$result = $query->row_array();
+		if (!empty($result['itemDetailId'])) {
+			return $result['itemDetailId'];
+		}
+		return null;
+	}
+
+
 	public function update()
 	{
-		Debug::log('Item_detail_model::update');
-		Debug::log($this->__toString());
+		Debug::log();
 
 		if (empty($this->itemDetailId)) {
 			throw new InvalidArgumentException('itemDetailId cannot be empty.');
@@ -126,20 +143,6 @@ class Item_detail_model extends MY_Model
 		}
 		$sql = 'DELETE FROM '.self::TBL_NAME.' WHERE itemDetailId IN (?)';
 		$query = $this->db->query($sql, array($itemDetailIds));
-	}
-
-
-	public function __toString()
-	{
-		return "ItemDetailModel: itemDetailId[$this->itemDetailId], "
-			. "productCode[$this->productCode], "
-			. "itemTypeId[$this->itemTypeId], "
-			. "description[$this->description], "
-			. "unit[$this->unit], "
-			. "buyingPrice[$this->buyingPrice], "
-			. "isUsed[$this->isUsed], "
-			. "supplierId[$this->supplierId] "
-			. "active[$this->active] ";
 	}
 
 }

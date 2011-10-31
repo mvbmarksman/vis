@@ -6,14 +6,6 @@ class ItemDetailService extends MY_Service
 		'item_detail',
 	);
 
-
-	public function fetchAllItems()
-	{
-		$itemDetail = new Item_detail_model();
-		$items = $itemDetail->fetchAll();
-		return $items;
-	}
-
 	public function saveOrUpdate($data)
 	{
 		if (empty($data)) {
@@ -73,4 +65,18 @@ class ItemDetailService extends MY_Service
 		$itemDetail = new Item_detail_model();
 		$itemDetail->delete($itemDetailIds);
 	}
+
+	public function saveItem($data)
+	{
+		if (empty($data)) {
+			throw new InvalidArgumentException('Data cannot be empty.');
+		}
+		$itemDetail = new Item_detail_model();
+		$itemDetail->description = $data['itemName'];
+		$itemDetail->itemTypeId = $data['itemType'];
+		$itemDetail->productCode = $data['productCode'];
+		$itemDetail->active = 1;
+		return $itemDetail->insert();
+	}
+
 }

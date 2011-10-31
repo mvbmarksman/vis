@@ -26,4 +26,28 @@ class ItemService extends MY_Service
 	}
 
 
+	public function fetchItemsForAutocomplete()
+	{
+		$query = $this->db->get('Item');
+		$items = $query->result_array();
+		foreach ($items as $key => $item) {
+			$items[$key]['label'] = $item['description'];
+			$items[$key]['value'] = $item['description'];
+		}
+		return $items;
+	}
+
+	public function saveItem($data)
+	{
+		$item = new Item_model();
+		$item->productCode = $data['productCode'];
+		$item->description = $data['itemName'];
+		$item->itemTypeId = $data['itemType'];
+		$item->isUsed = !empty($data['isUsed']) ? 1 : 0;
+		$item->latestBuyingPrice = $data['price'];
+		$item->active = 1;
+		return $item->insert();
+	}
+
+
 }

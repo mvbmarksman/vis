@@ -20,23 +20,6 @@ class Sales extends MY_Controller
 	}
 
 	/**
-	 * Gets the data needed for the items autocomplete input box.
-	 * This function is called via an AJAX call.
-	 *
-	 * @return JSON
-	 */
-	public function getitemsforautocomplete()
-	{
-		$itemDetailService = new ItemDetailService();
-		$items = $itemDetailService->fetchAllItems();
-		foreach ($items as $key => $item) {
-			$items[$key]['label'] = $item['description'];
-			$items[$key]['value'] = $item['description'];
-		}
-		echo json_encode($items);
-	}
-
-	/**
 	 * Gets the data needed for the customer autocomplete input box.
 	 * This function is called via an AJAX call.
 	 *

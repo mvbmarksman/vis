@@ -61,7 +61,7 @@ function addRow() {
  * @returns JSON
  */
 function initAutoCompleteData() {
-	$.post('/sales/getitemsforautocomplete', {}, function(data){
+	$.post('/item/getitemsforautocomplete', {}, function(data){
 		autoCompleteData = eval(data);
 		addRow();
 	});

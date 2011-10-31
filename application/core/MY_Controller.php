@@ -5,11 +5,11 @@ require_once APPPATH . 'core/MY_Service.php';
 
 class MY_Controller extends CI_Controller {
 
-	public $libs;
-	public $services;
+	public $libs = array();
+	public $services = array();
+	public $models = array();
 
 	private $_controllerName;
-
 
 	public function __construct() {
 		parent::__construct();
@@ -21,25 +21,26 @@ class MY_Controller extends CI_Controller {
 	}
 
 
-	public function _loadLibraries()
+	private function _loadLibraries()
 	{
-		if (count($this->libs) <= 0) {
-			return;
-		}
 		foreach ($this->libs as $lib) {
 			$this->load->library($lib);
 		}
 	}
 
 
-	public function _loadServices()
+	private function _loadServices()
 	{
-		if (count($this->services) <= 0) {
-			return;
-
-		}
 		foreach ($this->services as $service) {
 			require_once APPPATH . 'services/' . $service . '_service.php';
+		}
+	}
+
+
+	private function _loadModels()
+	{
+		foreach ($this->models as $model) {
+			require_once APPPATH . 'models/' . $model . '_model.php';
 		}
 	}
 
@@ -57,7 +58,6 @@ class MY_Controller extends CI_Controller {
 		$this->view->render();
 
 	}
-
 
 	public function renderAjaxView($template, $data) {
 		$content = $this->view->load('content', $this->_controllerName . '/' . $template, $data);

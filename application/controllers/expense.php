@@ -2,34 +2,64 @@
 class Expense extends MY_Controller
 {
 	public $services = array(
-		#'sales_transaction',
-		#'item_detail',
-		#'customer',
-		#'sales',
 		'supplier',
+		'item_type',
+		'item',
+		'stock',
+		'item_expense'
 	);
 
+
 	/**
-	 * Adds the dependencies needed by the sales form.
-	 * Initializes the creditdetailsform partial.
+	 * Creates and processes the inventory expense form
 	 */
 	public function inventoryexpenseform()
 	{
 		$this->view->addCss('expense/inventoryexpenseform.css');
 		$this->view->addJs('jquery.validate.min.js');
-		$this->renderView('inventoryexpenseform', array());
-	}
 
+		if ($this->input->post() != null) {
+			$data = $this->input->post();
+			Debug::log($data);
+			try {
+				// save the item data if we're adding a new one
+				if ($this->input->post('newItem') == 1) {
+					$itemService = new ItemService();
+					$data['itemId'] = $itemService->saveItem($data);
+				}
 
-	public function processinventoryexpenseform()
-	{
-		$data = $this->input->post();
-		Debug::dump($data);
-		$supplierService = new SupplierService();
-		$supplierService->createOrUpdate($data);
+				// save the supplier data if there is one
+				if ($this->input->post('supplier')) {
+					$supplierService = new SupplierService();
+					$data['supplierId'] = $supplierService->saveOrUpdate($data);
+				}
 
-		// create supplier record
-		// create InventoryItemExpense record
-		// create record in Item
+				$stockService = new StockService();
+				$stockService->addItemToStore($data['itemId'], 1, $this->input->post('quantity')); // TODO hardcoded storeID
+
+				// create item expense record
+				$itemExpenseService = new ItemExpenseService();
+				$itemExpenseService->saveItemExpense($data);
+
+			} catch (Exception $e) {
+				Debug::log($e->getMessage(), 'error');
+				$error = $e->getMessage();
+				$this->message->set($error, 'error', TRUE);
+				redirect('/expense/inventoryexpenseform');
+				exit;
+			}
+
+			if ($this->input->post('addAnother') == 1) {
+				$this->message->set('Successfully added item and expense record.', 'success', TRUE);
+				redirect('/expense/inventoryexpenseform');
+				exit;
+			} else {
+				redirect('/expense/dailyreport');
+				exit;
+			}
+		}
+		$itemTypeService = new ItemTypeService();
+		$items = $itemTypeService->fetchAllItems();
+		$this->renderView('inventoryexpenseform', array('itemTypes' => $items));
 	}
 }
