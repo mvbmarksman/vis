@@ -54,7 +54,7 @@ class Expense extends MY_Controller
 				redirect('/expense/inventoryexpenseform');
 				exit;
 			} else {
-				redirect('/expense/dailyreport');
+				redirect('/expense/dailyexpense');
 				exit;
 			}
 		}
@@ -62,4 +62,18 @@ class Expense extends MY_Controller
 		$items = $itemTypeService->fetchAllItems();
 		$this->renderView('inventoryexpenseform', array('itemTypes' => $items));
 	}
+
+
+	/**
+	 * For now let's just show daily expense
+	 */
+	public function dailyexpense()
+	{
+		$itemExpenseService = new ItemExpenseService();
+		$itemExpenses = $itemExpenseService->fetchItemExpenses(ItemExpenseService::DAILY, date('Y-m-d'));
+		Debug::dump($itemExpenses);
+		$this->renderView('showexpenses', array());
+	}
+
+
 }
