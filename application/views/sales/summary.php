@@ -1,5 +1,5 @@
 <h1>Transaction Summary</h1>
-<table id="summaryTable">
+<table class="summaryTable">
 	<thead>
 		<tr>
 			<th>Item</th>

@@ -6,7 +6,8 @@ class Expense extends MY_Controller
 		'item_type',
 		'item',
 		'stock',
-		'item_expense'
+		'item_expense',
+		'other_expense'
 	);
 
 
@@ -52,19 +53,40 @@ class Expense extends MY_Controller
 				redirect('/expense/inventoryexpenseform');
 				exit;
 			}
-
-			if ($this->input->post('addAnother') == 1) {
-				$this->message->set('Successfully added item and expense record.', 'success', TRUE);
-				redirect('/expense/inventoryexpenseform');
-				exit;
-			} else {
-				redirect('/expense/dailyexpense');
-				exit;
-			}
+			$this->_showMessageAndRedirect();
 		}
 		$itemTypeService = new ItemTypeService();
 		$items = $itemTypeService->fetchAllItems();
 		$this->renderView('inventoryexpenseform', array('itemTypes' => $items));
+	}
+
+
+	public function otherexpenseform()
+	{
+		$this->view->addCss('expense/inventoryexpenseform.css');
+		$this->view->addJs('jquery.validate.min.js');
+
+		if ($this->input->post() != null) {
+			$data = $this->input->post();
+			Debug::log($data);
+			$otherExpenseService = new OtherExpenseService();
+			$otherExpenseService->saveOtherExpense($data);
+			$this->_showMessageAndRedirect();
+		}
+		$this->renderView('otherexpenseform', array());
+	}
+
+
+	private function _showMessageAndRedirect()
+	{
+		if ($this->input->post('addAnother') == 1) {
+			$this->message->set('Successfully added item and expense record.', 'success', TRUE);
+			redirect($this->uri->uri_string());
+			exit;
+		} else {
+			redirect('/expense/dailyexpense');
+			exit;
+		}
 	}
 
 
@@ -74,8 +96,6 @@ class Expense extends MY_Controller
 	public function dailyexpense($dateParam = null)
 	{
 		$this->view->addCss('sales/summary.css');
-		$itemExpenseService = new ItemExpenseService();
-
 		$date = null;
 		if (isset($dateParam)) {
 			try {
@@ -89,10 +109,15 @@ class Expense extends MY_Controller
 			$date = date('Y-m-d');
 		}
 
+		$itemExpenseService = new ItemExpenseService();
 		$itemExpenses = $itemExpenseService->fetchItemExpenses(ItemExpenseService::DAILY, $date);
-		Debug::log($itemExpenses);
+		$otherExpenseService = new OtherExpenseService();
+		$otherExpenses = $otherExpenseService->fetchOtherExpenses(OtherExpenseService::DAILY, $date);
+//		Debug::log($itemExpenses);
+//		Debug::log($otherExpenses);
 		$this->renderView('dailyexpense', array(
 			'itemExpenses' 	=> $itemExpenses,
+			'otherExpenses'	=> $otherExpenses,
 			'date'	=> $date,
 		));
 	}
