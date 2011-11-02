@@ -23,8 +23,8 @@ class Expense extends MY_Controller
 			Debug::log($data);
 			try {
 				// save the item data if we're adding a new one
+				$itemService = new ItemService();
 				if ($this->input->post('newItem') == 1) {
-					$itemService = new ItemService();
 					$data['itemId'] = $itemService->saveItem($data);
 				}
 
@@ -34,12 +34,16 @@ class Expense extends MY_Controller
 					$data['supplierId'] = $supplierService->saveOrUpdate($data);
 				}
 
+				// create stock data
 				$stockService = new StockService();
 				$stockService->addItemToStore($data['itemId'], 1, $this->input->post('quantity')); // TODO hardcoded storeID
 
 				// create item expense record
 				$itemExpenseService = new ItemExpenseService();
 				$itemExpenseService->saveItemExpense($data);
+
+				// finally update the lastest buying price column
+				$itemService->updateLatestBuyingPrice($data['itemId'], $data['price']);
 
 			} catch (Exception $e) {
 				Debug::log($e->getMessage(), 'error');
@@ -67,12 +71,30 @@ class Expense extends MY_Controller
 	/**
 	 * For now let's just show daily expense
 	 */
-	public function dailyexpense()
+	public function dailyexpense($dateParam = null)
 	{
+		$this->view->addCss('sales/summary.css');
 		$itemExpenseService = new ItemExpenseService();
-		$itemExpenses = $itemExpenseService->fetchItemExpenses(ItemExpenseService::DAILY, date('Y-m-d'));
-		Debug::dump($itemExpenses);
-		$this->renderView('showexpenses', array());
+
+		$date = null;
+		if (isset($dateParam)) {
+			try {
+				$dateObj = new DateTime($dateParam);
+				$date = $dateObj->format('Y-m-d');
+			} catch (Exception $e) {
+				Debug::log('Invalid date supplied.', 'error');
+			}
+		}
+		if ($date == null) {
+			$date = date('Y-m-d');
+		}
+
+		$itemExpenses = $itemExpenseService->fetchItemExpenses(ItemExpenseService::DAILY, $date);
+		Debug::log($itemExpenses);
+		$this->renderView('dailyexpense', array(
+			'itemExpenses' 	=> $itemExpenses,
+			'date'	=> $date,
+		));
 	}
 
 

@@ -48,7 +48,7 @@
 			</dd>
 			<dt><label>Credit :</label></dt>
 			<dd>
-				<input type="checkbox" id="credit" name="credit" class="longTxt" value="1"/>
+				<input type="checkbox" id="credit" name="credit" value="1"/>
 			</dd>
 		</dl>
 
@@ -73,13 +73,11 @@
 	<input id="addAnother" name="addAnother" type="hidden" value=""/>
 </form>
 
-<div id="separator"></div>
-<div class="controls" style="margin-top:0px;padding-top: 0px;">
-	<div class="btnClear" style="margin-left: 450px;" >
-		<a class="button" href="javascript:submitAndAdd()"><span><img src="/public/images/icons/add.png"/><p>Submit and Add Another</p></span></a>
-		<a class="button" href="javascript:submit()"><span><img src="/public/images/icons/accept.png"/><p>Submit</p></span></a>
-	</div>
+<div id="actionsContainer">
+	<input type="button" onclick="javascript:submitAndAdd()" value="Save and Add Another"/>
+	<input type="button" onclick="javascript:submit()" value="Save and Proceed to Summary"/>
 </div>
+
 
 <script type="text/javascript">
 	var itemAutoCompleteData = null;

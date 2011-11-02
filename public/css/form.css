@@ -1,27 +1,26 @@
 @CHARSET "UTF-8";
 input { 
-/*	border: 1px solid #8EA7D1;*/
+	border: 1px solid gray;
 	font-size: 12px;
+	border-radius: 3px;
 }
 
-input[type="submit"] {
-	background: #BDC7D8;
+#actionsContainer {
+}
+
+input[type="button"],  input[type="submit"] {
+	background: url("/public/images/components/button_bg.png") no-repeat scroll right top transparent;
+	border: 1px solid #7799BF;
+	padding: 1px 9px;
+	border-radius: 10px;
+	color: #003C80;
+	margin: 2px 5px;
 	cursor: pointer;
 }
 
-input[type="submit"]:hover {
-	background: #F0E8D1;
-	cursor: pointer;
-}
 
-input[type="button"] {
-	background: #BDC7D8;
-	cursor: pointer;
-}
-
-input[type="button"]:hover {
-	background: #F0E8D1;
-	cursor: pointer;
+input[type="button"]:hover, input[type="submit"]:hover {
+	color: #D98123;
 }
 
 input.error {
@@ -33,8 +32,14 @@ select {
 }
 
 textarea {
+	border: 1px solid gray;	
 	resize: none;
 	width: 200px;
+	border-radius: 3px;
+}
+
+checkbox {
+	border: 1px solid #7799BF;
 }
 
 label {
@@ -64,55 +69,6 @@ label em {
 .longTxt { width: 200px; }
 .longSelect{ width: 206px; }
  
- 
- /* sexy button */
- .btnClear { /* generic container (i.e. div) for floating buttons */
-    overflow: hidden;
-    width: 100%;
-}
- 
- a.button {
-    background: transparent url('/public/images/components/bg_button_a.gif') no-repeat scroll top right;
-    color: #003C80;
-    display: block;
-    float: left;
-    font: normal 12px arial, sans-serif;
-    height: 24px;
-    margin-right: 6px;
-    padding-right: 18px; /* sliding doors padding */
-    text-decoration: none;
-}
-
-a.button span {
-    background: transparent url('/public/images/components/bg_button_span.gif') no-repeat;
-    display: table-cell;
-    padding: 5px 0 5px 18px;
-}
-
-a.button span img {
-	margin-right: 5px;
-}
-a.button span p {
-	display: inline-block;
-	overflow: auto;
-}
-
-a.button:hover {
-    color: #D98123;
-}
-
-
-a.button:active {
-    background-position: bottom right;
-    color: #003C80;
-    outline: none; /* hide dotted outline in Firefox */
-}
-
-a.button:active span {
-    background-position: bottom left;
-    padding: 4px 0 1px 18px; /* push text down 1px */
-}
-
 .formError {
 	border: 1px solid #BF0030;
 }

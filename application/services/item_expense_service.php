@@ -21,7 +21,9 @@ class ItemExpenseService extends MY_Service
 		$itemExpense->discount = $data['discount'];
 		$itemExpense->userId = 1; // TODO hardcoded
 		$itemExpense->isCredit = empty($data['credit']) ? 0 : 1;
-		$itemExpense->isFullyPaid = $itemExpense->isCredit == 0 ? 1 : 0;
+
+		// leave fullyPaid to null if not a credit because we want to track expenses that were credited and then later paid
+		$itemExpense->isFullyPaid = empty($data['credit']) ? null : 0;
 		return $itemExpense->insert();
 	}
 
@@ -36,9 +38,11 @@ class ItemExpenseService extends MY_Service
 	public function fetchItemExpenses($scope, $range)
 	{
 		$this->db->select('*')
-			->from('ItemExpense')
-			->where('DATE(dateAdded) = ', date('Y-m-d', strtotime($range)))
-			->order_by('dateAdded', 'desc');
+			->from('ItemExpense ie')
+			->join('Item i', 'ie.itemId = i.itemId', 'left')
+			->join('Supplier s', 'ie.supplierId = s.supplierId', 'left')
+			->where('DATE(ie.dateAdded) = ', date('Y-m-d', strtotime($range)))
+			->order_by('ie.dateAdded', 'asc');
 		$query = $this->db->get();
 		$results = $query->result_array();
 		Debug::log($this->db->last_query());

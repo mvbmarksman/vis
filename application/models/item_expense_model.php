@@ -16,22 +16,19 @@ class Item_expense_model extends MY_Model
 	public function _checkArgs()
 	{
 		if (empty($this->itemId)) {
-			throw new InvalidArgumentsException('ItemId cannot be null.');
+			throw new InvalidArgumentException('ItemId cannot be null.');
 		}
 		if (empty($this->price)) {
-			throw new InvalidArgumentsException('Price cannot be null.');
+			throw new InvalidArgumentException('Price cannot be null.');
 		}
 		if (empty($this->quantity)) {
-			throw new InvalidArgumentsException('Quantity cannot be null.');
+			throw new InvalidArgumentException('Quantity cannot be null.');
 		}
 		if (!isset($this->isCredit)) {
-			throw new InvalidArgumentsException('IsCredit cannot be null.');
-		}
-		if (!isset($this->isFullyPaid)) {
-			throw new InvalidArgumentsException('IsFullyPaid cannot be null.');
+			throw new InvalidArgumentException('IsCredit cannot be null.');
 		}
 		if (empty($this->userId)) {
-			throw new InvalidArgumentsException('UserId cannot be null.');
+			throw new InvalidArgumentException('UserId cannot be null.');
 		}
 	}
 

@@ -4,20 +4,23 @@
 	margin-top: 20px;
 	width: 750px;
 }
+#summaryTable thead tr th { padding: 5px; }
 #summaryTable thead tr {
 	background-color: #6997BF;
 	color: #eee;
 	text-align: center;
 	font-weight: bold;
 }
-#summaryTable thead tr th {padding: 5px;}
 #summaryTable tr {
 	color: #333;
 	border: 1px solid silver;
 }
-#summaryTable td {
+#summaryTable td, #summaryTable thead th {
 	padding: 3px;
 	border: 1px solid silver;
+}
+#summaryTable a {
+	text-decoration: none;
 }
 
 

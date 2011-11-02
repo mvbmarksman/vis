@@ -1,13 +1,3 @@
-
-/*
- * http://kuler.adobe.com/
- * bassin rich
- * C4CCBB
- * 1C202E
- * 2D4469
- * 5CB9F2
- * 73DBFE
- */
 @CHARSET "UTF-8";
 body {
 	font-family: arial, sans-serif;
@@ -112,33 +102,37 @@ em {
 	letter-spacing: 0.5px;
 }
 
-#content h3 {
-	font-weight:bold;
-	margin: 2px 0;
+#content h3 { 
+   font-weight: bold; 
+   color: #004F94;
+   margin: 5px 0px;
+   border-bottom: 1px dotted silver;
+   padding-bottom: 4px;
 }
-
+#content h4 {
+	font-weight: bold;
+}
 
 .controls {
 	margin-top:40px;
 	padding-top:10px;
 }
 
+
 .hiliteRow {
 	background: #FAF4E1;
 }
 
-
-
 dl dt {
-float:left;
-width: 120px;
-text-align: right;
-padding: 3px 10px 3px 3px;
-font-weight: bold;
+	float:left;
+	width: 120px;
+	text-align: right;
+	padding: 3px 10px 3px 3px;
+	font-weight: bold;
 }
 
 dl dd {
-padding: 3px 10px 3px 3px;
+	padding: 3px 10px 3px 3px;
 }
 
 #separator {
@@ -167,12 +161,7 @@ padding: 3px 10px 3px 3px;
 }
 .tabular dd { padding: 5px; }
 #section { margin-top: 20px }
-#content h3 { 
-   font-weight: bold; 
-   color: #004F94;
-   margin: 5px 0px;
-   border-bottom: 1px solid silver;
-}
+
 .subtle {
 	font-size: 12px;
 	color: #999;

@@ -101,7 +101,7 @@ CREATE TABLE `Item` (
   `dateAdded` datetime DEFAULT NULL,
   `active` tinyint(4) NOT NULL DEFAULT '1',
   PRIMARY KEY (`itemId`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -110,7 +110,7 @@ CREATE TABLE `Item` (
 
 LOCK TABLES `Item` WRITE;
 /*!40000 ALTER TABLE `Item` DISABLE KEYS */;
-INSERT INTO `Item` VALUES (1,'b','a',1,0,'1.0000','2011-11-01 01:57:56',1),(2,'s','s',1,0,'1.0000','2011-11-01 01:59:41',1),(3,'c','c',1,0,'1.0000','2011-11-01 02:29:09',1),(4,'q','q',1,0,'1.0000','2011-11-01 02:32:53',1),(5,'f','f',1,0,'1.0000','2011-11-01 02:35:14',1),(6,'z','z',1,0,'1.0000','2011-11-01 02:37:45',1),(7,'test','test',1,1,'1.0000','2011-11-01 03:16:00',1),(8,'S','something',1,1,'100.0000','2011-11-01 04:01:54',1);
+INSERT INTO `Item` VALUES (1,'b','a',1,0,'1.0000','2011-11-01 01:57:56',1),(2,'s','s',1,0,'1.0000','2011-11-01 01:59:41',1),(3,'c','c',1,0,'1.0000','2011-11-01 02:29:09',1),(4,'q','q',1,0,'1.0000','2011-11-01 02:32:53',1),(5,'f','f',1,0,'1.0000','2011-11-01 02:35:14',1),(6,'z','z',1,0,'1.0000','2011-11-01 02:37:45',1),(7,'test','test',1,1,'1.0000','2011-11-01 03:16:00',1),(8,'S','something',1,1,'100.0000','2011-11-01 04:01:54',1),(9,'aaa','my new item',1,0,'5.0000','2011-11-02 01:58:26',1),(10,'VSHB`','Very Strong Handbrake',4,0,'150.0000','2011-11-02 22:01:10',1),(11,'NTR','Nitro',4,0,'950.0000','2011-11-02 22:01:47',1);
 /*!40000 ALTER TABLE `Item` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -145,11 +145,11 @@ CREATE TABLE `ItemExpense` (
   `supplierId` bigint(20) unsigned DEFAULT NULL,
   `discount` decimal(18,4) DEFAULT NULL,
   `isCredit` tinyint(4) NOT NULL DEFAULT '0',
-  `isFullyPaid` tinyint(4) NOT NULL DEFAULT '1',
+  `isFullyPaid` tinyint(4) DEFAULT NULL COMMENT 'leave fullyPaid to null if not a credit because we want to track expenses that were credited and then later paid',
   `dateAdded` datetime DEFAULT NULL,
   `userId` bigint(20) unsigned NOT NULL,
   PRIMARY KEY (`itemExpenseId`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -158,7 +158,7 @@ CREATE TABLE `ItemExpense` (
 
 LOCK TABLES `ItemExpense` WRITE;
 /*!40000 ALTER TABLE `ItemExpense` DISABLE KEYS */;
-INSERT INTO `ItemExpense` VALUES (1,7,'1.0000',1,1,NULL,0,0,'2011-11-01 03:32:46',1),(2,7,'5.0000',1,3,'100.0000',0,0,'2011-11-01 03:56:07',1),(3,7,'1.0000',1,1,'100.0000',0,0,'2011-11-01 03:56:45',1),(4,7,'1.0000',1,1,'100.0000',0,0,'2011-11-01 03:58:26',1),(5,1,'1.0000',1,1,'100.0000',0,0,'2011-11-01 04:00:09',1),(6,8,'100.0000',55,4,'100.0000',1,0,'2011-11-01 04:01:54',1);
+INSERT INTO `ItemExpense` VALUES (1,10,'150.0000',10,1,'0.0000',0,NULL,'2011-11-02 22:01:10',1),(2,11,'950.0000',5,2,'50.0000',0,NULL,'2011-11-02 22:01:47',1),(3,7,'1.0000',1,3,'0.0000',1,0,'2011-11-02 22:28:16',1),(4,9,'5.0000',55555,NULL,'0.0000',0,NULL,'2011-11-02 22:37:01',1);
 /*!40000 ALTER TABLE `ItemExpense` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -352,7 +352,7 @@ CREATE TABLE `Stock` (
 
 LOCK TABLES `Stock` WRITE;
 /*!40000 ALTER TABLE `Stock` DISABLE KEYS */;
-INSERT INTO `Stock` VALUES (6,1,103),(1,1,2),(7,1,106),(8,1,55);
+INSERT INTO `Stock` VALUES (6,1,104),(1,1,2),(7,1,202),(8,1,55),(9,1,55655),(10,1,10),(11,1,5);
 /*!40000 ALTER TABLE `Stock` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -402,7 +402,7 @@ CREATE TABLE `Supplier` (
 
 LOCK TABLES `Supplier` WRITE;
 /*!40000 ALTER TABLE `Supplier` DISABLE KEYS */;
-INSERT INTO `Supplier` VALUES (1,'Toyota','Pasong Tamo, Makati'),(2,'Mitsubishi','Aurora Blvd, Quezon City'),(3,'marko basmayor','cubao quezon city'),(4,'marko','somethign');
+INSERT INTO `Supplier` VALUES (1,'Toyota','Pasong Tamo, Makati'),(2,'Mitsubishi','Aurora Blvd, Quezon City'),(3,'mark santos','cubao quezon city'),(4,'marko','somethign');
 /*!40000 ALTER TABLE `Supplier` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -443,4 +443,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-11-01  4:02:33
+-- Dump completed on 2011-11-03  0:01:55

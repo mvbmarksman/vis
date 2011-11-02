@@ -49,5 +49,14 @@ class ItemService extends MY_Service
 		return $item->insert();
 	}
 
+	public function updateLatestBuyingPrice($itemId, $latestBuyingPrice)
+	{
+		if (empty($itemId) || empty($latestBuyingPrice)) {
+			throw new InvalidArgumentException('Required paramters are missing.');
+		}
+		$this->db->where('itemId', $itemId);
+		$this->db->update('Item', array('latestBuyingPrice' => $latestBuyingPrice));
+		Debug::log($this->db->last_query());
+	}
 
 }
