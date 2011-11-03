@@ -1,3 +1,5 @@
+<style> .tabular dt { width: 120px } </style>
+
 <ul id ="errors"></ul>
 
 <h1>
@@ -6,7 +8,7 @@
 </h1>
 <div class="clear"></div>
 
-<form name="salesForm" id="salesForms" action="/sales/processsalesform" method="POST">
+<form name="salesForm" id="salesForms" action="/sales/salesform" method="POST">
 	<table id="salesForm">
 		<thead>
 			<tr>
@@ -80,57 +82,37 @@
 		</table>
 	</div>
 
-	<div id="separator"></div>
-	<h1>
-		<img src="/public/images/icons/user.png" />
-		<div>Customer Information</div>
-	</h1>
-	<div class="clear"></div>
+	<h3>Customer Information</h3>
+	<dl class="tabular">
+		<dt><label>Name<em>*</em>:</label></dt>
+		<dd>
+			<input type="text" id="name" name="name" class="longTxt"/>
+		</dd>
+		<dt><label>Address:</label></dt>
+		<dd>
+			<textarea id="address" name="address" rows="2" cols="22" ></textarea>
+		</dd>
+		<dt><label>Contact Number:</label></dt>
+		<dd>
+			<input type="text" id="contact" name="contact" class="longTxt"/>
+		</dd>
+		<dt><label>Amount Paid:</label></dt>
+		<dd>
+			<input type="text" id="amountPaid" name="amountPaid" class="longTxt"/>
+		</dd>
+		<dt><label>Term:</label></dt>
+		<dd>
+			<select id="term" name="term" class="longSelect">
+					<option value="30">30 days</option>
+					<option value="60">60 days</option>
+					<option value="90">90 days</option>
+					<option value="120">120 days</option>
+			</select>
+		</dd>
+	</dl>
 
-	<table id="creditForm">
-		<tr>
-			<td class="rightAligned">Name:</td>
-			<td>
-				<input type="text" id="name" name="name" class="longTxt">
-				<input type="hidden" id="customerId" name="customerId"/>
-			</td>
-		</tr>
-		<tr>
-			<td class="rightAligned">Address:</td>
-			<td><textarea id="address" name="address" rows="2" cols="22" ></textarea></td>
-		</tr>
-		<tr>
-			<td class="rightAligned">Contact Number:</td>
-			<td><input type="text" id="contact" name="contact" class="longTxt"/></td>
-		</tr>
-		<tr>
-			<td class="rightAligned">Amount Paid:</td>
-			<td>
-				<input type="text" id="amountPaid" name="amountPaid" class="longTxt rightAligned"/>
-			</td>
-			<td>
-				<div id="creditNotification" class="action">
-					<img src="/public/images/icons/information.png"/><span style="margin-left: 5px"><em>credit payment</em></span>
-				</div>
-			</td>
-		</tr>
-		<tr id="termRow">
-			<td class="rightAligned">Term:</td>
-			<td>
-				<select id="term" name="term" class="longSelect">
-					<option value="30">30</option>
-					<option value="60">60</option>
-					<option value="90">90</option>
-					<option value="120">120</option>
-				</select>
-			</td>
-		</tr>
-	</table>
 </form>
 
-<div id="separator"></div>
-<div class="controls" style="margin-top:0px;padding-top: 0px;">
-	<div class="btnClear" style="margin-left: 580px;" >
-		<a class="button" href="javascript:submitForm()"><span><img src="/public/images/icons/drive_go.png"/><p>Submit and Save</p></span></a>
-	</div>
+<div id="actionsContainer">
+	<input type="button" onclick="javascript:submitForm()" value="Submit and Save"/>
 </div>

@@ -33,18 +33,6 @@
 	cursor: pointer;
 }
 
-#creditForm {
-	padding: 10px;
-}
-
-#creditForm tr td {
-	padding: 5px 5px;
-}
-
-#creditForm .rightAligned {
-	text-align: right;
-}
-
 #salesControls {
 	margin-left: 10px;
 }

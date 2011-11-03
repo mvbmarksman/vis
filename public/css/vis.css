@@ -135,12 +135,6 @@ dl dd {
 	padding: 3px 10px 3px 3px;
 }
 
-#separator {
-	background-image: url("/public/images/components/bottom-shadow.png");
-	height: 5px;
-	margin: 10px auto;
-}
-
 .removeBtn {
 	width: 16px;
 	height: 16px;

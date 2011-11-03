@@ -99,8 +99,8 @@ function initAutoComplete(rowCtr) {
  */
 function doAutoCompleteAction(rowCtr, item) {
 	$("#item_id_" + rowCtr).val(item.itemDetailId);
-	$("#buyingPrice_" + rowCtr).html(parseFloat(item.buyingPrice).toFixed(2));
-	$("#price_" + rowCtr).val(parseFloat(item.buyingPrice).toFixed(2));
+	$("#buyingPrice_" + rowCtr).html(parseFloat(item.latestBuyingPrice).toFixed(2));
+	$("#price_" + rowCtr).val(parseFloat(item.latestBuyingPrice).toFixed(2));
 	$("#quantity_" + rowCtr).focus();
 }
 
@@ -147,7 +147,7 @@ function computeSubTotal(rowCtr) {
 	}
 	var subTotal = price * quantity - discount;
 	$("#subtotaldisplay_" + rowCtr).html(formatMoney(subTotal));
-	$("#subtotal_" + rowCtr).html(subTotal);
+	$("#subtotal_" + rowCtr).val(subTotal);
 	
 	if ($("#vat_" + rowCtr).prop("checked")) {
 		var subTotalVatable = subTotal / 1.12;
@@ -177,7 +177,8 @@ function resetSubTotal(rowCtr) {
 function computeTotal() {
 	var total = 0;
 	$('input[id*="subtotal_"]').each(function(){
-		total += getFloat($(this).html());
+		total += getFloat($(this).val());
+//		console.log($(this));
 	});
 	var totalVat = 0;
 	$('input[id*="subtotalVat_"]').each(function(){
@@ -338,8 +339,9 @@ function checkForm() {
 		errors.push("Amount paid cannot be greater than the total price.");
 	}
 	
+	console.log(errors);
 	if (errors.length > 0) {
-		errors = errors.unique();
+		errors = $.unique(errors);
 		$("#errors").html("");
 		for (var i = 0; i < errors.length; i++) {
 			 $("#errors").append("<li>" + errors[i] + "</li>");

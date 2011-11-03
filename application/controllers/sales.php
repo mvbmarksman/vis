@@ -16,6 +16,29 @@ class Sales extends MY_Controller
 	{
 		$this->view->addCss('salesform.css');
 		$this->view->addJs('salesform.js');
+		$this->view->addJs('jquery.validate.min.js');
+
+		if ($this->input->post()) {
+			$data = $this->input->post();
+			$customerService = new CustomerService();
+			$customerId = $customerService->saveOrUpdate($data);
+			$data['customerId'] = $customerId;
+
+			$salesTransactionService = new SalesTransactionService();
+			$salesTransactionId = $salesTransactionService->insert($data);
+			$data['salesTransactionId'] = $salesTransactionId;
+
+			$salesService = new SalesService();
+			$salesObjs = $salesService->marshallSales($data);
+			$salesObjs = $salesService->mergeSimilarItems($salesObjs);
+			$totals = $salesService->saveAndComputeTotal($salesObjs);
+			$data['totalPrice'] = $totals['totalPrice'];
+			$data['totalVatable'] = $totals['totalVatable'];
+			$data['totalVat'] = $totals['totalVat'];
+			$salesTransactionService->update($data);
+			$this->load->helper('url');
+			redirect('/sales/summary?transactionId=' . $salesTransactionId, 'refresh');
+		}
 		$this->renderView('salesform', array());
 	}
 
@@ -34,32 +57,6 @@ class Sales extends MY_Controller
 			$items[$key]['value'] = $item['fullname'];
 		}
 		echo json_encode($items);
-	}
-
-	/**
-	 * Sales form handler
-	 */
-	public function processsalesform()
-	{
-		$data = $this->input->post();
-		$customerService = new CustomerService();
-		$customerId = $customerService->saveOrUpdate($data);
-		$data['customerId'] = $customerId;
-
-		$salesTransactionService = new SalesTransactionService();
-		$salesTransactionId = $salesTransactionService->insert($data);
-		$data['salesTransactionId'] = $salesTransactionId;
-
-		$salesService = new SalesService();
-		$salesObjs = $salesService->marshallSales($data);
-		$salesObjs = $salesService->mergeSimilarItems($salesObjs);
-		$totals = $salesService->saveAndComputeTotal($salesObjs);
-		$data['totalPrice'] = $totals['totalPrice'];
-		$data['totalVatable'] = $totals['totalVatable'];
-		$data['totalVat'] = $totals['totalVat'];
-		$salesTransactionService->update($data);
-		$this->load->helper('url');
-		redirect('/sales/summary?transactionId=' . $salesTransactionId, 'refresh');
 	}
 
 
