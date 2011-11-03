@@ -21,7 +21,7 @@
 			<td><?php echo $item['description'] ?></td>
 			<td class="rightAligned"><?php echo formatMoney($item['sellingPrice']) ?></td>
 			<td class="rightAligned"><?php echo $item['qty'] ?></td>
-			<td class="centered"><?php echo $item['discount'] ? formatMoney($item['discount']) : '<span class="grayed">none</span>' ?></td>
+			<td class="centered"><?php echo $item['discount'] ? formatMoney($item['discount']) : '<span class="subtle">none</span>' ?></td>
 			<td class="centered"><img src="/public/images/icons/<?php echo ! empty($item['vatable']) ? "accept.png" : "cross.png" ?>"/></td>
 			<td class="rightAligned"><?php echo formatMoney($item['subTotal']) ?></td>
 		</tr>

@@ -3,9 +3,9 @@ class Sales extends MY_Controller
 {
 	public $services = array(
 		'sales_transaction',
-		'item_detail',
+		'stock',
 		'customer',
-		'sales',
+		'sales'
 	);
 
 	/**
@@ -20,29 +20,19 @@ class Sales extends MY_Controller
 
 		if ($this->input->post()) {
 			$data = $this->input->post();
-			Debug::log($data);
-			// save the customer data
-			$customerService = new CustomerService();
-			$customerId = $customerService->saveOrUpdate($data);
-			$data['customerId'] = $customerId;
+			try {
+				$salesService = new SalesService();
+				$salesTransactionId = $salesService->processSalesForm($data);
 
-			// create a new sales transaction record
-			$salesTransactionService = new SalesTransactionService();
-			$salesTransactionId = $salesTransactionService->insert($data);
-			$data['salesTransactionId'] = $salesTransactionId;
-
-			// save sales items
-			$salesService = new SalesService();
-			$salesObjs = $salesService->marshallSales($data);
-			$salesObjs = $salesService->mergeSimilarItems($salesObjs);
-			$totals = $salesService->saveAndComputeTotal($salesObjs);
-			$data['totalPrice'] = $totals['totalPrice'];
-			$data['totalVatable'] = $totals['totalVatable'];
-			$data['totalVat'] = $totals['totalVat'];
-
-			$salesTransactionService->update($data);
+			} catch (Exception $e) {
+				Debug::log($e->getMessage(), 'error');
+				$this->message->set($e->getMessage(), 'error', TRUE);
+				redirect('/sales/salesform');
+				exit;
+			}
 			$this->load->helper('url');
-			redirect('/sales/summary?transactionId=' . $salesTransactionId, 'refresh');
+			redirect('/sales/summary/' . $salesTransactionId, 'refresh');
+			exit;
 		}
 		$this->renderView('salesform', array());
 	}
@@ -68,10 +58,9 @@ class Sales extends MY_Controller
 	/**
 	 * Builds the data structure that we need for displaying the transaction details
 	 */
-	public function summary()
+	public function summary($salesTransactionId = null)
 	{
 		$this->view->addCss('sales/summary.css');
-		$salesTransactionId = $this->input->get('transactionId');
 		$salesTransactionService = new SalesTransactionService();
 		$transactionDetails = $salesTransactionService->fetchDetailed($salesTransactionId);
 		Debug::log($transactionDetails);

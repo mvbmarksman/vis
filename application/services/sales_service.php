@@ -7,6 +7,47 @@ class SalesService extends MY_Service
 		'sales_transaction'
 	);
 
+	public $services = array(
+		'sales_transaction',
+		'customer',
+		'stock',
+	);
+
+
+	public function processSalesForm($data)
+	{
+		$this->db->trans_begin();
+		$salesTransactionId = null;
+		try {
+			Debug::log($data);
+			$customerService = new CustomerService();
+			$customerId = $customerService->saveOrUpdate($data);
+			$data['customerId'] = $customerId;
+
+			$salesTransactionService = new SalesTransactionService();
+			$salesTransactionId = $salesTransactionService->insert($data);
+			$data['salesTransactionId'] = $salesTransactionId;
+
+			$salesObjs = $this->marshallSales($data);
+			$salesObjs = $this->mergeSimilarItems($salesObjs);
+			$totals = $this->saveAndComputeTotal($salesObjs);
+			$data['totalPrice'] = $totals['totalPrice'];
+			$data['totalVatable'] = $totals['totalVatable'];
+			$data['totalVat'] = $totals['totalVat'];
+
+			Debug::log('removing items from the stocks');
+			$this->removeItemsFromStocks($salesObjs);
+			Debug::log('updating sales transaction data');
+			$salesTransactionService->update($data);
+		} catch (Exception $e) {
+			$this->db->trans_rollback();
+			throw new Exception($e->getMessage());
+		}
+		Debug::log('committing transaction');
+		$this->db->trans_commit();
+		return $salesTransactionId;
+	}
+
 
 	/**
 	 * Instantiates sales objects from the data
@@ -112,5 +153,14 @@ class SalesService extends MY_Service
 			'totalVatable'	=> $totalVatable,
 			'totalVat'		=> $totalVat,
 		);
+	}
+
+	public function removeItemsFromStocks($salesObjs)
+	{
+		$stockService = new StockService();
+		foreach ($salesObjs as $salesObj) {
+			// TODO hardcoded
+			$stockService->removeItemsFromStore($salesObj->itemId, 1, $salesObj->qty);
+		}
 	}
 }

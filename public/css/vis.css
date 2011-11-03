@@ -159,7 +159,6 @@ dl dd {
 .subtle {
 	font-size: 12px;
 	color: #999;
-	font-style: italic;
 }
 
 /******************** summary table ********************/
@@ -184,7 +183,9 @@ dl dd {
 	border: 1px solid silver;
 }
 .summaryTable a {
-	color: #C45002;
+	/*color: #C45002;*/
+	color: #3B5998;
+	text-decoration: none;
 }
 .summaryTable .hiliteRow {
 	background-color: #E4EDF5;

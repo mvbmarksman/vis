@@ -2,24 +2,26 @@
 class Dashboard extends MY_Controller
 {
 	public $services = array(
-		'item',
 		'sales_transaction',
 		'credit',
+		'stock',
 	);
 
 
 	public function index()
 	{
-		$itemService = new ItemService();
-		$itemsLowInStock = $itemService->fetchLowInStock();
+		$stockService = new StockService();
+		$itemsLowInStock = $stockService->fetchLowInStock();
 
-		$recentlyAddedItems = $itemService->fetchRecentlyAdded();
-
-		$salesTransactionService = new SalesTransactionService();
-		$recentSalesTransactions = $salesTransactionService->fetchRecent();
-
-		$creditService = new CreditService();
-		$overdueCredits = $creditService->fetchOverdueCredits();
+//		$recentlyAddedItems = $itemService->fetchRecentlyAdded();
+		$recentlyAddedItems = array();
+		$recentSalesTransactions = array();
+		$overdueCredits = array();
+//		$salesTransactionService = new SalesTransactionService();
+//		$recentSalesTransactions = $salesTransactionService->fetchRecent();
+//
+//		$creditService = new CreditService();
+//		$overdueCredits = $creditService->fetchOverdueCredits();
 
 		$this->view->addCss('dashboard/index.css');
 		$this->renderView('index', array(

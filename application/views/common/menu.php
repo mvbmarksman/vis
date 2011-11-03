@@ -1,13 +1,12 @@
 <ul id="menu">
 	<li>
-		<a href="/dashboard/index">Home</a>
+		<a href="/dashboard/index">Dashboard</a>
 	</li>
 	<li>
 		<a href="#">Sales</a>
 		<ul>
 			<li><a href="/sales/salesform">Sales Form</a></li>
 			<li><a href="/credit_payment/showform">Credit Payment</a></li>
-			<li><a href="http://www.php.net/">Sub Menu</a></li>
 		</ul>
 	</li>
 	<li>
@@ -16,10 +15,8 @@
 			<li><a href="/expense/inventoryexpenseform">Inventory Expense Form</a></li>
 			<li><a href="/expense/inventoryexpenseform/1">New Item Expense Form</a></li>
 			<li><a href="/expense/otherexpenseform">Other Expense Form</a></li>
+			<li><a href="/expense/dailyexpense">Daily Expense Report</a></li>
 		</ul>
-	</li>
-	<li>
-		<a href="/items/transferform">Transfer</a>
 	</li>
 	<li>
 		<a href="#">Reports</a>

@@ -10,13 +10,13 @@ class Stock_model extends MY_Model
 
 	public function _checkArgs()
 	{
-		if (empty($this->itemId)) {
+		if (!isset($this->itemId)) {
 			throw new InvalidArgumentException('ItemId is missing.');
 		}
-		if (empty($this->storeId)) {
+		if (!isset($this->storeId)) {
 			throw new InvalidArgumentException('StoreId is missing.');
 		}
-		if (empty($this->quantity)) {
+		if (!isset($this->quantity)) {
 			throw new InvalidArgumentException('Quantity is missing.');
 		}
 	}
@@ -40,6 +40,21 @@ class Stock_model extends MY_Model
 			'quantity' => $this->quantity,
 		));
 		Debug::log($this->db->last_query());
+	}
+
+	public function fetchByCriteria($where)
+	{
+		if (empty($where)) {
+			throw new InvalidArgumentException('Where condition is required');
+		}
+
+		$this->db->select()
+			->from(self::TBL_NAME)
+			->where($where);
+		$query = $this->db->get();
+		$results = $query->result_array();
+		Debug::log($this->db->last_query());
+		return $results;
 	}
 
 

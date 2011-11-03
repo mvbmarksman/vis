@@ -1,5 +1,5 @@
 <style> .tabular dt { width: 120px } </style>
-
+<?php $this->message->display(); ?>
 <ul id ="errors" style="display:none"></ul>
 
 <h1>

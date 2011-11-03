@@ -11,11 +11,11 @@
 						<ul>
 							<?php foreach ($itemsLowInStock as $item): ?>
 							<li>
-								<a href="/item_detail/view/<?php echo $item['itemDetailId'] ?>">
+								<a href="/item_detail/view/<?php echo $item['itemId'] ?>">
 								<?php echo isset($item['productCode']) ? '[ ' . $item['productCode'] . ' ]' : '' ?>
 								<?php echo isset($item['description']) ? $item['description'] : '' ?></a>,
-								<?php $stockClass = $item['count'] == 0 ? 'high' : 'medium' ?>
-								<span class="<?php echo $stockClass ?>"><?php echo $item['count'] ?> items left in stock.</span>
+								<?php $stockClass = $item['totalQuantity'] == 0 ? 'high' : 'medium' ?>
+								<span class="<?php echo $stockClass ?>"><?php echo $item['totalQuantity'] ?> items left in stock.</span>
 							</li>
 							<?php endforeach; ?>
 						</ul>
@@ -31,7 +31,7 @@
 						<ul>
 							<?php foreach ($recentlyAddedItems as $item): ?>
 							<li>
-								<a href="/item_detail/view/<?php echo $item['itemDetailId'] ?>">
+								<a href="/item_detail/view/<?php echo $item['itemId'] ?>">
 								<?php echo isset($item['productCode']) ? '[ ' . $item['productCode'] . ' ]' : '' ?>
 								<?php echo isset($item['description']) ? $item['description'] : '' ?></a>,
 								<?php echo $item['count']?> items added

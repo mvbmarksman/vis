@@ -38,13 +38,13 @@
 				<td><a href="/item/detail/<?php echo $itemExpense['itemId'] ?>"><?php echo $itemExpense['description'] . ' [ ' . $itemExpense['productCode'] . ' ]' ?></a></td>
 				<td class="rightAligned"><?php echo formatMoney($itemExpense['price']) ?></td>
 				<td class="rightAligned"><?php echo $itemExpense['quantity'] ?></td>
-				<td class="rightAligned"><?php echo $itemExpense['discount'] == 0 ? 'none ' : formatMoney($itemExpense['discount']) ?></td>
+				<td class="rightAligned"><?php echo $itemExpense['discount'] == 0 ? '<span class="subtle">none</span>' : formatMoney($itemExpense['discount']) ?></td>
 				<td class="centered"><?php echo $itemExpense['isCredit'] == 0 ? 'no' : 'yes' ?></td>
 				<td>
 					<?php if (!(empty($itemExpense['name']))): ?>
 						<a href="supplier/detail/<?php echo $itemExpense['supplierId'] ?>"><?php echo $itemExpense['name'] ?></a>
 					<?php else: ?>
-						not provided
+						<span class="subtle">not provided</span>
 					<?php endif; ?>
 				</td>
 				<td class="rightAligned"><?php  echo formatMoney($itemExpense['price'] * $itemExpense['quantity'] - $itemExpense['discount']) ?></td>

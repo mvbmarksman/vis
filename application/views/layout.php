@@ -4,7 +4,8 @@
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
     <meta name="description" content="Inventory system for Vieva Auto Parts." />
     <title>Vieva Auto Parts Inventory System</title>
-    <link href="/public/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+
     <link href="/public/css/reset.css" rel="stylesheet" type="text/css" media="screen"/>
     <link href="/public/css/vis.css" rel="stylesheet" type="text/css" media="screen"/>
     <link href="/public/css/form.css" rel="stylesheet" type="text/css" media="screen"/>
@@ -35,6 +36,7 @@
 <!--	<script type="text/javascript" src="/public/js/thickbox-compressed.js"></script>-->
 
 	<script type="text/javascript" src="/public/js/utils.js"></script>
+	<script type="text/javascript" src="/public/js/commons.js"></script>
 
 	<?php $jsFiles = !isset($jsFiles) ? array() : $jsFiles ?>
     <?php foreach ($jsFiles as $js): ?>

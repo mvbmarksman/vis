@@ -1,10 +1,5 @@
 @CHARSET "UTF-8";
 
-.grayed {
-	color: #999;
-	font-style: italic;
-}
-
 #creditTable {
 	font-size: 12px;
 	margin-top: 5px;
