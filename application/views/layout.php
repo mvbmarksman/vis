@@ -3,7 +3,8 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
     <meta name="description" content="Inventory system for Vieva Auto Parts." />
-    <title>Vieva Auto Parts Inventory System</title><link href="/public/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <title>Vieva Auto Parts Inventory System</title>
+    <link href="/public/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     <link href="/public/css/reset.css" rel="stylesheet" type="text/css" media="screen"/>
     <link href="/public/css/vis.css" rel="stylesheet" type="text/css" media="screen"/>
     <link href="/public/css/form.css" rel="stylesheet" type="text/css" media="screen"/>

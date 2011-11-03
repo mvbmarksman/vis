@@ -14,36 +14,30 @@ class Expense extends MY_Controller
 	/**
 	 * Creates and processes the inventory expense form
 	 */
-	public function inventoryexpenseform()
+	public function inventoryexpenseform($newItemMode = null)
 	{
 		$this->view->addCss('expense/inventoryexpenseform.css');
 		$this->view->addJs('jquery.validate.min.js');
-
 		if ($this->input->post() != null) {
 			$data = $this->input->post();
 			Debug::log($data);
 			try {
-				// save the item data if we're adding a new one
 				$itemService = new ItemService();
 				if ($this->input->post('newItem') == 1) {
 					$data['itemId'] = $itemService->saveItem($data);
 				}
 
-				// save the supplier data if there is one
 				if ($this->input->post('supplier')) {
 					$supplierService = new SupplierService();
 					$data['supplierId'] = $supplierService->saveOrUpdate($data);
 				}
 
-				// create stock data
 				$stockService = new StockService();
 				$stockService->addItemToStore($data['itemId'], 1, $this->input->post('quantity')); // TODO hardcoded storeID
 
-				// create item expense record
 				$itemExpenseService = new ItemExpenseService();
 				$itemExpenseService->saveItemExpense($data);
 
-				// finally update the lastest buying price column
 				$itemService->updateLatestBuyingPrice($data['itemId'], $data['price']);
 
 			} catch (Exception $e) {
@@ -57,7 +51,10 @@ class Expense extends MY_Controller
 		}
 		$itemTypeService = new ItemTypeService();
 		$items = $itemTypeService->fetchAllItems();
-		$this->renderView('inventoryexpenseform', array('itemTypes' => $items));
+		$this->renderView('inventoryexpenseform', array(
+			'itemTypes' 	=> $items,
+			'newItemMode'	=> $newItemMode,
+		));
 	}
 
 
@@ -113,8 +110,6 @@ class Expense extends MY_Controller
 		$itemExpenses = $itemExpenseService->fetchItemExpenses(ItemExpenseService::DAILY, $date);
 		$otherExpenseService = new OtherExpenseService();
 		$otherExpenses = $otherExpenseService->fetchOtherExpenses(OtherExpenseService::DAILY, $date);
-//		Debug::log($itemExpenses);
-//		Debug::log($otherExpenses);
 		$this->renderView('dailyexpense', array(
 			'itemExpenses' 	=> $itemExpenses,
 			'otherExpenses'	=> $otherExpenses,

@@ -1,3 +1,6 @@
+<style>
+	.tabular dt { width: 90px; }
+</style>
 <h1>Transaction Summary</h1>
 <table class="summaryTable">
 	<thead>
@@ -44,24 +47,14 @@
 	</table>
 </div>
 
-<div id="creditContainer">
-	<h2>Customer Information</h2>
-	<table id="creditTable">
-		<tr>
-			<td class="labelCol">Full Name</td>
-			<td><?php echo $item['fullname'] ?></td>
-		</tr>
-		<tr class="even">
-			<td class="labelCol">Address</td>
-			<td><?php echo $item['address'] ?></td>
-		</tr>
-		<tr>
-			<td class="labelCol">Phone No</td>
-			<td><?php echo $item['phoneNo'] ?></td>
-		</tr>
-		<tr class="even">
-			<td class="labelCol">Amount Paid</td>
-			<td><?php echo formatMoney($item['totalAmountPaid']) ?></td>
-		</tr>
-	</table>
-</div>
+<h3>Customer Information</h3>
+<dl class="tabular">
+	<dt><label>Name :</label></dt>
+	<dd><?php echo $item['fullname']; ?></dd>
+	<dt><label>Address :</label></dt>
+	<dd><?php echo $item['address']; ?></dd>
+	<dt><label>Phone No :</label></dt>
+	<dd><?php echo $item['phoneNo'] ?></dd>
+	<dt><label>Amount Paid :</label></dt>
+	<dd><?php echo formatMoney($item['totalAmountPaid']) ?></dd>
+</dl>

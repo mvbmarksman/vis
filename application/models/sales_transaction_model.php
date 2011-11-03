@@ -63,10 +63,10 @@ class Sales_transaction_model extends MY_Model
 
 
 	public function fetchDetailed($transactionId) {
-		$this->db->select('st.*, s.*, id.*, c.*');
+		$this->db->select('st.*, s.*, i.*, c.*');
 		$this->db->from(self::TBL_NAME . ' as st');
 		$this->db->join('Sales as s', 'st.salesTransactionId = s.salesTransactionId');
-		$this->db->join('ItemDetail as id', 'id.itemDetailId = s.itemDetailId');
+		$this->db->join('Item as i', 'i.itemId = s.itemId');
 		$this->db->join('Customer as c', 'c.customerId = st.customerId', 'left');
 		$this->db->where('s.salesTransactionId', $transactionId);
 		$query = $this->db->get();

@@ -16,7 +16,7 @@ class Debug {
 	}
 
 	public static function log($data = array(), $level = null) {
-		$level = empty($level) ? 'debug' : $level;
+		$level = empty($level) ? 'error' : $level;
 		$trace = debug_backtrace();
 		$class = $trace[1]['class'];
 		$method = $trace[1]['function'];

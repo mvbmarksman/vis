@@ -25,7 +25,7 @@ class SalesService extends MY_Service
 		for ($i = 1; $i < count($data['item']); $i++) {
 			$sales = new Sales_model();
 			$sales->salesTransactionId = $data['salesTransactionId'];
-			$sales->itemDetailId = $data['item'][$i];
+			$sales->itemId = $data['item'][$i];
 			$sales->sellingPrice = $data['price'][$i];
 			$sales->discount = $data['discount'][$i];
 			$sales->storeId = 1; // TODO stub data;
@@ -53,10 +53,9 @@ class SalesService extends MY_Service
 			return array();
 		}
 
-		Debug::log('Merging similar items');
 		Debug::log('Sales Objects before merge:');
 		foreach ($salesObjs as $s) {
-			Debug::log($s->__toString());
+			Debug::log($s);
 		}
 
 		for ($i = 0; $i < count($salesObjs); $i++) {
@@ -64,7 +63,7 @@ class SalesService extends MY_Service
 				if ($i == $j || $salesObjs[$i] == null || $salesObjs[$j] == null) {
 					continue;
 				}
-				if ($salesObjs[$i]->itemDetailId == $salesObjs[$j]->itemDetailId
+				if ($salesObjs[$i]->itemId == $salesObjs[$j]->itemId
 					&& empty($salesObjs[$i]->vatable) == empty($salesObjs[$j]->vatable)
 					&& $salesObjs[$i]->sellingPrice == $salesObjs[$j]->sellingPrice) {
 					$salesObjs[$i]->qty += $salesObjs[$j]->qty;
@@ -86,7 +85,7 @@ class SalesService extends MY_Service
 				continue;
 			}
 			$newObjsList[] = $s;
-			Debug::log($s->__toString());
+			Debug::log($s);
 		}
 		return $newObjsList;
 	}
@@ -94,12 +93,11 @@ class SalesService extends MY_Service
 
 	public function saveAndComputeTotal($salesObjs)
 	{
-		Debug::log('SalesService::saveAndCompute');
 		$totalPrice = 0;
 		$totalVatable = 0;
 		$totalVat = 0;
 		foreach ($salesObjs as $sales) {
-			Debug::log($sales->__toString());
+			Debug::log($sales);
 			$sales->insert();
 			$totalPrice += $sales->subTotal;
 			$totalVatable += $sales->vatable;

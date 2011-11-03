@@ -161,3 +161,37 @@ dl dd {
 	color: #999;
 	font-style: italic;
 }
+
+/******************** summary table ********************/
+.summaryTable {
+	font-size: 12px;
+	margin-top: 20px;
+	width: 750px;
+}
+.summaryTable thead tr th { padding: 5px; }
+.summaryTable thead tr {
+	background-color: #6997BF;
+	color: #eee;
+	text-align: center;
+	font-weight: bold;
+}
+.summaryTable tr {
+	color: #333;
+	border: 1px solid silver;
+}
+.summaryTable td, .summaryTable thead th {
+	padding: 3px;
+	border: 1px solid silver;
+}
+.summaryTable a {
+	color: #C45002;
+}
+.summaryTable .hiliteRow {
+	background-color: #E4EDF5;
+}
+/******************** end summary table ****************/
+
+.creditBadge {
+	vertical-align:top; 
+	margin-left: 5px; 
+}

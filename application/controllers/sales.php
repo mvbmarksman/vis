@@ -20,14 +20,18 @@ class Sales extends MY_Controller
 
 		if ($this->input->post()) {
 			$data = $this->input->post();
+			Debug::log($data);
+			// save the customer data
 			$customerService = new CustomerService();
 			$customerId = $customerService->saveOrUpdate($data);
 			$data['customerId'] = $customerId;
 
+			// create a new sales transaction record
 			$salesTransactionService = new SalesTransactionService();
 			$salesTransactionId = $salesTransactionService->insert($data);
 			$data['salesTransactionId'] = $salesTransactionId;
 
+			// save sales items
 			$salesService = new SalesService();
 			$salesObjs = $salesService->marshallSales($data);
 			$salesObjs = $salesService->mergeSimilarItems($salesObjs);
@@ -35,6 +39,7 @@ class Sales extends MY_Controller
 			$data['totalPrice'] = $totals['totalPrice'];
 			$data['totalVatable'] = $totals['totalVatable'];
 			$data['totalVat'] = $totals['totalVat'];
+
 			$salesTransactionService->update($data);
 			$this->load->helper('url');
 			redirect('/sales/summary?transactionId=' . $salesTransactionId, 'refresh');

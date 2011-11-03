@@ -3,7 +3,6 @@
 <style> .tabular dt { width: 100px } </style>
 
 <h1>Inventory Expense Form</h1>
-<span style="float:right"><a href="javascript:renderNewItemForm()">Add an item that's not yet in the inventory</a></span>
 <form name="inventoryForm" id="inventoryForm" action="/expense/inventoryexpenseform" method="POST">
 
 	<div id="section">
@@ -69,7 +68,7 @@
 			</dd>
 		</dl>
 	</div>
-	<input id="newItem" name="newItem" type="hidden" value=""/>
+	<input id="newItem" name="newItem" type="hidden" value="<?php echo !empty($newItemMode) ? '1' : '0' ?>"/>
 	<input id="addAnother" name="addAnother" type="hidden" value=""/>
 </form>
 
@@ -89,6 +88,10 @@
 		initItemSection();
 		initItemAutoCompleteData();
 		initSupplierAutoCompleteData();
+
+		if ($("#newItem").val() == '1') {
+			renderNewItemForm();
+		}
 	});
 
 

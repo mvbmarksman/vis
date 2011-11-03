@@ -13,8 +13,9 @@
 	<li>
 		<a href="#">Expenses</a>
 		<ul>
-			<li><a href="/expense/inventoryexpenseform">Inventory Expenses</a></li>
-			<li><a href="/expense/otherexpenseform">Other Expenses</a></li>
+			<li><a href="/expense/inventoryexpenseform">Inventory Expense Form</a></li>
+			<li><a href="/expense/inventoryexpenseform/1">New Item Expense Form</a></li>
+			<li><a href="/expense/otherexpenseform">Other Expense Form</a></li>
 		</ul>
 	</li>
 	<li>

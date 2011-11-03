@@ -1,6 +1,6 @@
 <style> .tabular dt { width: 120px } </style>
 
-<ul id ="errors"></ul>
+<ul id ="errors" style="display:none"></ul>
 
 <h1>
 	<img src="/public/images/icons/wallet.png" />
@@ -98,10 +98,10 @@
 		</dd>
 		<dt><label>Amount Paid:</label></dt>
 		<dd>
-			<input type="text" id="amountPaid" name="amountPaid" class="longTxt"/>
+			<input type="text" id="amountPaid" name="amountPaid" class="longTxt"/><img class="creditBadge" src="/public/images/icons/iscredit.png"/>
 		</dd>
-		<dt><label>Term:</label></dt>
-		<dd>
+		<dt class="termRow"><label>Term:</label></dt>
+		<dd class="termRow">
 			<select id="term" name="term" class="longSelect">
 					<option value="30">30 days</option>
 					<option value="60">60 days</option>
@@ -110,7 +110,6 @@
 			</select>
 		</dd>
 	</dl>
-
 </form>
 
 <div id="actionsContainer">

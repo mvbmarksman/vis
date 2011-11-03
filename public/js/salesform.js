@@ -11,22 +11,23 @@ $(document).ready(function(){
 	$("#errors").hide();
 	initAutoCompleteData();
 	initCustomerAutoComplete();
-	$("#termRow").hide();
+	$(".termRow").hide();
+	$(".creditBadge").hide();
 	$("#amountPaid").blur(function(){
 		var total = getFloat($("#total").val());
 		var amountPaid = getFloat($("#amountPaid").val());
 		if (isNaN(amountPaid) && total != 0) {
-			$("#termRow").show();
-			$("#creditNotification").show();
+			$(".termRow").show();
+			$(".creditBadge").show();
 		} else if (isNaN(amountPaid) && total == 0) {
-			$("#termRow").hide();
-			$("#creditNotification").hide();
+			$(".termRow").hide();
+			$(".creditBadge").hide();
 		} else if (total != 0 && amountPaid < total) {
-			$("#termRow").show();
-			$("#creditNotification").show();
+			$(".termRow").show();
+			$(".creditBadge").show();
 		} else {
-			$("#termRow").hide();
-			$("#creditNotification").hide();
+			$(".termRow").hide();
+			$(".creditBadge").hide();
 		}
 	});
 	$("#creditNotification").hide();
@@ -98,7 +99,8 @@ function initAutoComplete(rowCtr) {
  * @param item the data container
  */
 function doAutoCompleteAction(rowCtr, item) {
-	$("#item_id_" + rowCtr).val(item.itemDetailId);
+	console.log(item);
+	$("#item_id_" + rowCtr).val(item.itemId);
 	$("#buyingPrice_" + rowCtr).html(parseFloat(item.latestBuyingPrice).toFixed(2));
 	$("#price_" + rowCtr).val(parseFloat(item.latestBuyingPrice).toFixed(2));
 	$("#quantity_" + rowCtr).focus();
@@ -178,7 +180,6 @@ function computeTotal() {
 	var total = 0;
 	$('input[id*="subtotal_"]').each(function(){
 		total += getFloat($(this).val());
-//		console.log($(this));
 	});
 	var totalVat = 0;
 	$('input[id*="subtotalVat_"]').each(function(){
@@ -319,7 +320,6 @@ function checkForm() {
 			errors.push("Quantity must be greater than zero.");
 		}
 	});
-
 	$('[id*="item_"]:visible').each(function(){
 		var item = $(this);
 		if (empty(item.val())) {
@@ -339,7 +339,6 @@ function checkForm() {
 		errors.push("Amount paid cannot be greater than the total price.");
 	}
 	
-	console.log(errors);
 	if (errors.length > 0) {
 		errors = $.unique(errors);
 		$("#errors").html("");
