@@ -65,18 +65,18 @@ class Admin_item_type extends MY_Controller
 	}
 
 
-	/**
-	 * Gets the data for a specific store
-	 * Ajax call
-	 * @return JSON
-	 */
-	public function getstoredata()
-	{
-		$itemTypeId = $this->input->post('itemTypeId');
-		$itemTypeService = new ItemTypeService();
-		$itemTypeData = $itemTypeService->fetchById($itemTypeId);
-		echo json_encode($itemTypeData);
-	}
+//	/**
+//	 * Gets the data for a specific store
+//	 * Ajax call
+//	 * @return JSON
+//	 */
+//	public function getstoredata()
+//	{
+//		$itemTypeId = $this->input->post('itemTypeId');
+//		$itemTypeService = new ItemTypeService();
+//		$itemTypeData = $itemTypeService->fetchById($itemTypeId);
+//		echo json_encode($itemTypeData);
+//	}
 
 
 	public function delete()

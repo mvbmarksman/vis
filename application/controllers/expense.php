@@ -33,7 +33,7 @@ class Expense extends MY_Controller
 				}
 
 				$stockService = new StockService();
-				$stockService->addItemsToStore($data['itemId'], 1, $this->input->post('quantity')); // TODO hardcoded storeID
+				$stockService->addItemsToStock($data['itemId'], $this->input->post('quantity'));
 
 				$itemExpenseService = new ItemExpenseService();
 				$itemExpenseService->saveItemExpense($data);

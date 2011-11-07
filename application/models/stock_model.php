@@ -4,7 +4,6 @@ class Stock_model extends MY_Model
 	const TBL_NAME = 'Stock';
 
 	public $itemId;
-	public $storeId;
 	public $quantity;
 
 
@@ -12,9 +11,6 @@ class Stock_model extends MY_Model
 	{
 		if (!isset($this->itemId)) {
 			throw new InvalidArgumentException('ItemId is missing.');
-		}
-		if (!isset($this->storeId)) {
-			throw new InvalidArgumentException('StoreId is missing.');
 		}
 		if (!isset($this->quantity)) {
 			throw new InvalidArgumentException('Quantity is missing.');
@@ -35,7 +31,6 @@ class Stock_model extends MY_Model
 		Debug::log($this);
 		$this->_checkArgs();
 		$this->db->where('itemId', $this->itemId);
-		$this->db->where('storeId', $this->storeId);
 		$this->db->update(self::TBL_NAME, array(
 			'quantity' => $this->quantity,
 		));

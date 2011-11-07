@@ -9,7 +9,6 @@ class Sales_model extends CI_Model
   	public $sellingPrice;
   	public $qty;
   	public $discount;
-  	public $storeId;
   	public $subTotal;
   	public $vatable;
   	public $vat;
@@ -28,9 +27,6 @@ class Sales_model extends CI_Model
 		}
 		if (empty($this->qty)) {
 			throw new IllegalArgumentsException('Qty is empty.');
-		}
-		if (empty($this->storeId)) {
-			throw new IllegalArgumentsException('StoreId is empty.');
 		}
   	}
 

@@ -11,21 +11,18 @@ class StockService extends MY_Service
 
 
 	/**
-	 * This function checks first if there's already an existing record
-	 * for the item in the store.
+	 * This function checks first if there's already an existing record for the item.
 	 * If there is none, it create a new record,
 	 * otherwise, it merely updates the quantity for that record.
 	 */
-	public function addItemsToStore($itemId, $storeId, $quantity)
+	public function addItemsToStock($itemId, $quantity)
 	{
 		$stock = new Stock_model();
 		$results = $stock->fetchByCriteria(array(
 			'itemId'	=> $itemId,
-			'storeId'	=> $storeId,
 		));
 
 		$stock->itemId = $itemId;
-		$stock->storeId = $storeId;
 		$stock->quantity = $quantity;
 		if (count($results) > 0) {
 			$stock->quantity = (int) $results[0]['quantity'] + $quantity;
@@ -37,26 +34,23 @@ class StockService extends MY_Service
 
 
 	/**
-	 * This function checks that the item exists in the stock
-	 * and that there are enough items.
+	 * This function checks first if the item exists and that there are enough items.
 	 */
-	public function removeItemsFromStore($itemId, $storeId, $quantity)
+	public function removeItemsFromStock($itemId, $quantity)
 	{
 		$stock = new Stock_model();
 		$results = $stock->fetchByCriteria(array(
 			'itemId'	=> $itemId,
-			'storeId'	=> $storeId,
 		));
 		Debug::log('Trying to remove items from the stock');
 		Debug::log($results);
 		if (count($results) == 0) {
-			throw new RecordNotFoundException('Unable to remove item from the store because it does not exist.');
+			throw new RecordNotFoundException('Unable to remove item from the stock because it does not exist.');
 		}
 		if ($results[0]['quantity'] < $quantity) {
 			throw new Exception("Not enough items are available ({$results[0]['quantity']}).");
 		}
 		$stock->itemId = $itemId;
-		$stock->storeId = $storeId;
 		$stock->quantity = (int) $results[0]['quantity'] - $quantity;
 		$stock->updateQuantity();
 	}

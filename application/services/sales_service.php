@@ -69,7 +69,6 @@ class SalesService extends MY_Service
 			$sales->itemId = $data['item'][$i];
 			$sales->sellingPrice = $data['price'][$i];
 			$sales->discount = $data['discount'][$i];
-			$sales->storeId = 1; // TODO stub data;
 			$sales->qty = $data['qty'][$i];
 			$sales->subTotal = $sales->sellingPrice * $sales->qty - $sales->discount;
 			if (!empty($isVAT[$i])) {
@@ -160,7 +159,7 @@ class SalesService extends MY_Service
 		$stockService = new StockService();
 		foreach ($salesObjs as $salesObj) {
 			// TODO hardcoded
-			$stockService->removeItemsFromStore($salesObj->itemId, 1, $salesObj->qty);
+			$stockService->removeItemsFromStock($salesObj->itemId, $salesObj->qty);
 		}
 	}
 }
