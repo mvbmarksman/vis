@@ -5,3 +5,9 @@ function formatMoney($value)
 	$value = round($value, 2);
 	return number_format($value, 2, '.', ',');
 }
+
+
+function formatDate($value)
+{
+	return date('m-d-Y g:i:s a', strtotime($value));
+}

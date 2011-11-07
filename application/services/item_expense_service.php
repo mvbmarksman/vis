@@ -5,6 +5,7 @@ class ItemExpenseService extends MY_Service
 	const DAILY = 1;
 	const MONTHLY = 2;
 
+	const BUYING_PRICES_LIMIT = 10;
 
 	public $models = array(
 		'item_expense',
@@ -46,5 +47,23 @@ class ItemExpenseService extends MY_Service
 		return $results;
 	}
 
+
+	public function fetchBuyingPricesForItem($itemId)
+	{
+		if (!$itemId) {
+			throw new InvalidArgumentException('ItemId must be supplied.');
+		}
+		$this->db->select('ie.*, s.name as supplierName')
+			->from('ItemExpense ie')
+			->join('Supplier s', 'ie.supplierId = s.supplierId', 'left')
+			->where('ie.itemId', (int) $itemId)
+			->group_by(array('ie.supplierId', 'ie.price'))
+			->order_by('dateAdded', 'desc')
+			->limit(self::BUYING_PRICES_LIMIT);
+		$query = $this->db->get();
+		$results = $query->result_array();
+		Debug::log($this->db->last_query());
+		return $results;
+	}
 
 }

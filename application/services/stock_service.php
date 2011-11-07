@@ -27,7 +27,7 @@ class StockService extends MY_Service
 		$stock->itemId = $itemId;
 		$stock->storeId = $storeId;
 		$stock->quantity = $quantity;
-		if (count($results()) > 0) {
+		if (count($results) > 0) {
 			$stock->quantity = (int) $results[0]['quantity'] + $quantity;
 			$stock->updateQuantity();
 		} else {
@@ -53,7 +53,7 @@ class StockService extends MY_Service
 			throw new RecordNotFoundException('Unable to remove item from the store because it does not exist.');
 		}
 		if ($results[0]['quantity'] < $quantity) {
-			throw new Exception('Unable to remove item from the store because there are not enough items available.');
+			throw new Exception("Not enough items are available ({$results[0]['quantity']}).");
 		}
 		$stock->itemId = $itemId;
 		$stock->storeId = $storeId;

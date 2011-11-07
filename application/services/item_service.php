@@ -28,6 +28,26 @@ class ItemService extends MY_Service
 		return $items;
 	}
 
+
+	public function fetchDetailed($itemId)
+	{
+		if (empty($itemId)) {
+			throw new InvalidArgumentException('ItemId must not be empty.');
+		}
+		$this->db->select('i.*, it.*, s.*, sum(s.quantity) as totalQuantity')
+			->from('Item i')
+			->join('ItemType it', 'i.itemTypeId = it.itemTypeId')
+			->join('Stock s', 's.itemId = i.itemId', 'left')
+			->where('i.itemId', (int) $itemId)
+			->group_by('s.itemId')
+			->limit(1);
+		$query = $this->db->get();
+		Debug::log($this->db->last_query());
+		$results = $query->row_array();
+		return $results;
+
+	}
+
 	public function saveItem($data)
 	{
 		$item = new Item_model();

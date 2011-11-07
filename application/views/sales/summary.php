@@ -52,9 +52,9 @@
 	<dt><label>Name :</label></dt>
 	<dd><?php echo $item['fullname']; ?></dd>
 	<dt><label>Address :</label></dt>
-	<dd><?php echo $item['address']; ?></dd>
+	<dd><?php echo !empty($item['address']) ? $item['address'] : "<span class='subtle'>none provided</span>"; ?></dd>
 	<dt><label>Phone No :</label></dt>
-	<dd><?php echo $item['phoneNo'] ?></dd>
+	<dd><?php echo !empty($item['phoneNo']) ? $item['phoneNo'] :  "<span class='subtle'>none provided</span>" ?></dd>
 	<dt><label>Amount Paid :</label></dt>
 	<dd><?php echo formatMoney($item['totalAmountPaid']) ?></dd>
 </dl>

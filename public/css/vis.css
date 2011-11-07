@@ -164,7 +164,7 @@ dl dd {
 /******************** summary table ********************/
 .summaryTable {
 	font-size: 12px;
-	margin-top: 20px;
+	margin-top: 5px;
 	width: 750px;
 }
 .summaryTable thead tr th { padding: 5px; }

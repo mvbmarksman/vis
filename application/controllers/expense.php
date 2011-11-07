@@ -78,7 +78,14 @@ class Expense extends MY_Controller
 	{
 		if ($this->input->post('addAnother') == 1) {
 			$this->message->set('Successfully added item and expense record.', 'success', TRUE);
-			redirect($this->uri->uri_string());
+			Debug::log('add another detected');
+			$url = $this->uri->uri_string();
+			if ($this->input->post('newItem') == 1) {
+				Debug::log('new item mode detected');
+				$url .= '/1';	// set to newItemMode
+			}
+			Debug::log($url);
+			redirect($url);
 			exit;
 		} else {
 			redirect('/expense/dailyexpense');

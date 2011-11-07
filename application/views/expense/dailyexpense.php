@@ -35,7 +35,7 @@
 				$total += $subTotal;
 			?>
 			<tr class="<?php echo $ctr % 2 == 0 ? 'hiliteRow' : ''?>">
-				<td><a href="/item/detail/<?php echo $itemExpense['itemId'] ?>"><?php echo $itemExpense['description'] . ' [ ' . $itemExpense['productCode'] . ' ]' ?></a></td>
+				<td><a href="/item/view/<?php echo $itemExpense['itemId'] ?>"><?php echo $itemExpense['description'] . ' [ ' . $itemExpense['productCode'] . ' ]' ?></a></td>
 				<td class="rightAligned"><?php echo formatMoney($itemExpense['price']) ?></td>
 				<td class="rightAligned"><?php echo $itemExpense['quantity'] ?></td>
 				<td class="rightAligned"><?php echo $itemExpense['discount'] == 0 ? '<span class="subtle">none</span>' : formatMoney($itemExpense['discount']) ?></td>
@@ -65,7 +65,6 @@
 				<th>Description</th>
 				<th width="70px">Price</th>
 				<th width="200px">Payee</th>
-				<th width="10px">Credit</th>
 				<th width="100px">Subtotal</th>
 			</tr>
 		</thead>
@@ -81,7 +80,6 @@
 				<td><?php echo $otherExpense['description']?></td>
 				<td class="rightAligned"><?php echo formatMoney($otherExpense['price']) ?></td>
 				<td><?php echo $otherExpense['payee'] ?></td>
-				<td class="centered"><?php echo $otherExpense['isCredit'] == 0 ? 'no' : 'yes' ?></td>
 				<td class="rightAligned"><?php  echo formatMoney($subTotal) ?></td>
 			</tr>
 			<?php endforeach; ?>
