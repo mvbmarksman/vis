@@ -13,6 +13,7 @@ class Sales_transaction_model extends MY_Model
 	public $isFullyPaid;
 	public $isCredit;
 	public $creditTerm;
+	public $dueDate;
 
 
 	public function insert()
@@ -20,8 +21,7 @@ class Sales_transaction_model extends MY_Model
 		if (empty($this->userId)) {
 			throw new InvalidArgumentException('UserId is empty.');
 		}
-		Debug::log('Sales_transaction_model::insert');
-		Debug::log($this->__toString());
+		Debug::log($this);
 		$this->db->insert(self::TBL_NAME, $this);
 		return $this->db->insert_id();
 	}

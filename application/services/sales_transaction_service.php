@@ -43,6 +43,11 @@ class SalesTransactionService extends MY_Service
 			$salesTransaction->creditTerm = $data['term'];
 			$this->_insertCreditPayment($data);
 		}
+		if (!empty($salesTransaction->isCredit)) {
+			$now= date('Y-m-d');
+			$dueDate = date('Y-m-d', strtotime(date('Y-m-d', strtotime($now)) . " +{$salesTransaction->creditTerm} day"));
+			$salesTransaction->dueDate = $dueDate;
+		}
 		$salesTransaction->update();
 	}
 
