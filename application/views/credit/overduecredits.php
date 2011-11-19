@@ -11,9 +11,9 @@
 	<table class="summaryTable">
 		<thead>
 			<tr>
-				<th width="70px">ID</th>
+				<th width="40px">ID</th>
 				<th>Customer</th>
-				<th width="70px">Due Date</th>
+				<th width="60px">Due Date</th>
 				<th width="90px">Total Amount</th>
 				<th width="90px">Amount Paid</th>
 				<th width="90px">Collectibles</th>
@@ -27,9 +27,11 @@
 				$ctr++;
 			?>
 			<tr class="<?php echo $ctr % 2 == 0 ? 'hiliteRow' : ''?>">
-				<td><?php echo $credit['salesTransactionId'] ?></td>
+				<td class="rightAligned">
+					<a href="/sales/summary/<?php echo $credit['salesTransactionId'] ?>"><?php echo $credit['salesTransactionId'] ?></a>
+				</td>
 				<td><?php echo $credit['fullname'] ?></td>
-				<td><?php echo $credit['dueDate'] ?></td>
+				<td class="centered"><?php echo $credit['dueDate'] ?></td>
 				<td class="rightAligned"><?php echo formatMoney($credit['totalPrice']) ?></td>
 				<td class="rightAligned"><?php echo formatMoney($credit['totalAmountPaid']) ?></td>
 				<td class="rightAligned"><?php echo formatMoney($credit['totalPrice'] - $credit['totalAmountPaid']) ?></td>
@@ -43,5 +45,4 @@
 			<?php endif; ?>
 		</tbody>
 	</table>
-
 </div>

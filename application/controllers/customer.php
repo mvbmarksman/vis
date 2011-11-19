@@ -1,12 +1,21 @@
 <?php
 class Customer extends MY_Controller
 {
-	public $models = array(
-		'customer_model',
+	public $services = array(
+		'customer'
 	);
 
-	public $libs = array(
-		'view',
-	);
+
+	public function view($customerId)
+	{
+		$customerDetails = null;
+		if (!empty($customerId)) {
+			$customerService = new CustomerService();
+			$customerDetails = $customerService->fetchDetails($customerId);
+		}
+		$this->renderView('view', array(
+			'customer'	=> $customerDetails,
+		));
+	}
 
 }
