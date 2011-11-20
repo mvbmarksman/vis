@@ -12,6 +12,10 @@ class Customer_model extends MY_Model
 		$this->setName('Customer');
 	}
 
+
+
+
+	#######
 	public function insert() {
 		Debug::log('Customer_model::insert');
 		Debug::log($this->__toString());
@@ -21,6 +25,7 @@ class Customer_model extends MY_Model
 		$this->db->insert($this->_name, $this);
 		return $this->db->insert_id();
 	}
+
 
 
 	public function update()
@@ -85,19 +90,6 @@ class Customer_model extends MY_Model
 		return $this->db->count_all_results();
 	}
 
-
-	public function fetchById($customerId)
-	{
-		Debug::log('Customer Model::fetchById');
-		if (empty($customerId)) {
-			throw new InvalidArgumentException('CustomerId cannot be null.');
-		}
-		$sql = 'SELECT * FROM '.$this->_name.' WHERE customerId = ?';
-		$query = $this->db->query($sql, array($customerId));
-		Debug::log($this->db->last_query());
-		$results = $query->result_array();
-		return $results[0];
-	}
 
 
 	public function delete($customerIds)

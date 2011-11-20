@@ -6,7 +6,6 @@
 		<a href="#">Sales</a>
 		<ul>
 			<li><a href="/sales/salesform">Sales Form</a></li>
-			<li><a href="/credit_payment/showform">Credit Payment</a></li>
 		</ul>
 	</li>
 	<li>
@@ -16,6 +15,13 @@
 			<li><a href="/expense/inventoryexpenseform/1">New Item Expense Form</a></li>
 			<li><a href="/expense/otherexpenseform">Other Expense Form</a></li>
 			<li><a href="/expense/dailyexpense">Daily Expense Report</a></li>
+		</ul>
+	</li>
+	<li>
+		<a href="#">Credits</a>
+		<ul>
+			<li><a href="/credit/overduecredits">Overdue Credits</a></li>
+			<li><a href="/credit_payment/showform">Credit Payment</a></li>
 		</ul>
 	</li>
 	<li>

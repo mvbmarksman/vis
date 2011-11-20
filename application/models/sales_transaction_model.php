@@ -11,6 +11,7 @@ class Sales_transaction_model extends MY_Model
 	public $isFullyPaid;
 	public $isCredit;
 	public $creditTerm;
+	public $dueDate;
 
 
 	public function __construct()

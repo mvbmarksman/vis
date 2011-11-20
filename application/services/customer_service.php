@@ -5,12 +5,29 @@ class CustomerService extends MY_Service
 		'customer',
 	);
 
+
 	public function fetchAllItems()
 	{
 		$customer = new Customer_model();
 		$results = $customer->fetchAll();
 		return $results;
 	}
+
+
+	public function fetchCustomersWithCredit()
+	{
+		$customer = new Customer_model();
+		$customers = $customer->fetchCustomersWithCredit();
+		return $customers;
+	}
+
+
+	public function fetchByCriteria($criteria)
+	{
+		$customer = new Customer_model();
+		return $customer->fetchByCriteria($criteria);
+	}
+
 
 	public function saveOrUpdate($data)
 	{
@@ -28,34 +45,6 @@ class CustomerService extends MY_Service
 		}
 		$customerId = $customer->insert();
 		return $customerId;
-	}
-
-	public function fetchCustomersWithCredit()
-	{
-		$customer = new Customer_model();
-		$customers = $customer->fetchCustomersWithCredit();
-		return $customers;
-	}
-
-	public function fetchCriteriaBased($criteria)
-	{
-		$customer = new Customer_model();
-		$customers = $customer->fetchCriteriaBased($criteria);
-		return $customers;
-	}
-
-	public function fetchCountCriteriaBased($criteria)
-	{
-		$customer = new Customer_model();
-		$count = $customer->fetchCountCriteriaBased($criteria);
-		return $count;
-	}
-
-	public function fetchById($customerId)
-	{
-		$customer = new Customer_model();
-		$customerData = $customer->fetchById($customerId);
-		return $customerData;
 	}
 
 

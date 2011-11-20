@@ -28,13 +28,6 @@
     <script type="text/javascript" src="/public/js/flexigrid/js/flexigrid.js"></script>
 	<link rel="stylesheet" type="text/css" href="/public/js/flexigrid/css/flexigrid.css" />
 
-	<!-- jquery autocomplete -->
-<!--	<link rel="stylesheet" type="text/css" href="/public/css/jquery.autocomplete.css" />-->
-<!--	<script type="text/javascript" src="/public/js/jquery.ajaxQueue.js"></script>-->
-<!--	<script type="text/javascript" src="/public/js/jquery.autocomplete.min.js"></script>-->
-<!--	<script type="text/javascript" src="/public/js/jquery.bgiframe.min.js"></script>-->
-<!--	<script type="text/javascript" src="/public/js/thickbox-compressed.js"></script>-->
-
 	<script type="text/javascript" src="/public/js/utils.js"></script>
 	<script type="text/javascript" src="/public/js/commons.js"></script>
 
@@ -62,9 +55,7 @@
       <div id="content">
 		<?php $content->render() ?>
       </div>
-<!--      <div id="footer" class="clear">-->
-<!--      	Footer-->
-<!--      </div>-->
+      <div id="footer" class="clear"></div>
     </div>
   </body>
 </html>

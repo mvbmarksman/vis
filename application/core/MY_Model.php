@@ -46,4 +46,13 @@ class MY_Model extends CI_Model
 		Debug::log($this->db->last_query());
 		return $query->result_array();
 	}
+
+	public function fetchById($customerId)
+	{
+		if (empty($customerId)) {
+			return null;
+		}
+		$query = $this->db->get_where($this->_name, array('customerId' => (int) $customerId));
+		return $query->row_array();
+	}
 }

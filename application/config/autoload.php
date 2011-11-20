@@ -62,7 +62,7 @@ $autoload['libraries'] = array('Debug', 'CustomLoader', 'view', 'message');
 |	$autoload['helper'] = array('url', 'file');
 */
 
-$autoload['helper'] = array('my_number', 'url');
+$autoload['helper'] = array('my_number', 'url', 'my_html');
 
 
 /*
