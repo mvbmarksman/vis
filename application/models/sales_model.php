@@ -1,5 +1,5 @@
 <?php
-class Sales_model extends CI_Model
+class Sales_model extends My_Model
 {
 	public $salesId;
   	public $salesTransactionId;
@@ -19,7 +19,7 @@ class Sales_model extends CI_Model
 	}
 
 
-  	private function _checkArgs()
+  	protected function _checkArgs()
   	{
   		if (empty($this->salesTransactionId)) {
 			throw new IllegalArgumentsException('SalesTransactionId is empty.');
