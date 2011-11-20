@@ -2,12 +2,10 @@
 class Expense extends MY_Controller
 {
 	public $services = array(
-		'supplier',
 		'item_type',
-		'item',
-		'stock',
+		'category',
 		'item_expense',
-		'other_expense'
+		'other_expense',
 	);
 
 
@@ -18,41 +16,29 @@ class Expense extends MY_Controller
 	{
 		$this->view->addCss('expense/inventoryexpenseform.css');
 		$this->view->addJs('jquery.validate.min.js');
+		$itemTypes = array();
+		$categories = array();
 		if ($this->input->post() != null) {
 			$data = $this->input->post();
 			Debug::log($data);
 			try {
-				$itemService = new ItemService();
-				if ($this->input->post('newItem') == 1) {
-					$data['itemId'] = $itemService->saveItem($data);
-				}
-
-				if ($this->input->post('supplier')) {
-					$supplierService = new SupplierService();
-					$data['supplierId'] = $supplierService->saveOrUpdate($data);
-				}
-
-				$stockService = new StockService();
-				$stockService->addItemsToStock($data['itemId'], $this->input->post('quantity'));
-
 				$itemExpenseService = new ItemExpenseService();
-				$itemExpenseService->saveItemExpense($data);
-
-				$itemService->updateLatestBuyingPrice($data['itemId'], $data['price']);
-
+				$itemExpenseService->processItemExpenseForm($data);
 			} catch (Exception $e) {
 				Debug::log($e->getMessage(), 'error');
-				$error = $e->getMessage();
-				$this->message->set($error, 'error', TRUE);
-				redirect('/expense/inventoryexpenseform');
-				exit;
+				$this->_showErrorMessageAndRedirect($e->getMessage());
 			}
 			$this->_showMessageAndRedirect();
+		} else {
+			$itemTypeService = new ItemTypeService();
+			$itemTypes = $itemTypeService->fetchAllItems();
+			$categoryService = new CategoryService();
+			$categories = $categoryService->fetchAll();
 		}
-		$itemTypeService = new ItemTypeService();
-		$items = $itemTypeService->fetchAllItems();
+
 		$this->renderView('inventoryexpenseform', array(
-			'itemTypes' 	=> $items,
+			'itemTypes' 	=> $itemTypes,
+			'categories'	=> $categories,
 			'newItemMode'	=> $newItemMode,
 		));
 	}
@@ -78,10 +64,9 @@ class Expense extends MY_Controller
 	{
 		if ($this->input->post('addAnother') == 1) {
 			$this->message->set('Successfully added item and expense record.', 'success', TRUE);
-			Debug::log('add another detected');
 			$url = $this->uri->uri_string();
+
 			if ($this->input->post('newItem') == 1) {
-				Debug::log('new item mode detected');
 				$url .= '/1';	// set to newItemMode
 			}
 			Debug::log($url);
@@ -91,6 +76,17 @@ class Expense extends MY_Controller
 			redirect('/expense/dailyexpense');
 			exit;
 		}
+	}
+
+	private function _showErrorMessageAndRedirect($message)
+	{
+		$this->message->set($message, 'error', TRUE);
+		$url = '/expense/inventoryexpenseform';
+		if ($this->input->post('newItem') == 1) {
+			$url .= '/1'; 		// set to newItemMode
+		}
+		redirect($url);
+		exit;
 	}
 
 

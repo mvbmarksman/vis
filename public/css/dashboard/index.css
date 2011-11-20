@@ -1,6 +1,7 @@
 @CHARSET "UTF-8";
 
-#dashboard-section { margin-top: 20px }
+/* #dashboard-section { margin-top: 20px } */
+#dateSection { text-align:right; margin-top: 15px; margin-bottom: 10px; font-weight: bold; }
 .dashboard-subsection { margin-bottom: 20px }
 .dashboard-subsection .dashboard-left { clear: both; }
 #dashboard-section h2 {
@@ -32,7 +33,7 @@
 	line-height: 15px;
 }
 
-.dashboard-subsection-content a { color: #3B5998; text-decoration: none }
+.dashboard-subsection a { color: #3B5998; text-decoration: none }
 
 .dashboard-subsection-content ul li { padding: 5px 0; }
 .dashboard-subsection-content .high { /* color: #D60027 */ color: #C45002; font-weight: bold}
@@ -55,3 +56,6 @@
 	color: #999;
 	margin-left: 5px;	
 }
+
+.joinedRows { border: none !important; }
+.joinedRows td { padding: 5px !important; }

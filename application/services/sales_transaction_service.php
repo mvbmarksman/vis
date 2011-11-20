@@ -2,8 +2,6 @@
 class SalesTransactionService extends MY_Service
 {
 
-	const RECENT_DAY_THRESHOLD = 5;
-
 	public $models = array(
 		'sales_transaction',
 		'credit_payment',
@@ -70,9 +68,15 @@ class SalesTransactionService extends MY_Service
 	}
 
 
-	public function fetchRecent()
+	public function fetchTotalSales($date)
 	{
-		$salesTransaction = new Sales_transaction_model();
-		return $salesTransaction->fetchRecent(self::RECENT_DAY_THRESHOLD);
+		$this->db->select('SUM(totalPrice) as total')
+			->from('SalesTransaction')
+			->where('DATE(date)', $date);
+		$query = $this->db->get();
+		Debug::log($this->db->last_query());
+		$result = $query->row_array();
+		return $result['total'];
+
 	}
 }

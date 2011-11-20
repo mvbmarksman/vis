@@ -13,7 +13,7 @@
 		<thead>
 			<tr>
 				<th>Item</th>
-				<th width="100px">Buying Price</th>
+				<th width="100px">Suggested Price</th>
 				<th width="100px">Selling Price</th>
 				<th width="20px">Qty</th>
 				<th width="50px">Discount</th>
@@ -30,7 +30,7 @@
 					<input type="hidden" id="item_id_-rowCtr-" name="item[]"/>
 				</td>
 				<td>
-					<span id="buyingPrice_-rowCtr-"></span>
+					<span id="suggestedSellingPrice_-rowCtr-"></span>
 				</td>
 				<td>
 					<input type="text" id="price_-rowCtr-" name="price[]" class="mediumTxt rightAligned"/>

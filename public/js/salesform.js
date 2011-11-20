@@ -89,7 +89,7 @@ function initAutoComplete(rowCtr) {
 				$("#item_" + rowCtr).val(null);
 				$("#item_id_" + rowCtr).val(null);
 				$("#price_" + rowCtr).val(null);
-				$("#buyingPrice_" + rowCtr).html(null);
+				$("#suggestedSellingPrice_" + rowCtr).html(null);
 			}
 		}		
 	});
@@ -103,8 +103,8 @@ function initAutoComplete(rowCtr) {
 function doAutoCompleteAction(rowCtr, item) {
 	console.log(item);
 	$("#item_id_" + rowCtr).val(item.itemId);
-	$("#buyingPrice_" + rowCtr).html(parseFloat(item.latestBuyingPrice).toFixed(2));
-	$("#price_" + rowCtr).val(parseFloat(item.latestBuyingPrice).toFixed(2));
+	$("#suggestedSellingPrice_" + rowCtr).html(parseFloat(item.suggestedSellingPrice).toFixed(2));
+	$("#price_" + rowCtr).val(parseFloat(item.suggestedSellingPrice).toFixed(2));
 	$("#quantity_" + rowCtr).focus();
 }
 

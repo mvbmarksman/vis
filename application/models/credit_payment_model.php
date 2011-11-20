@@ -1,13 +1,18 @@
 <?php
 class Credit_payment_model extends CI_Model
 {
-	const TBL_NAME = 'CreditPayment';
-
 	public $creditPaymentId;
 	public $customerId;
 	public $salesTransactionId;
 	public $datePaid;
 	public $amount;
+
+
+	public function __construct()
+	{
+		parent::__construct();
+		$this->setName('CreditPayment');
+	}
 
 
 	public function insert()
@@ -18,7 +23,7 @@ class Credit_payment_model extends CI_Model
 		if (empty($this->salesTransactionId)) {
 			throw new InvalidArgumentException('SalesTransactionId is empty.');
 		}
-		$this->db->insert(self::TBL_NAME, $this);
+		$this->db->insert($this->_name, $this);
 		return $this->db->insert_id();
 	}
 
@@ -30,13 +35,13 @@ class Credit_payment_model extends CI_Model
 		}
 		$creditPaymentId = $this->creditPaymentId;
 		unset($this->creditPaymentId);
-		$this->db->update(self::TBL_NAME, $this, array('creditPaymentId' => $creditPaymentId));
+		$this->db->update($this->_name, $this, array('creditPaymentId' => $creditPaymentId));
 		return $creditPaymentId;
 	}
 
 //	public function getpaymentdetails($creditDetailId){
 //		$this->db->select();
-//		$this->db->from(self::TBL_NAME);
+//		$this->db->from($this->_name);
 //		$this->db->where('creditDetailId', $creditDetailId);
 //		$query = $this->db->get();
 //		$result = $query->result_array();

@@ -1,16 +1,21 @@
 <?php
 class Item_type_model extends MY_Model
 {
-	const TBL_NAME = 'ItemType';
-
 	public $itemTypeId;
 	public $name;
+
+
+	public function __construct()
+	{
+		parent::__construct();
+		$this->setName('ItemType');
+	}
 
 	public function insert() {
 		if (empty($this->name)) {
 			throw new InvalidArgumentException('Item Type Name is empty.');
 		}
-		$this->db->insert(self::TBL_NAME, $this);
+		$this->db->insert($this->_name, $this);
 		return $this->db->insert_id();
 	}
 
@@ -22,7 +27,7 @@ class Item_type_model extends MY_Model
 		}
 		$itemTypeId = $this->itemTypeId;
 		unset($this->itemTypeId);
-		$this->db->update(self::TBL_NAME, $this, array('itemTypeId' => $itemTypeId));
+		$this->db->update($this->_name, $this, array('itemTypeId' => $itemTypeId));
 		return $itemTypeId;
 	}
 
@@ -30,7 +35,7 @@ class Item_type_model extends MY_Model
 	public function fetchAll()
 	{
 		$this->db->select();
-		$this->db->from(self::TBL_NAME);
+		$this->db->from($this->_name);
 		$query = $this->db->get();
 		$results = $query->result_array();
 		return $results;
@@ -39,7 +44,7 @@ class Item_type_model extends MY_Model
 	public function fetchCriteriaBased($criteria)
 	{
 		$this->db->select();
-		$this->db->from(self::TBL_NAME . ' as c');
+		$this->db->from($this->_name . ' as c');
 		if ($criteria->searchKey) {
 			$this->db->where("$criteria->searchField = '$criteria->searchKey'");
 		}
@@ -53,7 +58,7 @@ class Item_type_model extends MY_Model
 	public function fetchCountCriteriaBased($criteria)
 	{
 		$this->db->select();
-		$this->db->from(self::TBL_NAME . ' as c');
+		$this->db->from($this->_name . ' as c');
 		if ($criteria->searchKey) {
 			$this->db->where("$criteria->searchField = '$criteria->searchKey'");
 		}
@@ -66,7 +71,7 @@ class Item_type_model extends MY_Model
 		if (empty($itemTypeId)) {
 			throw new InvalidArgumentException('ItemTypeId cannot be null.');
 		}
-		$sql = 'SELECT * FROM '.self::TBL_NAME.' WHERE itemTypeId = ?';
+		$sql = 'SELECT * FROM '.$this->_name.' WHERE itemTypeId = ?';
 		$query = $this->db->query($sql, array($itemTypeId));
 		$results = $query->result_array();
 		return $results[0];
@@ -78,7 +83,7 @@ class Item_type_model extends MY_Model
 		if (empty($itemTypeIds)) {
 			throw new InvalidArgumentException('Must specify itemTypeIds to delete.');
 		}
-		$sql = 'DELETE FROM '.self::TBL_NAME.' WHERE itemTypeId IN (?)';
+		$sql = 'DELETE FROM '.$this->_name.' WHERE itemTypeId IN (?)';
 		$query = $this->db->query($sql, array($itemTypeIds));
 	}
 

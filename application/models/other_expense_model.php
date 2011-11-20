@@ -1,11 +1,16 @@
 <?php
 class Other_expense_model extends MY_Model
 {
-	const TBL_NAME = 'OtherExpense';
-
 	public $description;
 	public $price;
 	public $payee;
+
+
+	public function __construct()
+	{
+		parent::__construct();
+		$this->setName('OtherExpense');
+	}
 
 	public function _checkArgs()
 	{
@@ -23,7 +28,7 @@ class Other_expense_model extends MY_Model
 	public function insert() {
 		Debug::log($this);
 		$this->_checkArgs();
-		$this->db->insert(self::TBL_NAME, $this);
+		$this->db->insert($this->_name, $this);
 		Debug::log($this->db->last_query());
 		return $this->db->insert_id();
 	}

@@ -8,9 +8,9 @@
 	<dl class="tabular">
 		<dt>Description:</dt><dd><?php echo $item['description'] ?></dd>
 		<dt>Product Code:</dt><dd><?php echo $item['productCode'] ?></dd>
-		<dt>Item Type:</dt><dd><?php echo $item['name'] ?></dd>
-		<dt>Used:</dt><dd><?php echo $item['isUsed'] ? 'yes' : 'no' ?></dd>
-		<dt>Latest Buying Price:</dt><dd><?php echo formatMoney($item['latestBuyingPrice']) ?></dd>
+		<dt>Category:</dt><dd><?php echo $item['categoryName'] ?></dd>
+		<dt>Item Type:</dt><dd><?php echo $item['itemTypeName'] ?></dd>
+		<dt>Suggested Price:</dt><dd><?php echo formatMoney($item['suggestedSellingPrice']) ?></dd>
 		<dt>Items in Stock:</dt><dd><?php echo $item['totalQuantity'] ?></dd>
 	</dl>
 

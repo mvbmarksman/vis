@@ -2,19 +2,9 @@
 class ItemService extends MY_Service
 {
 
-	const RECENT_ITEMS_LIMIT = 5;
-	const RECENT_DAY_THRESHOLD = 5;
-
 	public $models = array(
 		'item',
 	);
-
-
-	public function fetchRecentlyAdded()
-	{
-		$item = new Item_model();
-		return $item->fetchRecentlyAdded(self::RECENT_DAY_THRESHOLD);
-	}
 
 
 	public function fetchItemsForAutocomplete()
@@ -34,13 +24,14 @@ class ItemService extends MY_Service
 		if (empty($itemId)) {
 			throw new InvalidArgumentException('ItemId must not be empty.');
 		}
-		$this->db->select('i.*, it.*, s.*, sum(s.quantity) as totalQuantity')
-			->from('Item i')
-			->join('ItemType it', 'i.itemTypeId = it.itemTypeId')
-			->join('Stock s', 's.itemId = i.itemId', 'left')
-			->where('i.itemId', (int) $itemId)
-			->group_by('s.itemId')
-			->limit(1);
+		$this->db->select('i.*, it.*, s.*, c.*, sum(s.quantity) as totalQuantity')
+		->from('Item i')
+		->join('ItemType it', 'i.itemTypeId = it.itemTypeId')
+		->join('Category c', 'c.categoryId = i.categoryId', 'left')
+		->join('Stock s', 's.itemId = i.itemId', 'left')
+		->where('i.itemId', (int) $itemId)
+		->group_by('s.itemId')
+		->limit(1);
 		$query = $this->db->get();
 		Debug::log($this->db->last_query());
 		$results = $query->row_array();
@@ -53,20 +44,37 @@ class ItemService extends MY_Service
 		$item = new Item_model();
 		$item->productCode = $data['productCode'];
 		$item->description = $data['itemName'];
-		$item->itemTypeId = $data['itemType'];
-		$item->isUsed = !empty($data['isUsed']) ? 1 : 0;
-		$item->latestBuyingPrice = $data['price'];
+		$item->itemTypeId = $data['itemTypeId'];
+		$item->categoryId = $data['categoryId'];
+		$item->suggestedSellingPrice = $data['price'];
 		$item->active = 1;
+
+		$query = $this->db->get_where('Item', array('productCode' => $data['productCode']));
+		if ($query->num_rows() > 0) {
+			throw new DuplicateRecordException('The product code ' . $data['productCode'] . ' already exists.');
+		}
 		return $item->insert();
 	}
 
-	public function updateLatestBuyingPrice($itemId, $latestBuyingPrice)
+
+
+	public function updateSuggestedSellingPrice($itemId, $suggestedSellingPrice, $force = false)
 	{
-		if (empty($itemId) || empty($latestBuyingPrice)) {
+		if (empty($itemId) || empty($suggestedSellingPrice)) {
 			throw new InvalidArgumentException('Required paramters are missing.');
 		}
+		if (!$force) {
+			// do not update if the field already has a value
+			$item = new Item_model();
+			$item = $item->fetchByCriteria(array('itemId' => $itemId));
+			$item = array_pop($item);
+			if (!empty($item['suggestedSellingPrice'])) {
+				Debug::log('Suggested selling price is already populated, skipping update.');
+				return;
+			}
+		}
 		$this->db->where('itemId', $itemId);
-		$this->db->update('Item', array('latestBuyingPrice' => $latestBuyingPrice));
+		$this->db->update('Item', array('suggestedSellingPrice' => $suggestedSellingPrice));
 		Debug::log($this->db->last_query());
 	}
 

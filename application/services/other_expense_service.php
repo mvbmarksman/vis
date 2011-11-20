@@ -38,4 +38,16 @@ class OtherExpenseService extends MY_Service
 		return $results;
 	}
 
+
+	public function getTotalExpense($date)
+	{
+		$this->db->select('SUM(price) as total')
+			->from('OtherExpense')
+			->where('DATE(dateAdded)', $date);
+		$query = $this->db->get();
+		Debug::log($this->db->last_query());
+		$result = $query->row_array();
+		return $result['total'];
+	}
+
 }

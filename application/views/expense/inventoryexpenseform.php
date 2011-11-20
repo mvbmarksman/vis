@@ -24,19 +24,23 @@
 				<input type="text" id="productCode" name="productCode" class="longTxt"/>
 			</dd>
 
-			<dt class="itemType"><label>Item Type<em>*</em>:</label></dt>
-			<dd class="itemType">
-				<select id="itemType" name="itemType">
-					<?php foreach ($itemTypes as $itemType): ?>
-					<option value="<?php echo $itemType['itemTypeId'] ?>"> <?php echo $itemType['name'] ?></option>
+			<dt class="category"><label>Category<em>*</em>:</label></dt>
+			<dd class="category">
+				<select id="category" name="categoryId">
+					<?php foreach ($categories as $category): ?>
+					<option value="<?php echo $category['categoryId'] ?>"><?php echo $category['categoryName'] ?></option>
 					<?php endforeach; ?>
 				</select>
 			</dd>
-			<dt class="isUsed"><label>Is Used :</label></dt>
-			<dd class="isUsed">
-				<input type="checkbox" id="isUsed" name="isUsed" value="1"/>
-			</dd>
 
+			<dt class="itemType"><label>Item Type<em>*</em>:</label></dt>
+			<dd class="itemType">
+				<select id="itemType" name="itemTypeId">
+					<?php foreach ($itemTypes as $itemType): ?>
+					<option value="<?php echo $itemType['itemTypeId'] ?>"><?php echo $itemType['itemTypeName'] ?></option>
+					<?php endforeach; ?>
+				</select>
+			</dd>
 			<dt><label>Price<em>*</em>:</label></dt>
 			<dd>
 				<input type="text" id="price" name="price" class="longTxt"/>
@@ -99,6 +103,7 @@
 	{
 		$(".productCode").hide();
 		$(".itemType").hide();
+		$(".category").hide();
 		$(".itemName").hide();
 		$(".isUsed").hide();
 	}
@@ -169,6 +174,7 @@
 		$(".itemName").show();
 		$(".productCode").show();
 		$(".itemType").show();
+		$(".category").show();
 		$(".isUsed").show();
 	}
 
@@ -182,11 +188,11 @@
 				itemName: 		{ required: "#newItem:filled" },
 				productCode:	{ required: "#newItem:filled" },
 				itemType: 		{ required: "#newItem:filled" },
+				category: 		{ required: "#newItem:filled" },
 				price: 			{ required: true, number: true },
 				quantity: 		{ required: true, number: true },
 				discount: 		{ required: false, number: true }
 			}
 		});
 	}
-
 </script>

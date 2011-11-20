@@ -11,6 +11,10 @@ em {
 	font-style: italic;
 }
 
+strong {
+	font-weight: bold;
+}
+
 #wrapper {
 	width: 980px;
 	overflow: hidden;

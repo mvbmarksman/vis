@@ -1,23 +1,22 @@
 <?php
-class Supplier_model extends CI_Model
+class Supplier_model extends MY_Model
 {
 	public $supplierId;
 	public $name;
 	public $address;
 
-	const TBL_NAME = 'Supplier';
 
 	public function __construct()
 	{
-		$this->load->database();
 		parent::__construct();
+		$this->setName('Supplier');
 	}
 
 
 	public function fetchAll()
 	{
 		$this->db->select();
-		$this->db->from(self::TBL_NAME);
+		$this->db->from($this->_name);
 		$resultSet = $this->db->get();
 		Debug::log($this->db->last_query());
 		return $resultSet->result_array();
@@ -29,7 +28,7 @@ class Supplier_model extends CI_Model
 		if (empty($this->name)) {
 			throw new InvalidArgumentException('Supplier name cannot be null.');
 		}
-		$this->db->insert(self::TBL_NAME, $this);
+		$this->db->insert($this->_name, $this);
 		Debug::log($this->db->last_query());
 		return $this->db->insert_id();
 	}
@@ -43,7 +42,7 @@ class Supplier_model extends CI_Model
 		}
 		$supplierId = $this->supplierId;
 		unset($this->supplierId);
-		$this->db->update(self::TBL_NAME, $this, array('supplierId' => $supplierId));
+		$this->db->update($this->_name, $this, array('supplierId' => $supplierId));
 		Debug::log($this->db->last_query());
 		return $supplierId;
 	}

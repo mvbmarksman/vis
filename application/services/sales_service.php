@@ -43,7 +43,6 @@ class SalesService extends MY_Service
 			$this->db->trans_rollback();
 			throw new Exception($e->getMessage());
 		}
-		Debug::log('committing transaction');
 		$this->db->trans_commit();
 		return $salesTransactionId;
 	}

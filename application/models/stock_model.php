@@ -1,10 +1,15 @@
 <?php
 class Stock_model extends MY_Model
 {
-	const TBL_NAME = 'Stock';
-
 	public $itemId;
 	public $quantity;
+
+
+	public function __construct()
+	{
+		parent::__construct();
+		$this->setName('Stock');
+	}
 
 
 	public function _checkArgs()
@@ -21,7 +26,7 @@ class Stock_model extends MY_Model
 	{
 		Debug::log($this);
 		$this->_checkArgs();
-		$this->db->insert(self::TBL_NAME, $this);
+		$this->db->insert($this->_name, $this);
 		Debug::log($this->db->last_query());
 		return $this->db->insert_id();
 	}
@@ -31,7 +36,7 @@ class Stock_model extends MY_Model
 		Debug::log($this);
 		$this->_checkArgs();
 		$this->db->where('itemId', $this->itemId);
-		$this->db->update(self::TBL_NAME, array(
+		$this->db->update($this->_name, array(
 			'quantity' => $this->quantity,
 		));
 		Debug::log($this->db->last_query());
@@ -43,8 +48,8 @@ class Stock_model extends MY_Model
 			throw new InvalidArgumentException('Where condition is required');
 		}
 
-		$this->db->select()
-			->from(self::TBL_NAME)
+		$this->db->select('*')
+			->from($this->_name)
 			->where($where);
 		$query = $this->db->get();
 		$results = $query->result_array();

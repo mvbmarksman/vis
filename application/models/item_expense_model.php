@@ -1,8 +1,6 @@
 <?php
 class Item_expense_model extends MY_Model
 {
-	const TBL_NAME = 'ItemExpense';
-
 	public $itemId;
 	public $price;
 	public $quantity;
@@ -11,6 +9,12 @@ class Item_expense_model extends MY_Model
 	public $isCredit;
 	public $isFullyPaid;
 	public $userId;
+
+	public function __construct()
+	{
+		parent::__construct();
+		$this->setName('ItemExpense');
+	}
 
 
 	public function _checkArgs()
@@ -35,7 +39,7 @@ class Item_expense_model extends MY_Model
 	public function insert() {
 		Debug::log($this);
 		$this->_checkArgs();
-		$this->db->insert(self::TBL_NAME, $this);
+		$this->db->insert($this->_name, $this);
 		Debug::log($this->db->last_query());
 		return $this->db->insert_id();
 	}

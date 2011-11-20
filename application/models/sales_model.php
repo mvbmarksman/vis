@@ -1,8 +1,6 @@
 <?php
 class Sales_model extends CI_Model
 {
-	const TBL_NAME = 'Sales';
-
 	public $salesId;
   	public $salesTransactionId;
   	public $itemId;
@@ -12,6 +10,13 @@ class Sales_model extends CI_Model
   	public $subTotal;
   	public $vatable;
   	public $vat;
+
+
+	public function __construct()
+	{
+		parent::__construct();
+		$this->setName('Sales');
+	}
 
 
   	private function _checkArgs()
@@ -35,7 +40,7 @@ class Sales_model extends CI_Model
 	{
 		Debug::log($this);
 		$this->_checkArgs();
-		$this->db->insert(self::TBL_NAME, $this);
+		$this->db->insert($this->_name, $this);
 		return $this->db->insert_id();
 	}
 

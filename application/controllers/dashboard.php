@@ -2,9 +2,11 @@
 class Dashboard extends MY_Controller
 {
 	public $services = array(
-		'sales_transaction',
-		'credit',
 		'stock',
+		'sales_transaction',
+		'item_expense',
+		'other_expense',
+		'credit',
 	);
 
 
@@ -12,24 +14,36 @@ class Dashboard extends MY_Controller
 	{
 		$stockService = new StockService();
 		$itemsLowInStock = $stockService->fetchLowInStock();
-
-//		$recentlyAddedItems = $itemService->fetchRecentlyAdded();
-		$recentlyAddedItems = array();
-		$recentSalesTransactions = array();
+		$currentDate = date('Y-m-d');
+		$totalExpenses = $this->_getTotalExpense($currentDate);
+		$totalSales = 0;
 		$overdueCredits = array();
-//		$salesTransactionService = new SalesTransactionService();
-//		$recentSalesTransactions = $salesTransactionService->fetchRecent();
-//
+
+		$salesTransactionService = new SalesTransactionService();
+		$totalSales = $salesTransactionService->fetchTotalSales($currentDate);
+
 //		$creditService = new CreditService();
 //		$overdueCredits = $creditService->fetchOverdueCredits();
 
 		$this->view->addCss('dashboard/index.css');
 		$this->renderView('index', array(
-			'itemsLowInStock'			=> $itemsLowInStock,
-			'recentlyAddedItems'		=> $recentlyAddedItems,
-			'recentSalesTransactions'	=> $recentSalesTransactions,
-			'overdueCredits'			=> $overdueCredits,
+			'itemsLowInStock'		=> $itemsLowInStock,
+			'totalExpenses'			=> $totalExpenses,
+			'totalSales'			=> $totalSales,
+			'overdueCredits'		=> array(),
 		));
+	}
+
+
+	private function _getTotalExpense($currentDate)
+	{
+		$itemExpenseService = new ItemExpenseService();
+		$totalItemExpense = $itemExpenseService->getTotalExpense($currentDate);
+
+		$otherExpenseService = new OtherExpenseService();
+		$totalOtherExpense = $otherExpenseService->getTotalExpense($currentDate);
+
+		return $totalItemExpense + $totalOtherExpense;
 	}
 
 

@@ -11,6 +11,12 @@ class ItemExpenseService extends MY_Service
 		'item_expense',
 	);
 
+	public $services = array(
+		'supplier',
+		'item',
+		'stock',
+	);
+
 
 	public function saveItemExpense($data)
 	{
@@ -64,6 +70,45 @@ class ItemExpenseService extends MY_Service
 		$results = $query->result_array();
 		Debug::log($this->db->last_query());
 		return $results;
+	}
+
+	public function processItemExpenseForm($data)
+	{
+		$this->db->trans_begin();
+		try {
+			$itemService = new ItemService();
+			if ($data['newItem'] == 1) {
+				$data['itemId'] = $itemService->saveItem($data);
+			}
+
+			if ($data['supplier']) {
+				$supplierService = new SupplierService();
+				$data['supplierId'] = $supplierService->saveOrUpdate($data);
+			}
+
+			$stockService = new StockService();
+			$stockService->addItemsToStock($data['itemId'], $data['quantity']);
+			$itemExpenseService = new ItemExpenseService();
+			$itemExpenseService->saveItemExpense($data);
+			$itemService->updateSuggestedSellingPrice($data['itemId'], $data['price']);
+
+		} catch (Exception $e) {
+			$this->db->trans_rollback();
+			throw new Exception($e->getMessage());
+		}
+		$this->db->trans_commit();
+	}
+
+
+	public function getTotalExpense($date)
+	{
+		$this->db->select('SUM(price * quantity - discount) as total')
+			->from('ItemExpense')
+			->where('DATE(dateAdded)', $date);
+		$query = $this->db->get();
+		Debug::log($this->db->last_query());
+		$result = $query->row_array();
+		return $result['total'];
 	}
 
 }

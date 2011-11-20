@@ -1,13 +1,16 @@
 <?php
 class Customer_model extends MY_Model
 {
-	const TBL_NAME = 'Customer';
-
 	public $customerId;
 	public $fullname;
 	public $address;
 	public $phoneNo;
 
+	public function __construct()
+	{
+		parent::__construct();
+		$this->setName('Customer');
+	}
 
 	public function insert() {
 		Debug::log('Customer_model::insert');
@@ -15,7 +18,7 @@ class Customer_model extends MY_Model
 		if (empty($this->fullname)) {
 			throw new InvalidArgumentException('Full name is empty.');
 		}
-		$this->db->insert(self::TBL_NAME, $this);
+		$this->db->insert($this->_name, $this);
 		return $this->db->insert_id();
 	}
 
@@ -30,7 +33,7 @@ class Customer_model extends MY_Model
 
 		$customerId = $this->customerId;
 		unset($this->customerId);
-		$this->db->update(self::TBL_NAME, $this, array('customerId' => $customerId));
+		$this->db->update($this->_name, $this, array('customerId' => $customerId));
 		return $customerId;
 	}
 
@@ -38,7 +41,7 @@ class Customer_model extends MY_Model
 	public function fetchAll()
 	{
 		$this->db->select();
-		$this->db->from(self::TBL_NAME);
+		$this->db->from($this->_name);
 		$query = $this->db->get();
 		$results = $query->result_array();
 		return $results;
@@ -48,7 +51,7 @@ class Customer_model extends MY_Model
 	public function fetchCustomersWithCredit()
 	{
 		$this->db->select('c.customerId, c.fullname')
-			->from(self::TBL_NAME . ' as c')
+			->from($this->_name . ' as c')
 			->join('SalesTransaction st', 'c.customerId = st.customerId')
 			->where('st.isCredit = 1 and st.isFullyPaid =0')
 			->group_by('st.customerId');
@@ -61,7 +64,7 @@ class Customer_model extends MY_Model
 	public function fetchCriteriaBased($criteria)
 	{
 		$this->db->select();
-		$this->db->from(self::TBL_NAME . ' as c');
+		$this->db->from($this->_name . ' as c');
 		if ($criteria->searchKey) {
 			$this->db->where("$criteria->searchField = '$criteria->searchKey'");
 		}
@@ -75,7 +78,7 @@ class Customer_model extends MY_Model
 	public function fetchCountCriteriaBased($criteria)
 	{
 		$this->db->select();
-		$this->db->from(self::TBL_NAME . ' as c');
+		$this->db->from($this->_name . ' as c');
 		if ($criteria->searchKey) {
 			$this->db->where("$criteria->searchField = '$criteria->searchKey'");
 		}
@@ -89,7 +92,7 @@ class Customer_model extends MY_Model
 		if (empty($customerId)) {
 			throw new InvalidArgumentException('CustomerId cannot be null.');
 		}
-		$sql = 'SELECT * FROM '.self::TBL_NAME.' WHERE customerId = ?';
+		$sql = 'SELECT * FROM '.$this->_name.' WHERE customerId = ?';
 		$query = $this->db->query($sql, array($customerId));
 		Debug::log($this->db->last_query());
 		$results = $query->result_array();
@@ -102,7 +105,7 @@ class Customer_model extends MY_Model
 		if (empty($customerIds)) {
 			throw new InvalidArgumentException('Must specify customerIds to delete.');
 		}
-		$sql = 'DELETE FROM '.self::TBL_NAME.' WHERE customerId IN (?)';
+		$sql = 'DELETE FROM ' . $this->_name . ' WHERE customerId IN (?)';
 		$query = $this->db->query($sql, array($customerIds));
 	}
 
