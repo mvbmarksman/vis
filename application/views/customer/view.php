@@ -50,7 +50,7 @@
 					<?php endforeach ?>
 					<?php endif ?>
 				</table>
-				<div style="float: right; font-weight: bold; margin-top: 5px; margin-right: 20px"><a href="#">record a payment</a></div>
+				<div style="float: right; font-weight: bold; margin-top: 5px; margin-right: 20px"><a href="/credit/creditpaymentform/<?php echo $credit['salesTransactionId'] ?>">Record a Payment</a></div>
 				<div style="clear: both;"></div>
 			</li>
 		<?php endforeach ?>

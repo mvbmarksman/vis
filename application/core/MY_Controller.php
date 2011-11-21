@@ -54,7 +54,6 @@ class MY_Controller extends CI_Controller {
 		$this->view->layout = 'layout';
 		$this->view->load('menu', 'common/menu', array());
 		$this->view->load('search', 'common/search', array());
-
 		if (substr($template, 0, 1) != '/') {
 			$template = $this->_controllerName . '/' . $template;
 		}

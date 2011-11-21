@@ -38,8 +38,7 @@ class Sales_transaction_model extends MY_Model
 		if (empty($this->salesTransactionId)) {
 			throw new InvalidArgumentException('SalesTransactionId cannot be empty.');
 		}
-		Debug::log('Sales_transaction_model::update');
-		Debug::log($this->__toString());
+		Debug::log($this);
 		$salesTransactionId = $this->salesTransactionId;
 		unset($this->salesTransactionId);
 		$this->db->update($this->_name, $this, array('salesTransactionId' => $salesTransactionId));

@@ -16,7 +16,7 @@
 				<th width="60px">Due Date</th>
 				<th width="90px">Total Amount</th>
 				<th width="90px">Amount Paid</th>
-				<th width="90px">Collectibles</th>
+				<th width="90px">Balance</th>
 				<th>Actions</th>
 			</tr>
 		</thead>
@@ -35,7 +35,7 @@
 				<td class="rightAligned"><?php echo formatMoney($credit['totalPrice']) ?></td>
 				<td class="rightAligned"><?php echo formatMoney($credit['totalAmountPaid']) ?></td>
 				<td class="rightAligned"><?php echo formatMoney($credit['totalPrice'] - $credit['totalAmountPaid']) ?></td>
-				<td class="centered">Settle</td>
+				<td class="centered"><a href="/credit/creditpaymentform/<?php echo $credit['salesTransactionId'] ?>">Record a Payment</a></td>
 			</tr>
 			<?php endforeach; ?>
 			<?php if (count($overdueCredits) == 0): ?>
@@ -46,3 +46,4 @@
 		</tbody>
 	</table>
 </div>
+

@@ -3,6 +3,8 @@ class CreditService extends MY_Service
 {
 
 	public $models = array(
+		'credit_payment',
+		'sales_transaction',
 	);
 
 
@@ -56,6 +58,41 @@ class CreditService extends MY_Service
 
 		$query = $this->db->get();
 		return $query->result_array();
+	}
+
+
+	public function addCreditPayment($data)
+	{
+		$this->db->trans_begin();
+		try {
+			$salesTransactionModel = new Sales_transaction_model();
+			$salesTransaction = $salesTransactionModel->fetchById($data['salesTransactionId']);
+			$updatedPaidAmount = (float) $data['amount'] + (float) $salesTransaction['totalAmountPaid'];
+
+			if ($updatedPaidAmount > $salesTransaction['totalPrice']) {
+				throw new Exception('Amount paid will exceed total transaction amount.');
+			}
+
+			$creditPaymentModel = new Credit_payment_model();
+			$creditPaymentModel->customerId = $data['customerId'];
+			$creditPaymentModel->salesTransactionId = $data['salesTransactionId'];
+			$creditPaymentModel->amount = $data['amount'];
+			$creditPaymentModel->insert();
+
+			$updateData = array(
+				'totalAmountPaid' => $updatedPaidAmount,
+			);
+			if ($updatedPaidAmount == $salesTransaction['totalPrice']) {
+				$updateData['isFullyPaid'] = 1;
+			}
+			$this->db->where('salesTransactionId', $data['salesTransactionId']);
+			$this->db->update('SalesTransaction', $updateData);
+
+		} catch (Exception $e) {
+			$this->db->trans_rollback();
+			throw new Exception($e->getMessage());
+		}
+		$this->db->trans_commit();
 	}
 
 }

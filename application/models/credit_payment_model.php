@@ -4,7 +4,6 @@ class Credit_payment_model extends MY_Model
 	public $creditPaymentId;
 	public $customerId;
 	public $salesTransactionId;
-	public $datePaid;
 	public $amount;
 
 
@@ -15,7 +14,7 @@ class Credit_payment_model extends MY_Model
 	}
 
 
-	public function insert()
+	protected function _checkArgs()
 	{
 		if (empty($this->customerId)) {
 			throw new InvalidArgumentException('CustomerId is empty.');
@@ -23,6 +22,21 @@ class Credit_payment_model extends MY_Model
 		if (empty($this->salesTransactionId)) {
 			throw new InvalidArgumentException('SalesTransactionId is empty.');
 		}
+		if (empty($this->amount)) {
+			throw new InvalidArgumentException('Amount is empty.');
+		}
+		if ($this->amount <= 0) {
+			throw new InvalidArgumentException('Amount must be greater than 0.');
+		}
+		if (!is_numeric($this->amount)) {
+			throw new InvalidArgumentException('Amount should be numeric.');
+		}
+	}
+
+
+	public function insert()
+	{
+		$this->_checkArgs();
 		$this->db->insert($this->_name, $this);
 		return $this->db->insert_id();
 	}

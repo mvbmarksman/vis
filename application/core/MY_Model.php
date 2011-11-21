@@ -47,12 +47,14 @@ class MY_Model extends CI_Model
 		return $query->result_array();
 	}
 
-	public function fetchById($customerId)
+	public function fetchById($id)
 	{
-		if (empty($customerId)) {
+		if (empty($id)) {
 			return null;
 		}
-		$query = $this->db->get_where($this->_name, array('customerId' => (int) $customerId));
+		$idCol = lcfirst($this->_name) . 'Id';
+		$query = $this->db->get_where($this->_name, array($idCol => (int) $id));
+		Debug::log($this->db->last_query());
 		return $query->row_array();
 	}
 }
