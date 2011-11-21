@@ -6,11 +6,12 @@ class Credit extends MY_Controller
 	);
 
 
-	public function overduecredits()
+	public function listcredits()
 	{
+		$this->view->addJs('jquery.cookie.js');
 		$creditService = new CreditService();
-		$overdueCredits = $creditService->fetchOverdueList();
-		$this->renderView('overduecredits', array('overdueCredits' => $overdueCredits));
+		$credits = $creditService->fetchOverdueList(); 		// TODO
+		$this->renderView('listcredits', array('credits' => $credits));
 	}
 
 

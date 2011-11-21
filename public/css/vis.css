@@ -24,7 +24,6 @@ strong {
 #header {
 	height: 65px;
 	background-color: #004F94;
-	/*border: 1px solid orange;*/
 }
 
 #header h1 {
@@ -77,14 +76,13 @@ strong {
 }
 
 #content h1 {
-	/* border-bottom: 1px solid silver; */
-    color: #C45002;
+    /* color: #C45002; */
+    color: #004F94;
     font-family: Arial;
     font-size: 18px;
     font-weight: bold;
     letter-spacing: 0.5px;
     margin: 5px 0;
-    /* padding-bottom: 4px; */
 }
 
 #content h1 img {
@@ -108,7 +106,8 @@ strong {
 
 #content h3 { 
    font-weight: bold; 
-   color: #004F94;
+   /* color: #004F94; */
+   color: #C45002;
    margin: 5px 0px;
    border-bottom: 1px dotted silver;
    padding-bottom: 4px;
