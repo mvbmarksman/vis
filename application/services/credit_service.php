@@ -1,6 +1,9 @@
 <?php
 class CreditService extends MY_Service
 {
+        const FILTER_ACTIVE = 'active';
+        const FILTER_PAID = 'paid';
+        const FILTER_OVERDUE = 'overdue';
 
 	public $models = array(
 		'credit_payment',
@@ -8,15 +11,36 @@ class CreditService extends MY_Service
 	);
 
 
-	public function fetchOverdueList()
+	public function fetchCreditList($showFilter = self::FILTER_ACTIVE, $fromDate = null, $toDate = null)
 	{
-		// overdue if currentDate > dueDate
 		$this->db->select('st.*, c.*')
 			->from('SalesTransaction st')
 			->join('Customer c', 'c.customerId=st.customerId', 'left')
-			->where('CURDATE() > st.dueDate')
-			->where('isCredit = 1')
-			->where('isFullyPaid = 0');
+                        ->where('isCredit = 1');
+
+                switch ($showFilter) {
+                    case self::FILTER_PAID:
+                        $this->db->where('isFullyPaid = 1');
+                        break;
+                    case self::FILTER_OVERDUE:
+                        $this->db->where('CURDATE() > st.dueDate');
+                    default:
+                        $this->db->where('isFullyPaid = 0');
+                        break;
+                }
+
+                if (!empty($fromDate) && !empty($toDate)) {
+                    $this->db->where('DATE(st.transactionDate) >= ', $fromDate);
+                    $this->db->where('DATE(st.transactionDate) <= ', $toDate);
+
+                } elseif (!empty($fromDate) && empty($toDate)) {
+                    $this->db->where('DATE(st.transactionDate) >= ', $fromDate);
+                    $this->db->where('DATE(st.transactionDate) <= ', date('Y-m-d'));
+
+                } elseif (empty($fromDate) && !empty($toDate)) {
+                    $this->db->where('DATE(st.transactionDate) <= ', $toDate);
+                }
+
 		$query = $this->db->get();
 		Debug::log($this->db->last_query());
 		return $query->result_array();

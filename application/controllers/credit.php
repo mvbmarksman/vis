@@ -8,11 +8,56 @@ class Credit extends MY_Controller
 
 	public function listcredits()
 	{
-		$this->view->addJs('jquery.cookie.js');
-		$creditService = new CreditService();
-		$credits = $creditService->fetchOverdueList(); 		// TODO
-		$this->renderView('listcredits', array('credits' => $credits));
+                $showFilter = $this->_getAndStoreFilter('showFilter');
+                $fromDate = $this->_getAndStoreFilter('fromDate');
+                $toDate = $this->_getAndStoreFilter('toDate');
+
+                $creditService = new CreditService();
+                $credits = $creditService->fetchCreditList(
+                    $showFilter,
+                    $fromDate,
+                    $toDate
+                );
+
+		$this->renderView('listcredits', array(
+                    'credits' => $credits,
+                    'showFilter' => $showFilter,
+                    'fromDate' => $fromDate,
+                    'toDate' => $toDate,
+
+                ));
 	}
+
+
+        /**
+         * Try to get the value from the input.
+         * If found, update the value in the cookie.
+         * Otherwise try to get the value from the cookie.
+         * If still unsuccessful, returns null.
+         */
+        private function _getAndStoreFilter($name)
+        {
+            $val = $this->input->get($name);
+            if (!empty($val)) {
+                Debug::log($name);
+                Debug::log('input parameter found. setting cookie');
+                $cookie = array(
+                    'name'   => $name,
+                    'value'  => $val,
+                    'expire' => 604800, // 1 week
+                    'host' => 'local.vis.com',
+                    'path'   => '/',
+                    'prefix' => 'filter_',
+                );
+                $this->input->set_cookie($cookie);
+                return $val;
+            } else {
+                $val = $this->input->cookie('filter_' . $name);
+                if (!empty($val)) {
+                    return $val;
+                }
+            }
+        }
 
 
 	public function creditpaymentform($salesTransactionId = null)
@@ -53,7 +98,7 @@ class Credit extends MY_Controller
 			redirect($url);
 			exit;
 		}
-		redirect('/credit/overduecredits');
+		redirect('/credit/listcredits');
 		exit;
 	}
 }

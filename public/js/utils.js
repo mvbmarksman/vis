@@ -50,3 +50,17 @@ function getIdsForDelete(formObj, name)
 	return ids.join(",");
 }
 
+
+function setCookie(c_name,value,exdays)
+{
+    var exdate=new Date();
+    exdate.setDate(exdate.getDate() + exdays);
+    var c_value=escape(value) + ((exdays==null) ? "" : "; expires="+exdate.toUTCString()) + "; path=/";
+    document.cookie=c_name + "=" + c_value;
+}
+
+function deleteCookie(c_name)
+{
+    setCookie(c_name, '');
+}
+

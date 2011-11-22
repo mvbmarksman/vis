@@ -38,26 +38,26 @@
 
 </style>
 
-<h1>Credits</h1>
+<h1>Credit List</h1>
 
 <div id="filterContainer">
 	<h1>Filters</h1>
-		<form action="/credit/listcredits/" method="GET">
+		<form action="/credit/listcredits/" method="GET" id="filterForm">
 			<div id="filterBody">
 				<div style="margin: 5px 7px">
 					<label>Show</label>
 					<select id="showFilter" name="showFilter" style="width: 130px">
-						<option value="active">Active Credits</option>
-						<option value="overdue">Overdue</option>
-						<option value="paid">Fully Paid</option>
+						<option value="active" <?php echo $showFilter == 'active' ? 'selected="selected"' : '' ?>>Active Credits</option>
+						<option value="overdue" <?php echo $showFilter == 'overdue' ? 'selected="selected"' : '' ?>>Overdue</option>
+						<option value="paid" <?php echo $showFilter == 'paid' ? 'selected="selected"' : '' ?>>Fully Paid</option>
 					</select>
 					<span style="margin-left: 15px">
 						<label>From</label>
-						<input type="text" class="mediumTxt" id="fromDate" name="fromDate" />
+						<input type="text" class="mediumTxt" id="fromDate" name="fromDate" value="<?echo $fromDate ?>"/>
 					</span>
 					<span style="margin-left: 15px">
 						<label>To</label>
-						<input type="text" class="mediumTxt" id="toDate" name="toDate" />
+						<input type="text" class="mediumTxt" id="toDate" name="toDate" value="<?echo $toDate ?>" />
 					</span>
 				</div>
 				<div id="actions">
@@ -74,11 +74,12 @@
 			<tr>
 				<th width="40px">ID</th>
 				<th>Customer</th>
-				<th width="60px">Due Date</th>
-				<th width="90px">Total Amount</th>
-				<th width="90px">Amount Paid</th>
-				<th width="90px">Balance</th>
-				<th>Actions</th>
+				<th width="60px">Transaction Date</th>
+                                <th width="60px">Due Date</th>
+				<th width="60px">Total Amount</th>
+				<th width="60px">Amount Paid</th>
+				<th width="60px">Balance</th>
+				<th width="80px">Actions</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -92,11 +93,12 @@
 					<a href="/sales/summary/<?php echo $credit['salesTransactionId'] ?>"><?php echo $credit['salesTransactionId'] ?></a>
 				</td>
 				<td><a href="/customer/view/<?php echo $credit['customerId'] ?>"><?php echo $credit['fullname'] ?></a></td>
-				<td class="centered"><?php echo $credit['dueDate'] ?></td>
+				<td class="centered"><?php echo date('Y-m-d', strtotime($credit['transactionDate'])) ?></td>
+                                <td class="centered"><?php echo $credit['dueDate'] ?></td>
 				<td class="rightAligned"><?php echo formatMoney($credit['totalPrice']) ?></td>
 				<td class="rightAligned"><?php echo formatMoney($credit['totalAmountPaid']) ?></td>
 				<td class="rightAligned"><?php echo formatMoney($credit['totalPrice'] - $credit['totalAmountPaid']) ?></td>
-				<td class="centered"><a href="/credit/creditpaymentform/<?php echo $credit['salesTransactionId'] ?>">Record a Payment</a></td>
+				<td class="centered"><a href="/credit/creditpaymentform/<?php echo $credit['salesTransactionId'] ?>">Add Payment</a></td>
 			</tr>
 			<?php endforeach; ?>
 			<?php if (count($credits) == 0): ?>
@@ -110,7 +112,7 @@
 
 <script type="text/javascript">
 	$(document).ready(function(){
-		$("#filterContent").hide();
+		$("#filterBody").hide();
 		$("#filterContainer h1").click(function(){
 			$("#filterBody").slideToggle();
 		});
@@ -128,9 +130,9 @@
 		$("#showFilter").val("active");
 		$("#fromDate").val("");
 		$("#toDate").val("");
-		$.cookie('showFilter', null);
-		$.cookie('fromDate', null);
-		$.cookie('toDate', null);
+                deleteCookie('filter_showFilter');
+                deleteCookie('filter_fromDate');
+                deleteCookie('filter_toDate');
+		$("#filterForm").submit();
 	}
-
 </script>

@@ -20,8 +20,7 @@
 	<li>
 		<a href="#">Credits</a>
 		<ul>
-			<li><a href="/credit/overduecredits">Overdue Credits</a></li>
-			<li><a href="/credit_payment/showform">Credit Payment</a></li>
+			<li><a href="/credit/listcredits">Credit List</a></li>
 		</ul>
 	</li>
 	<li>
