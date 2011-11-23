@@ -9,13 +9,13 @@ class Credit extends MY_Controller
 	public function listcredits()
 	{
             $this->load->helper('my_filter');
-            $filterHelper = new My_filter_helper();
-
-            $filters = $this->input->get('filter');
-
-
-            Debug::log($this->input->get('filter'));
-//            $filterHelper->fetchAndStoreFilters($this->input->get('filter'), 'listcredits_');
+            $filterInput = array(
+                'show'      => $this->input->get('show_filter'),
+                'fromDate'  => $this->input->get('fromDate_filter'),
+                'toDate'    => $this->input->get('toDate_filter'),
+            );
+            $filterHelper = new My_filter_helper($filterInput, 'listcredits');
+            $filterHelper->processAndStoreFilters();
 
             $creditService = new CreditService();
             $credits = $creditService->fetchCreditList(

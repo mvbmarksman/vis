@@ -3,17 +3,23 @@ require APPPATH . '/helpers/' . 'my_cookie_helper.php';
 class My_filter_helper
 {
     private $_filters = array();
+    private $_input = array();
+    private $_prefix;
 
 
-    public function fetchAndStoreFilters($input, $prefix)
+    public function __construct($input, $prefix)
     {
-        if (!is_array($input) || empty($prefix)) {
-            throw new InvalidArgumentException('Must supply a valid input array and prefix.');
-        }
+        $this->_input = $input;
+        $this->_prefix = $prefix;
+    }
+
+
+    public function processAndStoreFilters()
+    {
         $filters = array();
-        foreach ($input as $key => $val) {
+        foreach ($this->_input as $key => $val) {
             $actualVal = $this->_getActualVal($key, $val);
-            My_cookie_helper::setCookie($prefix . '_' . $key, $actualVal);
+            My_cookie_helper::setCookie($this->_prefix . '_' . $key, $actualVal);
             $filters[$key] = $actualVal;
         }
         Debug::log($filters);

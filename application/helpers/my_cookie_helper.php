@@ -10,7 +10,8 @@ class My_cookie_helper
     {
         Debug::log("Creating cookie with name:[$name] value:[$value] expire:[" . My_cookie_helper::EXPIRE . '] path:[' . My_cookie_helper::PATH
                 . '] host: [' . My_cookie_helper::HOST . '] secure: [' . My_cookie_helper::SECURE . ']');
-        setcookie($name, $value, My_cookie_helper::EXPIRE, My_cookie_helper::PATH, My_cookie_helper::HOST, My_cookie_helper::SECURE);
+        $result = setcookie($name, $value, My_cookie_helper::EXPIRE, My_cookie_helper::PATH, My_cookie_helper::HOST, My_cookie_helper::SECURE);
+        Debug::log($result);
     }
 
 
