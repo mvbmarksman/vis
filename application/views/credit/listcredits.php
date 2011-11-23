@@ -46,18 +46,18 @@
 			<div id="filterBody">
 				<div style="margin: 5px 7px">
 					<label>Show</label>
-					<select id="showFilter" name="showFilter" style="width: 130px">
+					<select id="showFilter" name="filter[show]" style="width: 130px">
 						<option value="active" <?php echo $showFilter == 'active' ? 'selected="selected"' : '' ?>>Active Credits</option>
 						<option value="overdue" <?php echo $showFilter == 'overdue' ? 'selected="selected"' : '' ?>>Overdue</option>
 						<option value="paid" <?php echo $showFilter == 'paid' ? 'selected="selected"' : '' ?>>Fully Paid</option>
 					</select>
 					<span style="margin-left: 15px">
 						<label>From</label>
-						<input type="text" class="mediumTxt" id="fromDate" name="fromDate" value="<?echo $fromDate ?>"/>
+						<input type="text" class="mediumTxt" id="fromDate" name="filter[fromDate]" value="<?echo $fromDate ?>"/>
 					</span>
 					<span style="margin-left: 15px">
 						<label>To</label>
-						<input type="text" class="mediumTxt" id="toDate" name="toDate" value="<?echo $toDate ?>" />
+						<input type="text" class="mediumTxt" id="toDate" name="filter[toDate]" value="<?echo $toDate ?>" />
 					</span>
 				</div>
 				<div id="actions">
