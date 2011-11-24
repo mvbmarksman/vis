@@ -46,18 +46,18 @@
 			<div id="filterBody">
 				<div style="margin: 5px 7px">
 					<label>Show</label>
-					<select id="showFilter" name="show_filter" style="width: 130px">
+					<select id="show_filter" name="show_filter" style="width: 130px">
 						<option value="active" <?php echo $showFilter == 'active' ? 'selected="selected"' : '' ?>>Active Credits</option>
 						<option value="overdue" <?php echo $showFilter == 'overdue' ? 'selected="selected"' : '' ?>>Overdue</option>
 						<option value="paid" <?php echo $showFilter == 'paid' ? 'selected="selected"' : '' ?>>Fully Paid</option>
 					</select>
 					<span style="margin-left: 15px">
 						<label>From</label>
-						<input type="text" class="mediumTxt" id="fromDate" name="fromDate_filter" value="<?echo $fromDate ?>"/>
+						<input type="text" class="mediumTxt" id="fromDate_filter" name="fromDate_filter" value="<?echo $fromDate ?>"/>
 					</span>
 					<span style="margin-left: 15px">
 						<label>To</label>
-						<input type="text" class="mediumTxt" id="toDate" name="toDate_filter" value="<?echo $toDate ?>" />
+						<input type="text" class="mediumTxt" id="toDate_filter" name="toDate_filter" value="<?echo $toDate ?>" />
 					</span>
 				</div>
 				<div id="actions">
@@ -117,22 +117,23 @@
 			$("#filterBody").slideToggle();
 		});
 
-		$("#fromDate").datepicker({
+		$("#fromDate_filter").datepicker({
 			dateFormat: 'yy-mm-dd'
 		});
 
-		$("#toDate").datepicker({
+		$("#toDate_filter").datepicker({
 			dateFormat: 'yy-mm-dd'
 		});
 	});
 
 	function clearFilters() {
-		$("#showFilter").val("active");
-		$("#fromDate").val("");
-		$("#toDate").val("");
-                deleteCookie('filter_showFilter');
-                deleteCookie('filter_fromDate');
-                deleteCookie('filter_toDate');
+                var cookiePrefix = "<?php echo $cookiePrefix ?>";
+		$("#show_filter").val("active");
+		$("#fromDate_filter").val("");
+		$("#toDate_filter").val("");
+                deleteCookie(cookiePrefix + '_show');
+                deleteCookie(cookiePrefix + '_fromDate');
+                deleteCookie(cookiePrefix + '_toDate');
 		$("#filterForm").submit();
 	}
 </script>

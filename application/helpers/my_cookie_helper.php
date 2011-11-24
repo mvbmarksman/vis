@@ -10,21 +10,30 @@ class My_cookie_helper
     {
         Debug::log("Creating cookie with name:[$name] value:[$value] expire:[" . My_cookie_helper::EXPIRE . '] path:[' . My_cookie_helper::PATH
                 . '] host: [' . My_cookie_helper::HOST . '] secure: [' . My_cookie_helper::SECURE . ']');
-        $result = setcookie($name, $value, My_cookie_helper::EXPIRE, My_cookie_helper::PATH, My_cookie_helper::HOST, My_cookie_helper::SECURE);
-        Debug::log($result);
+        $cookie = array(
+            'name'      => $name,
+            'value'     => $value,
+            'expire'    => My_cookie_helper::EXPIRE,
+            'host'      => My_cookie_helper::HOST,
+            'path'      => My_cookie_helper::PATH,
+            'secure'    => FALSE
+        );
+
+        $ci =& get_instance();
+        $ci->input->set_cookie($cookie);
     }
 
 
     public static function getCookie($name)
     {
-        if (!empty($_COOKIE[$name])) {
-            return $_COOKIE[$name];
-        }
+        $ci =& get_instance();
+        $ci->input->cookie($name);
     }
 
 
     public static function deleteCookie($name)
     {
-        setcookie($name, '', time() - 3600, My_cookie_helper::PATH, My_cookie_helper::HOST, My_cookie_helper::SECURE);
+        Debug::log("Removing cookie - $name");
+        My_cookie_helper::setCookie($name, '');
     }
 }

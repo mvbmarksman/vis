@@ -14,7 +14,8 @@ class Credit extends MY_Controller
                 'fromDate'  => $this->input->get('fromDate_filter'),
                 'toDate'    => $this->input->get('toDate_filter'),
             );
-            $filterHelper = new My_filter_helper($filterInput, 'listcredits');
+            $cookiePrefix = 'listcredits';
+            $filterHelper = new My_filter_helper($filterInput, $cookiePrefix);
             $filterHelper->processAndStoreFilters();
 
             $creditService = new CreditService();
@@ -25,10 +26,11 @@ class Credit extends MY_Controller
             );
 
             $this->renderView('listcredits', array(
-                'credits' => $credits,
-                'showFilter' => $filterHelper->get('show'),
-                'fromDate' => $filterHelper->get('fromDate'),
-                'toDate' => $filterHelper->get('toDate'),
+                'credits'       => $credits,
+                'showFilter'    => $filterHelper->get('show'),
+                'fromDate'      => $filterHelper->get('fromDate'),
+                'toDate'        => $filterHelper->get('toDate'),
+                'cookiePrefix'  => $cookiePrefix,
             ));
 	}
 
