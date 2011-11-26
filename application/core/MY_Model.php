@@ -57,4 +57,11 @@ class MY_Model extends CI_Model
 		Debug::log($this->db->last_query());
 		return $query->row_array();
 	}
+
+
+	public function fetchAll()
+	{
+		$query = $this->db->get($this->_name);
+		return $query->result_array();
+	}
 }

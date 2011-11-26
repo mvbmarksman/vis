@@ -43,7 +43,7 @@
 <div id="filterContainer">
 	<h1>Filters</h1>
 		<form action="/credit/listcredits/" method="GET" id="filterForm">
-			<div id="filterBody">
+			<div id="filterBody" style="margin: 5px 7px">
 				<div style="margin: 5px 7px">
 					<label>Show</label>
 					<select id="show_filter" name="show_filter" style="width: 130px">

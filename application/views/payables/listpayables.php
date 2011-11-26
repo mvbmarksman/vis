@@ -22,13 +22,22 @@
 	}
 
 	#filterBody ul {
-	    border-top: 1px solid silver;
-	    padding: 10px 10px 0;
+	    margin: "5px 7px";
 	}
 
 	#filterBody ul li {
-		padding: 5px 0px;
+		margin-top: 10px;
 	}
+
+	#filterBody ul li span {
+		margin-left: 15px;
+	}
+
+	#filterBody ul li span label {
+		width: 200px;
+		text-align: right;
+	}
+
 	#filterBody #actions {
 		text-align:right;
 		border-top: 1px dotted silver;
@@ -38,34 +47,50 @@
 
 </style>
 
-<h1>Credit List</h1>
+<h1>Payables List</h1>
 
 <div id="filterContainer">
 	<h1>Filters</h1>
-		<form action="/credit/listcredits/" method="GET" id="filterForm">
-			<div id="filterBody">
-				<div style="margin: 5px 7px">
+	<form action="/credit/listcredits/" method="GET" id="filterForm">
+	<div id="filterBody">
+		<ul>
+			<li>
+				<span>
 					<label>Show</label>
-					<select id="show_filter" name="show_filter" style="width: 130px">
+					<select id="show_filter" name="show_filter" class="longTxt">
 						<option value="active" <?php echo $showFilter == 'active' ? 'selected="selected"' : '' ?>>Active Credits</option>
 						<option value="overdue" <?php echo $showFilter == 'overdue' ? 'selected="selected"' : '' ?>>Overdue</option>
 						<option value="paid" <?php echo $showFilter == 'paid' ? 'selected="selected"' : '' ?>>Fully Paid</option>
 					</select>
-					<span style="margin-left: 15px">
-						<label>From</label>
-						<input type="text" class="mediumTxt" id="fromDate_filter" name="fromDate_filter" value="<?echo $fromDate ?>"/>
-					</span>
-					<span style="margin-left: 15px">
-						<label>To</label>
-						<input type="text" class="mediumTxt" id="toDate_filter" name="toDate_filter" value="<?echo $toDate ?>" />
-					</span>
-				</div>
-				<div id="actions">
-					<span><input type="button" value="Clear Filters" onclick="javascript:clearFilters()"/></span>
-					<span><input type="submit" value="Filter Results" /></span>
-				</div>
-			</div>
-		</form>
+				</span>
+				<span>
+					<label>Supplier</label>
+					<select id="supplier_filter" name="supplier_filter" class="longTxt">
+						<?php foreach ($suppliers as $supplier): ?>
+							<option value="<?php echo $supplier['supplierId'] ?>" <?php if ($supplierFilter == $supplier['supplierId']) echo 'selected="selected"' ?> >
+								<?php echo $supplier['name'] ?>
+							</option>
+						<?php endforeach ?>
+					</select>
+				</span>
+			</li>
+			<li>
+				<span>
+					<label>From</label>
+					<input type="text" class="longTxt" id="fromDate_filter" name="fromDate_filter" value="<?php echo $fromDate ?>"/>
+				</span>
+				<span style="margin-left: 46px">
+					<label>To</label>
+					<input type="text" class="longTxt" id="toDate_filter" name="toDate_filter" value="<?php echo $toDate ?>" />
+				</span>
+			</li>
+			<li id="actions">
+				<span><input type="button" value="Clear Filters" onclick="javascript:clearFilters()"/></span>
+				<span><input type="submit" value="Filter Results" /></span>
+			</li>
+		</ul>
+	</div>
+	</form>
 </div>
 
 <div id="section">
@@ -75,7 +100,7 @@
 				<th width="40px">ID</th>
 				<th>Item Name</th>
 				<th width="60px">Cost</th>
-                                <th width="60px">Supplier</th>
+				<th width="60px">Supplier</th>
 				<th width="60px">Transaction Date</th>
 				<th width="60px">Action</th>
 			</tr>

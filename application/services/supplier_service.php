@@ -6,13 +6,6 @@ class SupplierService extends MY_Service
 		'supplier',
 	);
 
-	public function fetchAllItems()
-	{
-		$supplier = new Supplier_model();
-		$suppliers = $supplier->fetchAll();
-		return $suppliers;
-	}
-
 	public function saveOrUpdate($data)
 	{
 		$supplier = new Supplier_model();
