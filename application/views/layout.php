@@ -6,6 +6,7 @@
     <title>Vieva Auto Parts Inventory System</title>
     <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 
+	<link href="/public/css/debug.css" rel="stylesheet" type="text/css" media="screen"/>
     <link href="/public/css/reset.css" rel="stylesheet" type="text/css" media="screen"/>
     <link href="/public/css/vis.css" rel="stylesheet" type="text/css" media="screen"/>
     <link href="/public/css/form.css" rel="stylesheet" type="text/css" media="screen"/>
@@ -56,6 +57,18 @@
 		<?php $content->render() ?>
       </div>
       <div id="footer" class="clear"></div>
+
+      <?php if (!empty($debug)): ?>
+      <div id="debug">
+	      <h1>Debug:</h1>
+	      <ul>
+	      <?php foreach ($debug as $d): ?>
+	      	<li><?php echo $d ?></li>
+	      <?php endforeach ?>
+	      </ul>
+      </div>
+      <?php endif ?>
+
     </div>
   </body>
 </html>

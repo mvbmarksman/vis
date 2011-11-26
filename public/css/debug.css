@@ -1,0 +1,21 @@
+@CHARSET "UTF-8";
+#debug {
+	border: 2px solid maroon;
+}
+
+#debug h1 {
+	font-size: 14px;
+	font-weight: bold;
+	padding: 5px;
+	color: maroon;
+}
+
+#debug ul {
+	margin: 5px 0;
+	border-top: 1px dashed silver;
+}
+
+#debug ul li {
+	border-bottom: 1px dashed silver;
+}
+	

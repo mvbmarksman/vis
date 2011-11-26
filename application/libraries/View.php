@@ -32,4 +32,15 @@ class View extends BaseView {
 
 		$this->set('jsFiles', $jsFiles);
 	}
+
+
+	public function setDebug($value)
+	{
+		$debug = $this->fetch('debug');
+		if (empty($debug)) {
+			$debug = array();
+		}
+		$debug[] = $value;
+		$this->set('debug', $debug);
+	}
 }

@@ -29,7 +29,9 @@ class Payables extends MY_Controller
                 $filterHelper->get('toDate')
             );
             */
-            $this->renderView('listcredits', array(
+            Debug::show('hello');
+            Debug::show($payables);
+            $this->renderView('listpayables', array(
                 'credits'       => $credits,
                 'cookiePrefix'  => $cookiePrefix,
 //                'showFilter'    => $filterHelper->get('show'),
