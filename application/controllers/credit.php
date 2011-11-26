@@ -8,28 +8,26 @@ class Credit extends MY_Controller
 
 	public function listcredits()
 	{
-            $this->load->helper('my_filter');
-            $filterInput = array(
-                'show'      => $this->input->get('show_filter'),
-                'fromDate'  => $this->input->get('fromDate_filter'),
-                'toDate'    => $this->input->get('toDate_filter'),
-            );
             $cookiePrefix = 'listcredits';
-            $filterHelper = new My_filter_helper($filterInput, $cookiePrefix);
-            $filterHelper->processAndStoreFilters();
+            $this->load->helper('my_filter');
+            $filterHelper = new My_filter_helper($cookiePrefix, 'filter');
+            $showFilter = $filterHelper->storeAndGet('show');
+            $fromDateFilter = $filterHelper->storeAndGet('fromDate');
+            $toDateFilter = $filterHelper->storeAndGet('toDate');
+
+            Debug::show($showFilter);
+            Debug::show($fromDateFilter);
+            Debug::show($toDateFilter);
+
 
             $creditService = new CreditService();
-            $credits = $creditService->fetchCreditList(
-                $filterHelper->get('show'),
-                $filterHelper->get('fromDate'),
-                $filterHelper->get('toDate')
-            );
+            $credits = $creditService->fetchCreditList($showFilter, $fromDateFilter, $toDateFilter);
 
             $this->renderView('listcredits', array(
                 'credits'       => $credits,
-                'showFilter'    => $filterHelper->get('show'),
-                'fromDate'      => $filterHelper->get('fromDate'),
-                'toDate'        => $filterHelper->get('toDate'),
+                'showFilter'    => $showFilter,
+                'fromDate'      => $fromDateFilter,
+                'toDate'        => $toDateFilter,
                 'cookiePrefix'  => $cookiePrefix,
             ));
 	}

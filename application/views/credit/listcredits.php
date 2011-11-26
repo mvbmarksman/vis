@@ -42,7 +42,7 @@
 
 <div id="filterContainer">
 	<h1>Filters</h1>
-		<form action="/credit/listcredits/" method="GET" id="filterForm">
+		<form action="/credit/listcredits/" method="POST" id="filterForm">
 			<div id="filterBody" style="margin: 5px 7px">
 				<div style="margin: 5px 7px">
 					<label>Show</label>
@@ -103,7 +103,7 @@
 			<?php endforeach; ?>
 			<?php if (count($credits) == 0): ?>
 			<tr>
-				<td colspan="7">No overdue credits.</td>
+				<td colspan="7">Nothing to display.</td>
 			</tr>
 			<?php endif; ?>
 		</tbody>

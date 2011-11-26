@@ -18,10 +18,10 @@
 		</ul>
 	</li>
 	<li>
-		<a href="#">Credits</a>
-		<ul>
-			<li><a href="/credit/listcredits">Credit List</a></li>
-		</ul>
+		<a href="/credit/listcredits">Credit List</a>
+	</li>
+	<li>
+		<a href="/payables/listpayables">Payables List</a>
 	</li>
 	<li>
 		<a href="#">Reports</a>
@@ -39,7 +39,7 @@
 
 <script>
 function initMenu() {
-	  $('#menu ul').hide();
+	  //$('#menu ul').hide();
 	  $('#menu li a').hover(
 	    function() {
 	      var checkElement = $(this).next();
@@ -47,7 +47,7 @@ function initMenu() {
 	        return false;
 	        }
 	      if((checkElement.is('ul')) && (!checkElement.is(':visible'))) {
-	        $('#menu ul:visible').slideUp('normal');
+	        //$('#menu ul:visible').slideUp('normal');
 	        checkElement.slideDown('normal');
 	        return false;
 	        }

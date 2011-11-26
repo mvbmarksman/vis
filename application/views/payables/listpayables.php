@@ -51,7 +51,7 @@
 
 <div id="filterContainer">
 	<h1>Filters</h1>
-	<form action="/credit/listcredits/" method="GET" id="filterForm">
+	<form action="/payables/listpayables/" method="GET" id="filterForm">
 	<div id="filterBody">
 		<ul>
 			<li>

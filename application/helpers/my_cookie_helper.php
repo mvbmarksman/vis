@@ -27,7 +27,7 @@ class My_cookie_helper
     public static function getCookie($name)
     {
         $ci =& get_instance();
-        $ci->input->cookie($name);
+        return $ci->input->cookie($name);
     }
 
 

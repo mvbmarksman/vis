@@ -2,45 +2,31 @@
 require APPPATH . '/helpers/' . 'my_cookie_helper.php';
 class My_filter_helper
 {
-    private $_filters = array();
-    private $_input = array();
-    private $_prefix;
+    private $_cookiePrefix;
+    private $_postSuffix;
 
 
-    public function __construct($input, $prefix)
+    public function __construct($cookiePrefix, $postSuffix)
     {
-        $this->_input = $input;
-        $this->_prefix = $prefix;
+        $this->_cookiePrefix = $cookiePrefix;
+        $this->_postSuffix = $postSuffix;
     }
 
 
-    public function processAndStoreFilters()
+    public function storeAndGet($key)
     {
-        $filters = array();
-        foreach ($this->_input as $key => $val) {
-            $actualVal = $this->_getActualVal($key, $val);
-            My_cookie_helper::setCookie($this->_prefix . '_' . $key, $actualVal);
-            $filters[$key] = $actualVal;
-        }
-        Debug::log($filters);
-        $this->_filters = $filters;
-    }
 
+    	$postKey = $key . '_' . $this->_postSuffix;
+    	$cookieKey = $this->_cookiePrefix . '_' . $key;
 
-    private function _getActualVal($key, $val)
-    {
-        if (empty($val)) {
-            return My_cookie_helper::getCookie($key);
-        }
-        return $val;
-    }
-
-
-    public function get($key)
-    {
-        if (empty($this->_filters[$key])) {
-            return;
-        }
-        return $this->_filters[$key];
+    	if (isset($_POST[$postKey])) {
+    		My_cookie_helper::setCookie($cookieKey, $_POST[$postKey]);
+    		$this->_filters[$key] = $_POST[$postKey];
+    		return $_POST[$postKey];
+    	} else {
+    		$cookieVal = My_cookie_helper::getCookie($cookieKey);
+    		Debug::show('fetching from cookie ' . $cookieKey . ', fetched: ' . $cookieVal);
+    		return $cookieVal;
+    	}
     }
 }
