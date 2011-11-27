@@ -19,6 +19,24 @@ class ItemService extends MY_Service
 	}
 
 
+	public function fetchItemsForSale()
+	{
+		$this->db->select('*')
+			->from('Item i')
+			->join('Stock s', 's.itemId = i.itemId', 'left')
+			->where('s.quantity > 0');
+		$query = $this->db->get();
+		$items = $query->result_array();
+		Debug::log($this->db->last_query());
+		foreach ($items as $key => $item) {
+			$items[$key]['label'] = $item['description'];
+			$items[$key]['value'] = $item['description'];
+		}
+		return $items;
+	}
+
+
+
 	public function fetchDetailed($itemId)
 	{
 		if (empty($itemId)) {

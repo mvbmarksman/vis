@@ -62,7 +62,7 @@
 				</div>
 				<div id="actions">
 					<span><input type="button" value="Clear Filters" onclick="javascript:clearFilters()"/></span>
-					<span><input type="submit" value="Filter Results" /></span>
+					<span><input type="submit" value="Apply Filters" /></span>
 				</div>
 			</div>
 		</form>

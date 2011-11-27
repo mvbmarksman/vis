@@ -22,6 +22,14 @@ class Item extends MY_Controller
 	}
 
 
+	public function getitemsforsale()
+	{
+		$itemService = new ItemService();
+		$items = $itemService->fetchItemsForSale();
+		echo json_encode($items);
+	}
+
+
 	/**
 	 * Shows a detailed view of the item
 	 */
