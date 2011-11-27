@@ -15,11 +15,6 @@ class Credit extends MY_Controller
             $fromDateFilter = $filterHelper->storeAndGet('fromDate');
             $toDateFilter = $filterHelper->storeAndGet('toDate');
 
-            Debug::show($showFilter);
-            Debug::show($fromDateFilter);
-            Debug::show($toDateFilter);
-
-
             $creditService = new CreditService();
             $credits = $creditService->fetchCreditList($showFilter, $fromDateFilter, $toDateFilter);
 
