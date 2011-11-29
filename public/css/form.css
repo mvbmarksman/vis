@@ -97,6 +97,8 @@ label em {
     text-align: center;
 }
 
+.message-success, .message-error { margin-bottom: 15px; }
+
 #errors li {
 	padding: 2px;
 }

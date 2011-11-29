@@ -6,9 +6,9 @@ class PayablesService extends MY_Service
         const FILTER_OVERDUE = 'overdue';
 
 
-        public function fetchPayablesList($showFilter = self::FILTER_ACTIVE, $fromDate = null, $toDate = null, $supplierId = null)
+	public function fetchPayablesList($showFilter = self::FILTER_ACTIVE, $fromDate = null, $toDate = null, $supplierId = null)
 	{
-		$this->db->select('*')
+		$this->db->select('ie.*, s.supplierId, s.name as supplierName, i.itemId, i.description as itemDescription, i.productCode as itemProductCode')
 			->from('ItemExpense ie')
 			->join('Supplier s', 'ie.supplierId=s.supplierId', 'left')
                         ->join('Item i', 'i.itemId = ie.itemId')

@@ -25,7 +25,7 @@ class My_filter_helper
     		return $_POST[$postKey];
     	} else {
     		$cookieVal = My_cookie_helper::getCookie($cookieKey);
-    		Debug::show('fetching from cookie ' . $cookieKey . ', fetched: ' . $cookieVal);
+    		Debug::log('fetching from cookie ' . $cookieKey . ', fetched: ' . $cookieVal);
     		return $cookieVal;
     	}
     }

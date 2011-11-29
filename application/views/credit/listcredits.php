@@ -1,3 +1,4 @@
+<?php $this->message->display(); ?>
 <style>
 	.tabular dt { width: 100px; padding-right: 20px; }
 	#section h4 { text-align: left; margin-top: 5px; }
@@ -79,7 +80,7 @@
 				<th width="60px">Total Amount</th>
 				<th width="60px">Amount Paid</th>
 				<th width="60px">Balance</th>
-				<th width="80px">Actions</th>
+				<th width="50px">Add Payment</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -98,7 +99,7 @@
 				<td class="rightAligned"><?php echo formatMoney($credit['totalPrice']) ?></td>
 				<td class="rightAligned"><?php echo formatMoney($credit['totalAmountPaid']) ?></td>
 				<td class="rightAligned"><?php echo formatMoney($credit['totalPrice'] - $credit['totalAmountPaid']) ?></td>
-				<td class="centered"><a href="/credit/creditpaymentform/<?php echo $credit['salesTransactionId'] ?>">Add Payment</a></td>
+				<td class="centered"><a href="/credit/creditpaymentform/<?php echo $credit['salesTransactionId'] ?>"><img src="/public/images/icons/money_add.png" title="add payment"/></a></td>
 			</tr>
 			<?php endforeach; ?>
 			<?php if (count($credits) == 0): ?>

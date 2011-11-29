@@ -100,9 +100,9 @@
 				<th width="40px">ID</th>
 				<th>Item Name</th>
 				<th width="60px">Cost</th>
-				<th width="60px">Supplier</th>
-				<th width="60px">Transaction Date</th>
-				<th width="60px">Action</th>
+				<th width="120px">Supplier</th>
+				<th width="90px">Transaction Date</th>
+				<th width="50px">Flag as Paid</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -115,18 +115,20 @@
 				<td class="rightAligned">
 					<a href="/expense/daily/<?php echo $payable['itemExpenseId'] ?>"><?php echo $payable['itemExpenseId'] ?></a>
 				</td>
-				<td class="centered"><?php show($payable['description']) . $payable['productCode'] ?></td>
+				<td>
+					<a href="/item/view/<?php echo $payable['itemId'] ?>"><?php echo $payable['itemDescription'] . '[ ' . $payable['itemProductCode'] . ' ]'  ?></a>
+				</td>
 				<td class="rightAligned"><?php echo formatMoney($payable['price'] * $payable['quantity']) ?></td>
-                                <td class="centered"><?php echo $payable['dueDate'] ?></td>
-				<td class="rightAligned"><?php echo formatMoney($payable['totalPrice']) ?></td>
-				<td class="rightAligned"><?php echo formatMoney($payable['totalAmountPaid']) ?></td>
-				<td class="rightAligned"><?php echo formatMoney($payable['totalPrice'] - $payable['totalAmountPaid']) ?></td>
-				<td class="centered"><a href="/payable/payablepaymentform/<?php echo $payable['salesTransactionId'] ?>">Add Payment</a></td>
+				<td>
+					<a href="/supplier/view/<?php echo $payable['supplierId']?>"><?php show($payable['supplierName']) ?></a>
+				</td>
+				<td class="centered"><?php echo date('Y-m-d', strtotime($payable['dateAdded'])) ?> </td>
+				<td class="centered"><a href="#"><img src="/public/images/icons/flag_green.png" title="flag as paid"/></a></td>
 			</tr>
 			<?php endforeach; ?>
 			<?php if (count($payables) == 0): ?>
 			<tr>
-				<td colspan="7">No overdue payables.</td>
+				<td colspan="7">Nothing to display.</td>
 			</tr>
 			<?php endif; ?>
 		</tbody>

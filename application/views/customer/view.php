@@ -1,3 +1,5 @@
+<?php $this->message->display(); ?>
+
 <style>
 	.summaryTable dt { margin-top: 10px }
 	#creditsAndPayments dt { width: 170px }
@@ -11,6 +13,7 @@
 	#payments tr td { padding: 3px 0 }
 	.payments {margin-top:5px;}
 	.hilite { background-color: #EBF1F7 }
+	.paymentControl { float: right; font-weight: bold; margin-top: 5px; margin-right: 20px }
 </style>
 
 <h1>Customer Information</h1>
@@ -50,7 +53,9 @@
 					<?php endforeach ?>
 					<?php endif ?>
 				</table>
-				<div style="float: right; font-weight: bold; margin-top: 5px; margin-right: 20px"><a href="/credit/creditpaymentform/<?php echo $credit['salesTransactionId'] ?>">Record a Payment</a></div>
+				<div class="paymentControl">
+					<a href="/credit/creditpaymentform/<?php echo $credit['salesTransactionId'] ?>">Add credit payment</a>
+				</div>
 				<div style="clear: both;"></div>
 			</li>
 		<?php endforeach ?>

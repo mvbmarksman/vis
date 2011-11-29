@@ -28,6 +28,7 @@ class ItemExpenseService extends MY_Service
 		$itemExpense->discount = $data['discount'];
 		$itemExpense->userId = 1; // TODO hardcoded
 		$itemExpense->isCredit = empty($data['credit']) ? 0 : 1;
+		$itemExpense->isFullyPaid = empty($data['credit']) ? 1 : 0;
 		return $itemExpense->insert();
 	}
 

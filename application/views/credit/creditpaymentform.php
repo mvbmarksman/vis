@@ -49,6 +49,7 @@ $(document).ready(function(){
 			form.submit();
 		}
 	});
+	$("input[name='amount']").focus();
 });
 </script>
 
