@@ -1,5 +1,3 @@
-<?php $this->message->display(); ?>
-
 <h1>Record Credit Payment</h1>
 
 <form id="creditPaymentForm" action="/credit/processcreditpaymentform" method="POST">

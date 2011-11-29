@@ -54,6 +54,7 @@
       </div>
 
       <div id="content">
+        <?php $this->message->display(); ?>
 		<?php $content->render() ?>
       </div>
       <div id="footer" class="clear"></div>

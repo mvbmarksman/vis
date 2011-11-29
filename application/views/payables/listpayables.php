@@ -114,7 +114,7 @@
 			?>
 			<tr class="<?php echo $ctr % 2 == 0 ? 'hiliteRow' : ''?>">
 				<td class="rightAligned">
-					<a href="/expense/daily/<?php echo $payable['itemExpenseId'] ?>"><?php echo $payable['itemExpenseId'] ?></a>
+					<a href="/expense/dailyexpense/<?php echo date('Y-m-d', strtotime($payable['dateAdded'])) ?>"><?php echo $payable['itemExpenseId'] ?></a>
 				</td>
 				<td>
 					<a href="/item/view/<?php echo $payable['itemId'] ?>"><?php echo $payable['itemDescription'] . '[ ' . $payable['itemProductCode'] . ' ]'  ?></a>

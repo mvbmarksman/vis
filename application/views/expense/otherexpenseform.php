@@ -1,5 +1,3 @@
-<?php $this->message->display(); ?>
-
 <style> .tabular dt { width: 100px } </style>
 
 <h1>Other Expense Form</h1>

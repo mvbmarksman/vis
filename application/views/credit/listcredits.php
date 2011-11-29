@@ -1,4 +1,3 @@
-<?php $this->message->display(); ?>
 <style>
 	.tabular dt { width: 100px; padding-right: 20px; }
 	#section h4 { text-align: left; margin-top: 5px; }

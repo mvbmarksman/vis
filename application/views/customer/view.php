@@ -1,5 +1,3 @@
-<?php $this->message->display(); ?>
-
 <style>
 	.summaryTable dt { margin-top: 10px }
 	#creditsAndPayments dt { width: 170px }
