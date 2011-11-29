@@ -80,7 +80,7 @@
 				<th width="60px">Total Amount</th>
 				<th width="60px">Amount Paid</th>
 				<th width="60px">Balance</th>
-				<th width="50px">Add Payment</th>
+				<th width="60px">Add Payment</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -99,7 +99,13 @@
 				<td class="rightAligned"><?php echo formatMoney($credit['totalPrice']) ?></td>
 				<td class="rightAligned"><?php echo formatMoney($credit['totalAmountPaid']) ?></td>
 				<td class="rightAligned"><?php echo formatMoney($credit['totalPrice'] - $credit['totalAmountPaid']) ?></td>
-				<td class="centered"><a href="/credit/creditpaymentform/<?php echo $credit['salesTransactionId'] ?>"><img src="/public/images/icons/money_add.png" title="add payment"/></a></td>
+				<td class="centered">
+					<?php if ($credit['isFullyPaid'] == 0): ?>
+						<a href="/credit/creditpaymentform/<?php echo $credit['salesTransactionId'] ?>"><img src="/public/images/icons/money_add.png" title="add payment"/></a>
+					<?php else: ?>
+						<span class="fullyPaid">fully paid</span>
+					<?php endif ?>
+				</td>
 			</tr>
 			<?php endforeach; ?>
 			<?php if (count($credits) == 0): ?>

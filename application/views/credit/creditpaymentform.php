@@ -20,7 +20,7 @@
 				$balance = $transactionDetails['totalPrice'] - $transactionDetails['totalAmountPaid'];
 				echo formatMoney($balance)
 			?>
-			<?php if ($transactionDetails['isFullyPaid'] == 1):?><strong style="color: #0D6605">(Fully Paid)</strong><?php endif ?>
+			<?php if ($transactionDetails['isFullyPaid'] == 1):?><span class="fullyPaid">(Fully Paid)</span><?php endif ?>
 			<input type="hidden" id="balance" value="<?php echo $balance ?>" />
 		</dd>
 		<dt>Enter amount paid :</dt>

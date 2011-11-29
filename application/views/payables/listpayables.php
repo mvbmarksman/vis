@@ -51,7 +51,7 @@
 
 <div id="filterContainer">
 	<h1>Filters</h1>
-	<form action="/payables/listpayables/" method="GET" id="filterForm">
+	<form action="/payables/listpayables/" method="POST" id="filterForm">
 	<div id="filterBody">
 		<ul>
 			<li>
@@ -66,6 +66,7 @@
 				<span>
 					<label>Supplier</label>
 					<select id="supplier_filter" name="supplier_filter" class="longTxt">
+						<option value="">Any</option>
 						<?php foreach ($suppliers as $supplier): ?>
 							<option value="<?php echo $supplier['supplierId'] ?>" <?php if ($supplierFilter == $supplier['supplierId']) echo 'selected="selected"' ?> >
 								<?php echo $supplier['name'] ?>
@@ -122,8 +123,15 @@
 				<td>
 					<a href="/supplier/view/<?php echo $payable['supplierId']?>"><?php show($payable['supplierName']) ?></a>
 				</td>
-				<td class="centered"><?php echo date('Y-m-d', strtotime($payable['dateAdded'])) ?> </td>
-				<td class="centered"><a href="#"><img src="/public/images/icons/flag_green.png" title="flag as paid"/></a></td>
+				<td class="centered"><?php echo date('Y-m-d', strtotime($payable['dateAdded'])) ?></td>
+				<td class="centered">
+					<?php if ($payable['isFullyPaid'] == 0): ?>
+						<a href="#"><img src="/public/images/icons/flag_green.png" title="flag as paid"/></a>
+					<?php else: ?>
+						<span class="fullyPaid">fully paid</span>
+					<?php endif ?>
+
+				</td>
 			</tr>
 			<?php endforeach; ?>
 			<?php if (count($payables) == 0): ?>
@@ -156,9 +164,9 @@
 		$("#show_filter").val("active");
 		$("#fromDate_filter").val("");
 		$("#toDate_filter").val("");
-                deleteCookie(cookiePrefix + '_show');
-                deleteCookie(cookiePrefix + '_fromDate');
-                deleteCookie(cookiePrefix + '_toDate');
+		deleteCookie(cookiePrefix + '_show');
+        deleteCookie(cookiePrefix + '_fromDate');
+		deleteCookie(cookiePrefix + '_toDate');
 		$("#filterForm").submit();
 	}
 </script>
