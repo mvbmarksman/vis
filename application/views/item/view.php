@@ -27,7 +27,7 @@
 			<tbody>
 				<?php foreach ($suppliers as $supplier): ?>
 				<tr>
-					<td><?php echo $supplier['name']?></td>
+					<td><a href="/supplier/view/<?php echo $supplier['supplierId'] ?>"><?php echo $supplier['name']?></a></td>
 					<td><?php echo $supplier['address']?></td>
 					<td class="rightAligned"><?php echo formatMoney($supplier['discount'])?></td>
 				</tr>
@@ -46,7 +46,7 @@
 		<table class="summaryTable">
 			<thead>
 				<tr>
-					<th width="140px">Date of Purchase</th>
+					<th width="100px">Date of Purchase</th>
 					<th width="90px">Buying Price</th>
 					<th>Supplier</th>
 				</tr>
@@ -54,9 +54,10 @@
 			<tbody>
 				<?php foreach ($buyingPrices as $buyingPrice): ?>
 				<tr>
-					<td><?php echo formatDate($buyingPrice['dateAdded']) ?></td>
+					<td class="centered"><?php echo date('Y-m-d', strtotime($buyingPrice['dateAdded'])) ?></td>
 					<td class="rightAligned"><?php echo formatMoney($buyingPrice['price']) ?></td>
-					<td><?php echo $buyingPrice['supplierName'] == null ? "<span class='subtle'>none provided</span>" : $buyingPrice['supplierName'] ?></td>
+					<td><?php echo $buyingPrice['supplierName'] == null ? "<span class='subtle'>none provided</span>"
+						: "<a href='/supplier/view/" . $buyingPrice['supplierId'] . "'> " . $buyingPrice['supplierName'] . "</a>" ?></td>
 				</tr>
 				<?php endforeach ?>
 				<?php if (count($buyingPrices) == 0): ?>
