@@ -3,7 +3,6 @@ class PayablesService extends MY_Service
 {
         const FILTER_ACTIVE = 'active';
         const FILTER_PAID = 'paid';
-        const FILTER_OVERDUE = 'overdue';
 
 
 	public function fetchPayablesList($showFilter = self::FILTER_ACTIVE, $fromDate = null, $toDate = null, $supplierId = null)
@@ -18,8 +17,6 @@ class PayablesService extends MY_Service
                     case self::FILTER_PAID:
                         $this->db->where('ie.isFullyPaid = 1');
                         break;
-                    case self::FILTER_OVERDUE:
-                        $this->db->where('CURDATE() > ie.dueDate');
                     default:
                         $this->db->where('ie.isFullyPaid = 0');
                         break;

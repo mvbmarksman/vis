@@ -59,7 +59,6 @@
 					<label>Show</label>
 					<select id="show_filter" name="show_filter" class="longTxt">
 						<option value="active" <?php echo $showFilter == 'active' ? 'selected="selected"' : '' ?>>Active Credits</option>
-						<option value="overdue" <?php echo $showFilter == 'overdue' ? 'selected="selected"' : '' ?>>Overdue</option>
 						<option value="paid" <?php echo $showFilter == 'paid' ? 'selected="selected"' : '' ?>>Fully Paid</option>
 					</select>
 				</span>
@@ -145,7 +144,7 @@
 
 <script type="text/javascript">
 	$(document).ready(function(){
-		$("#filterBody").hide();
+//		$("#filterBody").hide();
 		$("#filterContainer h1").click(function(){
 			$("#filterBody").slideToggle();
 		});
@@ -157,12 +156,6 @@
 		$("#toDate_filter").datepicker({
 			dateFormat: 'yy-mm-dd'
 		});
-
-
-		$(window).keypress(function(ev){
-				$.loader('close');
-		});
-
 	});
 
 	function flagAsPaid(id)

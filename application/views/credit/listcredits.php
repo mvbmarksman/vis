@@ -118,7 +118,7 @@
 
 <script type="text/javascript">
 	$(document).ready(function(){
-		$("#filterBody").hide();
+//		$("#filterBody").hide();
 		$("#filterContainer h1").click(function(){
 			$("#filterBody").slideToggle();
 		});

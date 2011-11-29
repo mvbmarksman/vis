@@ -23,7 +23,7 @@ class Payables extends MY_Controller
 		$toDateFilter = $filterHelper->storeAndGet('toDate');
 
 		$payablesService = new PayablesService();
-		$payables = $payablesService->fetchPayablesList();
+		$payables = $payablesService->fetchPayablesList($showFilter, $fromDateFilter, $toDateFilter, $supplierFilter);
 
 		$this->renderView('listpayables', array(
 			'payables'       	=> $payables,
