@@ -126,7 +126,7 @@
 				<td class="centered"><?php echo date('Y-m-d', strtotime($payable['dateAdded'])) ?></td>
 				<td class="centered">
 					<?php if ($payable['isFullyPaid'] == 0): ?>
-						<a href="#"><img src="/public/images/icons/flag_green.png" title="flag as paid"/></a>
+						<a href="javascript:flagAsPaid('<?php echo $payable['itemExpenseId'] ?>')"><img src="/public/images/icons/flag_green.png" title="flag as paid"/></a>
 					<?php else: ?>
 						<span class="fullyPaid">fully paid</span>
 					<?php endif ?>
@@ -157,10 +157,24 @@
 		$("#toDate_filter").datepicker({
 			dateFormat: 'yy-mm-dd'
 		});
+
+
+		$(window).keypress(function(ev){
+				$.loader('close');
+		});
+
 	});
 
-	function clearFilters() {
-                var cookiePrefix = "<?php echo $cookiePrefix ?>";
+	function flagAsPaid(id)
+	{
+	    $.post('/payables/flagaspaid', {id:id}, function(data){
+			document.location = '/payables/listpayables';
+		});
+	}
+
+	function clearFilters()
+	{
+		var cookiePrefix = "<?php echo $cookiePrefix ?>";
 		$("#show_filter").val("active");
 		$("#fromDate_filter").val("");
 		$("#toDate_filter").val("");

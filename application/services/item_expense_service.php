@@ -112,4 +112,15 @@ class ItemExpenseService extends MY_Service
 		return $result['total'];
 	}
 
+
+	public function flagAsPaid($itemExpenseId)
+	{
+		Debug::log('Flagging as paid...');
+		$data = array(
+			'isFullyPaid'	=> 1
+		);
+		$this->db->update('ItemExpense', $data, array('itemExpenseId' => $itemExpenseId));
+		Debug::log($this->db->last_query());
+	}
+
 }
