@@ -6,6 +6,7 @@
 		<a href="#">Sales</a>
 		<ul>
 			<li><a href="/sales/salesform">Sales Form</a></li>
+			<li><a href="/sales/dailysales">Daily Sales Report</a></li>
 		</ul>
 	</li>
 	<li>

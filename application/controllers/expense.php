@@ -95,19 +95,8 @@ class Expense extends MY_Controller
 	 */
 	public function dailyexpense($dateParam = null)
 	{
-		$this->view->addCss('sales/summary.css');
-		$date = null;
-		if (isset($dateParam)) {
-			try {
-				$dateObj = new DateTime($dateParam);
-				$date = $dateObj->format('Y-m-d');
-			} catch (Exception $e) {
-				Debug::log('Invalid date supplied.', 'error');
-			}
-		}
-		if ($date == null) {
-			$date = date('Y-m-d');
-		}
+        $this->load->helper('My_date_helper');
+        $date = My_date_helper::getMysqlDate($dateParam);
 
 		$itemExpenseService = new ItemExpenseService();
 		$itemExpenses = $itemExpenseService->fetchItemExpenses(ItemExpenseService::DAILY, $date);
