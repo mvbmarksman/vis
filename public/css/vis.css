@@ -1,78 +1,109 @@
 @CHARSET "UTF-8";
+html, body { height: 100%; }
+
 body {
-	font-family: arial, sans-serif;
-	font-size: 12px;
-	color: #545454;
-	background-image: url("/public/images/components/main-bg.jpg");
-	background-repeat: repeat-x;
+    font-family: arial, sans-serif;
+    font-size: 12px;
+    color: #545454;
+    background-color: #f2f2f2;
+    background-image: url("/public/images/components/main-bg.png");
+    background-repeat: repeat-x;
 }
 
 em {
-	font-style: italic;
+    font-style: italic;
 }
 
 strong {
-	font-weight: bold;
+    font-weight: bold;
 }
 
 #wrapper {
-	width: 980px;
-	overflow: hidden;
-	margin: auto auto
+    width: 980px;
+    overflow: hidden;
+    margin: auto auto;
+    background: white;
+    display: block;
+    clear: both;
+    min-height: 100%;
 }
 
 #header {
-	height: 65px;
-	background-color: #004F94;
+    height: 65px;
+    background-color: #3279BB !important;
 }
 
 #header h1 {
-	margin: 0px 0px 0px 10px;
-	padding: 35px 0px 0px 0px;
-	font-size: 15px;
-	font-family: arial, sans-serif;
-	font-weight: bold;
-	letter-spacing: 1px;
-	color: #fff;
+    margin: 0px 0px 0px 10px;
+    padding: 35px 0px 0px 0px;
+    font-size: 15px;
+    font-family: arial, sans-serif;
+    font-weight: bold;
+    letter-spacing: 1px;
+    color: #fff;
 }
 
 #accountBar {
     padding: 5px 10px;
     background-color: #E4EDF5;
     text-align: right;
+    border-bottom: 1px solid silver;
 }
 
 #sidebar {
-	background: white;
-	float: left;	
-	width: 200px;
-	min-height: 700px;
-	border-top: 1px solid silver;
-	border-left: 1px solid silver;
+    background: white;
+    float: left;
+    width: 200px;
+    min-height: 500px;
+    border: none;
 }
 
 #content {
-	background: white;
-	float: left;
-	width: 746px;
-	min-height: 700px;
-	padding: 7px 15px;
-	border: 1px solid silver;
-	border-bottom: none;
+    background: white;
+    float: left;
+    width: 746px;
+    min-height: 500px;
+    padding: 7px 15px 20px 15px;
+    border-left: 1px dotted silver;
 }
 
+#watermark {
+    background: url("/public/images/components/car.png") no-repeat scroll 460px -50px transparent;
+    clear: both;
+    display: block;
+    height: 160px;
+    min-height: 190px;
+}
+
+
 #footer {
-	padding-top: 50px;
+    background: none repeat scroll 0 0 #3279BB;
+    color: white;
+    padding: 10px 0;
+    text-align: center;
+    width: 100%;
+    margin-top: 15px;
+    /*    position: absolute;*/
+    /*    z-index: 2;*/
+    /*    bottom: 0;*/
+}
+
+#footer p {
+    margin: 3px 0px;
+}
+
+#footer p a {
+    color: white;
 }
 
 .clear {
-	clear: both;
+    clear: both;
 }
 .rightAligned {
-	text-align:right;
+    text-align:right;
 }
 .centered {
-	text-align: center;
+    text-align: center;
 }
 
 #content h1 {
@@ -86,9 +117,9 @@ strong {
 }
 
 #content h1 img {
-	float: left;
-	width: 64px;
-	height: 64px;
+    float: left;
+    width: 64px;
+    height: 64px;
 }
 
 #content h1 div {
@@ -101,48 +132,48 @@ strong {
     font-size: 14px;
     font-weight: bold;
     padding: 5px 0;
-	letter-spacing: 0.5px;
+    letter-spacing: 0.5px;
 }
 
-#content h3 { 
-   font-weight: bold; 
-   /* color: #004F94; */
-   color: #C45002;
-   margin: 5px 0px;
-   border-bottom: 1px dotted silver;
-   padding-bottom: 4px;
+#content h3 {
+    font-weight: bold;
+    /* color: #004F94; */
+    color: #C45002;
+    margin: 5px 0px;
+    border-bottom: 1px dotted silver;
+    padding-bottom: 4px;
 }
 #content h4 {
-	font-weight: bold;
+    font-weight: bold;
 }
 
 .controls {
-	margin-top:40px;
-	padding-top:10px;
+    margin-top:40px;
+    padding-top:10px;
 }
 
 
 .hiliteRow {
-	background: #FAF4E1;
+    background: #FAF4E1;
 }
 
 dl dt {
-	float:left;
-	width: 120px;
-	text-align: right;
-	padding: 3px 10px 3px 3px;
-	font-weight: bold;
+    float:left;
+    width: 120px;
+    text-align: right;
+    padding: 3px 10px 3px 3px;
+    font-weight: bold;
 }
 
 dl dd {
-	padding: 3px 10px 3px 3px;
+    padding: 3px 10px 3px 3px;
 }
 
 .removeBtn {
-	width: 16px;
-	height: 16px;
-	background-image: url("/public/images/icons/delete.png");
-	cursor: pointer;
+    width: 16px;
+    height: 16px;
+    background-image: url("/public/images/icons/delete.png");
+    cursor: pointer;
 }
 
 
@@ -151,22 +182,22 @@ dl dd {
 
 .tabular { margin-bottom: 20px }
 .tabular dt {
-	float: left;
-	font-weight: strong;
-	text-align: right;
-	padding: 5px;
+    float: left;
+    font-weight: strong;
+    text-align: right;
+    padding: 5px;
 }
 .tabular dd { padding: 5px; }
 #section { margin-top: 20px }
 
 .subtle {
-	font-size: 12px;
-	color: #999;
+    font-size: 12px;
+    color: #999;
 }
 
 
 #generalError {
-	background-image: url("/public/images/icons/error.png");
+    background-image: url("/public/images/icons/error.png");
     background-repeat: no-repeat;
     font-size: 15px;
     height: 44px;
@@ -177,38 +208,38 @@ dl dd {
 
 /******************** summary table ********************/
 .summaryTable {
-	font-size: 12px;
-	margin-top: 5px;
-	width: 750px;
+    font-size: 12px;
+    margin-top: 5px;
+    width: 750px;
 }
 .summaryTable thead tr th { padding: 5px; }
 .summaryTable thead tr {
-	background-color: #6997BF;
-	color: #eee;
-	text-align: center;
-	font-weight: bold;
+    background-color: #f2f2f2;
+    color: #333;
+    text-align: center;
+    font-weight: bold;
 }
 .summaryTable tr {
-	color: #333;
-	border: 1px solid silver;
+    color: #333;
+    border: 1px solid silver;
 }
 .summaryTable td, .summaryTable thead th {
-	padding: 3px;
-	border: 1px solid silver;
+    padding: 3px;
+    border: 1px solid silver;
 }
 .summaryTable a {
-	/*color: #C45002;*/
-	color: #3B5998;
-	text-decoration: none;
+    /*color: #C45002;*/
+    color: #3B5998;
+    text-decoration: none;
 }
 .summaryTable .hiliteRow {
-	background-color: #E4EDF5;
+    background-color: #FFFEE0;
 }
 /******************** end summary table ****************/
 
 .creditBadge {
-	vertical-align:top; 
-	margin-left: 5px; 
+    vertical-align:top;
+    margin-left: 5px;
 }
 
 .fullyPaid { color: #0D6605 }

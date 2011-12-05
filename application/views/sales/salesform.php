@@ -2,10 +2,7 @@
 <?php $this->message->display(); ?>
 <ul id ="errors" style="display:none"></ul>
 
-<h1>
-	<img src="/public/images/icons/wallet.png" />
-	<div>Sales Form</div>
-</h1>
+<h1>Sales Form</h1>
 <div class="clear"></div>
 
 <form name="salesForm" id="salesForms" action="/sales/salesform" method="POST">

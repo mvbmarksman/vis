@@ -3,14 +3,14 @@
 		<a href="/dashboard/index">Dashboard</a>
 	</li>
 	<li>
-		<a href="#">Sales</a>
+		<a href="#" class="arrowCursor">Sales</a>
 		<ul>
 			<li><a href="/sales/salesform">Sales Form</a></li>
 			<li><a href="/sales/dailysales">Daily Sales Report</a></li>
 		</ul>
 	</li>
 	<li>
-		<a href="#">Expenses</a>
+		<a href="#" class="arrowCursor">Expenses</a>
 		<ul>
 			<li><a href="/expense/inventoryexpenseform">Inventory Expense Form</a></li>
 			<li><a href="/expense/inventoryexpenseform/1">New Item Expense Form</a></li>
@@ -28,7 +28,7 @@
 		<a href="#">Reports</a>
 	</li>
 	<li>
-		<a href="#">Admin</a>
+		<a href="#" class="arrowCursor">Admin</a>
 		<ul>
 			<li><a href="/admin_customer">Customers</a></li>
 			<li><a href="/admin_item_detail">Items</a></li>

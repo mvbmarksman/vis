@@ -37,7 +37,6 @@ class Supplier extends MY_Controller
 		}
 
 		$itemsSupplied = $supplierService->fetchItemsSupplied($supplierId);
-		Debug::show($itemsSupplied);
 		$this->renderView('view', array(
 			'supplier'			=> $supplierDetails,
 			'itemsSupplied'		=> $itemsSupplied,
