@@ -39,7 +39,6 @@ class SalesTransactionService extends MY_Service
 			$salesTransaction->isFullyPaid = 0;
 			$salesTransaction->isCredit = 1;
 			$salesTransaction->creditTerm = $data['term'];
-			$this->_insertCreditPayment($data);
 		}
 		if (!empty($salesTransaction->isCredit)) {
 			$now= date('Y-m-d');
@@ -49,20 +48,7 @@ class SalesTransactionService extends MY_Service
 		$salesTransaction->update();
 	}
 
-
-	private function _insertCreditPayment($data)
-	{
-		if (empty($data)) {
-			throw new InvalidArgumentException('Data cannot be null.');
-		}
-		$creditPayment = new Credit_payment_model();
-		$creditPayment->customerId = $data['customerId'];
-		$creditPayment->salesTransactionId = $data['salesTransactionId'];
-		$creditPayment->amount = $data['amountPaid'];
-		$creditPayment->insert();
-	}
-
-
+        
 	public function fetchDetailed($salesTransactionId)
 	{
 		if (empty($salesTransactionId)) {
