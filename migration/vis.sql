@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.1.58, for debian-linux-gnu (i686)
+-- MySQL dump 10.13  Distrib 5.1.54, for debian-linux-gnu (i686)
 --
 -- Host: localhost    Database: vis
 -- ------------------------------------------------------
--- Server version	5.1.58-1ubuntu1
+-- Server version	5.1.54-1ubuntu4
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -53,7 +53,7 @@ CREATE TABLE `CreditPayment` (
   `datePaid` datetime DEFAULT NULL,
   `amount` decimal(10,4) NOT NULL,
   PRIMARY KEY (`creditPaymentId`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -62,7 +62,7 @@ CREATE TABLE `CreditPayment` (
 
 LOCK TABLES `CreditPayment` WRITE;
 /*!40000 ALTER TABLE `CreditPayment` DISABLE KEYS */;
-INSERT INTO `CreditPayment` VALUES (1,6,3,'2011-11-21 20:48:23','1.0000'),(2,6,3,'2011-11-21 20:48:35','1.0000'),(3,6,3,'2011-11-21 20:49:13','1.0000'),(4,6,3,'2011-11-21 20:49:18','5.0000'),(5,6,3,'2011-11-21 20:50:01','92.0000');
+INSERT INTO `CreditPayment` VALUES (1,6,3,'2011-11-21 20:48:23','1.0000'),(2,6,3,'2011-11-21 20:48:35','1.0000'),(3,6,3,'2011-11-21 20:49:13','1.0000'),(4,6,3,'2011-11-21 20:49:18','5.0000'),(5,6,3,'2011-11-21 20:50:01','92.0000'),(6,14,14,'2011-12-19 11:55:52','50.0000');
 /*!40000 ALTER TABLE `CreditPayment` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -95,7 +95,7 @@ CREATE TABLE `Customer` (
   `address` varchar(200) COLLATE utf8_bin DEFAULT NULL,
   `phoneNo` varchar(20) COLLATE utf8_bin DEFAULT NULL,
   PRIMARY KEY (`customerId`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -104,7 +104,7 @@ CREATE TABLE `Customer` (
 
 LOCK TABLES `Customer` WRITE;
 /*!40000 ALTER TABLE `Customer` DISABLE KEYS */;
-INSERT INTO `Customer` VALUES (1,'Mark Basmayor','cubao',''),(3,'test','',''),(4,'Mark Basmayor','cubao',''),(5,'test','',''),(6,'test','',''),(7,'test','',''),(8,'test','',''),(9,'test','',''),(10,'marko','test','1234');
+INSERT INTO `Customer` VALUES (1,'Mark Basmayor','cubao',''),(3,'test','',''),(4,'Mark Basmayor','cubao',''),(5,'test','',''),(6,'test','',''),(7,'test','',''),(8,'test','',''),(9,'test','',''),(10,'marko','test','1234'),(11,'Mark Basmayor','cubao',''),(14,'unknown','',''),(18,'test','','');
 /*!40000 ALTER TABLE `Customer` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -126,7 +126,7 @@ CREATE TABLE `Item` (
   `dateAdded` datetime DEFAULT NULL,
   `active` tinyint(4) NOT NULL DEFAULT '1',
   PRIMARY KEY (`itemId`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -135,7 +135,7 @@ CREATE TABLE `Item` (
 
 LOCK TABLES `Item` WRITE;
 /*!40000 ALTER TABLE `Item` DISABLE KEYS */;
-INSERT INTO `Item` VALUES (1,'GAFP','Glade Air Freshener Pine',NULL,2,0,'100.0000','2011-11-07 17:43:05',1),(2,'ttt','testing',1,2,0,'500.0000','2011-11-21 04:35:14',1);
+INSERT INTO `Item` VALUES (1,'GAFP','Glade Air Freshener Pine',NULL,2,0,'100.0000','2011-11-07 17:43:05',1),(2,'ttt','testing',1,2,0,'500.0000','2011-11-21 04:35:14',1),(3,'V8E','v8 engine',1,2,0,'100.0000','2011-12-19 11:46:42',1),(4,'BT','Bridgestone tires',2,2,0,'50.0000','2011-12-19 11:48:13',1);
 /*!40000 ALTER TABLE `Item` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -174,7 +174,7 @@ CREATE TABLE `ItemExpense` (
   `dateAdded` datetime DEFAULT NULL,
   `userId` bigint(20) unsigned NOT NULL,
   PRIMARY KEY (`itemExpenseId`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -183,7 +183,7 @@ CREATE TABLE `ItemExpense` (
 
 LOCK TABLES `ItemExpense` WRITE;
 /*!40000 ALTER TABLE `ItemExpense` DISABLE KEYS */;
-INSERT INTO `ItemExpense` VALUES (1,1,'100.0000',100,1,'100.0000',0,NULL,'2011-11-07 17:43:05',1),(2,1,'100.0000',50,1,'100.0000',0,NULL,'2011-11-07 17:44:01',1),(3,1,'80.0000',50,2,'100.0000',0,NULL,'2011-11-07 17:47:14',1),(4,1,'100.0000',100,NULL,'0.0000',0,NULL,'2011-11-16 15:26:09',1),(5,2,'500.0000',1,NULL,'0.0000',0,NULL,'2011-11-21 04:35:14',1);
+INSERT INTO `ItemExpense` VALUES (1,1,'100.0000',100,1,'100.0000',0,NULL,'2011-11-07 17:43:05',1),(2,1,'100.0000',50,1,'100.0000',0,NULL,'2011-11-07 17:44:01',1),(3,1,'80.0000',50,2,'100.0000',0,NULL,'2011-11-07 17:47:14',1),(4,1,'100.0000',100,NULL,'0.0000',0,NULL,'2011-11-16 15:26:09',1),(5,2,'500.0000',1,NULL,'0.0000',0,NULL,'2011-11-21 04:35:14',1),(6,3,'100.0000',5,3,'10.0000',0,1,'2011-12-19 11:46:42',1),(7,4,'50.0000',100,1,'0.0000',1,0,'2011-12-19 11:48:13',1);
 /*!40000 ALTER TABLE `ItemExpense` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -295,7 +295,7 @@ CREATE TABLE `Sales` (
   KEY `salesTransactionId` (`salesTransactionId`),
   KEY `itemDetailId` (`itemId`),
   KEY `storeId` (`storeId`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -304,7 +304,7 @@ CREATE TABLE `Sales` (
 
 LOCK TABLES `Sales` WRITE;
 /*!40000 ALTER TABLE `Sales` DISABLE KEYS */;
-INSERT INTO `Sales` VALUES (1,1,1,'100.0000',200,0,1,'20000.0000',NULL,NULL),(3,3,1,'100.0000',1,0,1,'100.0000',NULL,NULL),(4,4,1,'100.0000',1,0,1,'100.0000',NULL,NULL),(5,5,1,'100.0000',1,0,1,'100.0000',NULL,NULL),(6,6,1,'100.0000',1,0,1,'100.0000',NULL,NULL),(7,7,1,'100.0000',1,0,1,'100.0000',NULL,NULL),(8,8,1,'100.0000',1,0,1,'100.0000',NULL,NULL),(9,9,1,'100.0000',1,0,1,'100.0000',NULL,NULL),(10,10,2,'500.0000',1,0,0,'500.0000',NULL,NULL);
+INSERT INTO `Sales` VALUES (1,1,1,'100.0000',200,0,1,'20000.0000',NULL,NULL),(3,3,1,'100.0000',1,0,1,'100.0000',NULL,NULL),(4,4,1,'100.0000',1,0,1,'100.0000',NULL,NULL),(5,5,1,'100.0000',1,0,1,'100.0000',NULL,NULL),(6,6,1,'100.0000',1,0,1,'100.0000',NULL,NULL),(7,7,1,'100.0000',1,0,1,'100.0000',NULL,NULL),(8,8,1,'100.0000',1,0,1,'100.0000',NULL,NULL),(9,9,1,'100.0000',1,0,1,'100.0000',NULL,NULL),(10,10,2,'500.0000',1,0,0,'500.0000',NULL,NULL),(11,11,4,'50.0000',5,0,0,'250.0000','223.2143','26.7857'),(14,14,3,'100.0000',1,0,0,'100.0000',NULL,NULL),(18,18,4,'50.0000',1,0,0,'50.0000',NULL,NULL);
 /*!40000 ALTER TABLE `Sales` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -330,7 +330,7 @@ CREATE TABLE `SalesTransaction` (
   `dueDate` date DEFAULT NULL,
   PRIMARY KEY (`salesTransactionId`) USING BTREE,
   KEY `userId` (`userId`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -339,7 +339,7 @@ CREATE TABLE `SalesTransaction` (
 
 LOCK TABLES `SalesTransaction` WRITE;
 /*!40000 ALTER TABLE `SalesTransaction` DISABLE KEYS */;
-INSERT INTO `SalesTransaction` VALUES (1,'2011-10-07 17:51:54',0,NULL,NULL,NULL,NULL,'5.0000',NULL,NULL,NULL,NULL),(3,'2011-11-16 15:26:33',1,6,'100.0000','0.0000','0.0000','100.0000',1,1,30,'2011-11-01'),(4,'2011-09-08 17:51:54',0,NULL,NULL,NULL,NULL,'55.0000',NULL,NULL,NULL,NULL),(5,'2011-11-16 18:33:05',1,6,'100.0000','0.0000','0.0000','100.0000',1,0,NULL,'2011-11-01'),(6,'2011-11-16 18:33:33',0,NULL,NULL,NULL,NULL,'55.0000',NULL,NULL,NULL,NULL),(7,'2011-11-16 18:37:51',1,6,'100.0000','0.0000','0.0000','100.0000',1,1,30,'2011-11-01'),(8,'2011-11-16 18:41:50',1,6,'100.0000','0.0000','0.0000','100.0000',1,1,30,'2011-11-01'),(9,'2011-11-16 18:45:27',1,6,'100.0000','0.0000','0.0000','100.0000',1,1,30,'2011-11-01'),(10,'2011-11-21 04:40:09',0,NULL,NULL,NULL,NULL,'101.0000',NULL,NULL,NULL,NULL);
+INSERT INTO `SalesTransaction` VALUES (1,'2011-10-07 17:51:54',0,NULL,NULL,NULL,NULL,'5.0000',NULL,NULL,NULL,NULL),(3,'2011-11-16 15:26:33',1,6,'100.0000','0.0000','0.0000','100.0000',1,1,30,'2011-11-01'),(4,'2011-09-08 17:51:54',0,NULL,NULL,NULL,NULL,'55.0000',NULL,NULL,NULL,NULL),(5,'2011-11-16 18:33:05',1,6,'100.0000','0.0000','0.0000','100.0000',1,0,NULL,'2011-11-01'),(6,'2011-11-16 18:33:33',0,NULL,NULL,NULL,NULL,'55.0000',NULL,NULL,NULL,NULL),(7,'2011-11-16 18:37:51',1,6,'100.0000','0.0000','0.0000','100.0000',1,1,30,'2011-11-01'),(8,'2011-11-16 18:41:50',1,6,'100.0000','0.0000','0.0000','100.0000',1,1,30,'2011-11-01'),(9,'2011-11-16 18:45:27',1,6,'100.0000','0.0000','0.0000','100.0000',1,1,30,'2011-11-01'),(10,'2011-11-21 04:40:09',0,NULL,NULL,NULL,NULL,'101.0000',NULL,NULL,NULL,NULL),(11,'2011-12-19 11:52:48',1,11,'250.0000','223.2143','26.7857','250.0000',1,0,NULL,NULL),(14,'2011-12-19 11:55:52',1,14,'100.0000','0.0000','0.0000','50.0000',0,1,30,'2012-01-18'),(18,'2011-12-19 14:00:39',1,18,'50.0000','0.0000','0.0000','0.0000',0,1,30,'2012-01-18');
 /*!40000 ALTER TABLE `SalesTransaction` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -379,7 +379,7 @@ CREATE TABLE `Stock` (
 
 LOCK TABLES `Stock` WRITE;
 /*!40000 ALTER TABLE `Stock` DISABLE KEYS */;
-INSERT INTO `Stock` VALUES (1,1,93),(2,0,0);
+INSERT INTO `Stock` VALUES (1,1,93),(2,0,0),(3,0,4),(4,0,94);
 /*!40000 ALTER TABLE `Stock` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -420,7 +420,7 @@ CREATE TABLE `Supplier` (
   `name` varchar(50) COLLATE utf8_bin NOT NULL,
   `address` varchar(50) COLLATE utf8_bin DEFAULT NULL,
   PRIMARY KEY (`supplierId`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -429,7 +429,7 @@ CREATE TABLE `Supplier` (
 
 LOCK TABLES `Supplier` WRITE;
 /*!40000 ALTER TABLE `Supplier` DISABLE KEYS */;
-INSERT INTO `Supplier` VALUES (1,'Toyota Pasong Tamo','Pasong Tamo, Makati'),(2,'Toyota Alabang','alabang, manila');
+INSERT INTO `Supplier` VALUES (1,'Toyota Pasong Tamo','Pasong Tamo, Makati'),(2,'Toyota Alabang','alabang, manila'),(3,'Toyota Makati','makati');
 /*!40000 ALTER TABLE `Supplier` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -441,14 +441,13 @@ DROP TABLE IF EXISTS `User`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `User` (
-  `userId` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `username` varchar(20) COLLATE utf8_bin NOT NULL,
-  `password` varchar(50) COLLATE utf8_bin NOT NULL,
-  `firstName` varchar(30) COLLATE utf8_bin NOT NULL,
-  `lastName` varchar(30) COLLATE utf8_bin NOT NULL,
-  `isAdmin` tinyint(1) NOT NULL,
-  PRIMARY KEY (`userId`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+  `userId` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(64) NOT NULL,
+  `password` varchar(64) NOT NULL,
+  `isAdmin` tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (`userId`),
+  UNIQUE KEY `username` (`username`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -457,7 +456,6 @@ CREATE TABLE `User` (
 
 LOCK TABLES `User` WRITE;
 /*!40000 ALTER TABLE `User` DISABLE KEYS */;
-INSERT INTO `User` VALUES (1,'erick','erick','erick','masanque',1),(2,'mark','mark','mark','mark',1);
 /*!40000 ALTER TABLE `User` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -470,4 +468,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-11-21 20:50:50
+-- Dump completed on 2012-01-05 22:44:22
